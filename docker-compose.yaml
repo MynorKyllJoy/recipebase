@@ -1,0 +1,30 @@
+name: recipebase
+
+services:
+  neo4j-db:
+    image: neo4j:latest
+    volumes:
+      - ./neo4j_db/logs:/logs
+      - ./neo4j_db/config:/config
+      - ./neo4j_db/data:/data
+      - ./neo4j_db/plugins:/plugins
+    environment:
+      - NEO4J_AUTH_FILE=/run/secrets/neo4j_auth_file
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: always
+    secrets:
+      - neo4j_auth_file
+  spring-recipebase:
+    image: "recipebase:0.0.1"
+    container_name: spring-recipebase
+    ports:
+      - "8080:8080"
+    env_file:
+      - "secret/docker_spring.env"
+    depends_on:
+      - neo4j-db
+secrets:
+  neo4j_auth_file:
+    file: ./secret/neo4j_auth_file.txt
