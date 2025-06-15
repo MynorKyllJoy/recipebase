@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Index</title>
+</head>
+<body>
+  <h1>[[${recipe.title}]]</h1>
+  <p>[[${recipe.description}]]</p>
+  <p>[[${recipe.source}]]</p>
+  <ul th:each="ingredient:${recipe.ingredients}">
+    <li>[[${ingredient.getName()}]]</li>
+  </ul>
+  <table>
+    <thead>
+      <tr>
+        <th>Step</th>
+        <th>Instruction</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="instruction, iter:${recipe.instructions}">
+        <td th:text="${iter.index+1}"></td>
+        <td th:text="${instruction}"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

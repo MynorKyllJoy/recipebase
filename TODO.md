@@ -1,0 +1,19 @@
+## TODO
+- [] Exception Handling
+    - [] Search for "EX" comments
+    - [] Proper exception handling in controllers
+- [] Ingredient-Recipe-Relationship
+    - [] Extract quantities, states, alternatives, and additional information from scrapes ingredient listings.
+    - [] Integrate Requirement relationship class into Recipe and Ingredient+
+- [] Data access
+    - [] integrate neo4j database into spring application
+    - [] save recipes and ingredients in database
+    - [] add repositories
+    - [] add query with quantity condition
+- [] Additional Features
+    - [] Upload/Create own recipes
+    - [] Search recipes via list of ingredients and quantities
+    - [] Grocery list creation for selected recipes
+    - Random Ideas:
+      - [] States for the two above points?
+      - [] Multiple users
