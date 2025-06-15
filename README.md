@@ -5,5 +5,5 @@ Creates grocery list.
 
 ## Run instructions with docker
 - Run "docker build -t recipebase:0.0.1 ." to create an image of the Spring application.
-- Run "docker compose"
+- Run "docker compose up"
 - Access website via Localhost:8080
