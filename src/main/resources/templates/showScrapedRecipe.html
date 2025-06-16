@@ -11,19 +11,25 @@
   <ul th:each="ingredient:${recipe.getIngredients()}">
     <li>[[${ingredient.getName()}]]</li>
   </ul>
-  <table>
-    <thead>
-      <tr>
-        <th>Step</th>
-        <th>Instruction</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr th:each="instruction, iter:${recipe.getInstructions()}">
-        <td th:text="${iter.index+1}"></td>
-        <td th:text="${instruction}"></td>
-      </tr>
-    </tbody>
-  </table>
+  <div th:if="${recipe.getInstructions().size() > 1}">
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Instruction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="instruction, iter:${recipe.getInstructions()}">
+          <td th:text="${iter.index+1}"></td>
+          <td th:text="${instruction}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:unless="${recipe.getInstructions().size() > 1}">
+    <p>Instructions</p>
+    <p>[[${recipe.getInstructions().get(0)}]]</p>
+  </div>
 </body>
 </html>
