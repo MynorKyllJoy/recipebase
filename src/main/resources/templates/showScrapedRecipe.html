@@ -5,10 +5,10 @@
   <title>Index</title>
 </head>
 <body>
-  <h1>[[${recipe.title}]]</h1>
-  <p>[[${recipe.description}]]</p>
-  <p>[[${recipe.source}]]</p>
-  <ul th:each="ingredient:${recipe.ingredients}">
+  <h1>[[${recipe.getTitle()}]]</h1>
+  <p>[[${recipe.getDescription()}]]</p>
+  <p>[[${recipe.getSource()}]]</p>
+  <ul th:each="ingredient:${recipe.getIngredients()}">
     <li>[[${ingredient.getName()}]]</li>
   </ul>
   <table>
@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="instruction, iter:${recipe.instructions}">
+      <tr th:each="instruction, iter:${recipe.getInstructions()}">
         <td th:text="${iter.index+1}"></td>
         <td th:text="${instruction}"></td>
       </tr>

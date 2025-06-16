@@ -5,10 +5,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import practice.recipebase.model.Ingredient;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScrapedRecipe extends RecipeTemplate {
@@ -17,11 +19,18 @@ public class ScrapedRecipe extends RecipeTemplate {
 
     public ScrapedRecipe(Document recipeSite, String siteURL) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        // works only for sites with one ld+json at the moment
-        Elements metadata = recipeSite.getElementsByAttributeValue("type", "application/ld+json");
-        String metadataString = metadata.getFirst().data();
-        JsonNode metadataNode = mapper.readTree(metadataString);
-        this.recipeNode = this.findRecipeNode(metadataNode);
+        Elements metadataList = recipeSite.getElementsByAttributeValue("type", "application/ld+json");
+
+        // a website can have multiple ld+json scripts, find the one that has the recipe data
+        for(Element metadata : metadataList.stream().toList()) {
+            String metadataString = metadata.data();
+            JsonNode metadataNode = mapper.readTree(metadataString);
+            JsonNode currNode = this.findRecipeNode(metadataNode);
+            if(currNode != null) {
+                this.recipeNode = currNode;
+                break;
+            }
+        }
         // the URL is sometimes missing in the ld+json
         this.siteURL = siteURL;
     }
@@ -47,7 +56,7 @@ public class ScrapedRecipe extends RecipeTemplate {
                 index += 1;
             }
         }
-        return null; // EX: change later to throw exception
+        return null;
     }
 
     @Override
@@ -78,8 +87,17 @@ public class ScrapedRecipe extends RecipeTemplate {
     List<String> getInstructions() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode instructionNode = recipeNode.get("recipeInstructions");
-        TypeReference<List<RecipeInstructionWrapper>> typeRef = new TypeReference<>() {};
-        List<RecipeInstructionWrapper> wrappedInstructions = mapper.readValue(instructionNode.traverse(), typeRef);
-        return  wrappedInstructions.stream().map(RecipeInstructionWrapper::getText).toList();
+
+        // Instructions are mostly JSON arrays, but they are sometimes Strings
+        // Possible EX: Test for empty instructions
+        try {
+            TypeReference<List<RecipeInstructionWrapper>> typeRef = new TypeReference<>() {};
+            List<RecipeInstructionWrapper> wrappedInstructions = mapper.readValue(instructionNode.traverse(), typeRef);
+            return wrappedInstructions.stream().map(RecipeInstructionWrapper::getText).toList();
+        } catch (IOException ex) {
+            List<String> list = new ArrayList<>();
+            list.add(instructionNode.asText());
+            return list;
+        }
     }
 }

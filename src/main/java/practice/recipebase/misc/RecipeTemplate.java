@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 abstract class RecipeTemplate {
+    // Template pattern since I want to save scraped and self-made recipes in the database
     public Recipe createRecipe() {
         try {
             String title = this.getTitle();
