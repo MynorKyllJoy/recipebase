@@ -1,4 +1,4 @@
-package practice.recipebase.misc;
+package practice.recipebase.interpreter;
 
 public class TerminalExpression implements Expression {
     private final Token token;

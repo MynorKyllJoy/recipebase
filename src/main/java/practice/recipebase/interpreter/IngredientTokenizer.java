@@ -1,4 +1,4 @@
-package practice.recipebase.misc;
+package practice.recipebase.interpreter;
 
 import practice.recipebase.TokenType;
 
