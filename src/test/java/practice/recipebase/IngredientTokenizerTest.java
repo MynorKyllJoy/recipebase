@@ -145,20 +145,22 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(0).value()).isEqualTo(")");
         assertThat(tokens.get(1).value()).isEqualTo("chopped into small pieces");
         assertThat(tokens.get(2).value()).isEqualTo("(");
-        assertThat(tokens.get(3).value()).isEqualTo("pork sausage");
-        assertThat(tokens.get(4).value()).isEqualTo(" ");
-        assertThat(tokens.get(5).value()).isEqualTo("g");
-        assertThat(tokens.get(6).value()).isEqualTo(" ");
-        assertThat(tokens.get(7).value()).isEqualTo("100");
+        assertThat(tokens.get(3).value()).isEqualTo(" ");
+        assertThat(tokens.get(4).value()).isEqualTo("pork sausage");
+        assertThat(tokens.get(5).value()).isEqualTo(" ");
+        assertThat(tokens.get(6).value()).isEqualTo("g");
+        assertThat(tokens.get(7).value()).isEqualTo(" ");
+        assertThat(tokens.get(8).value()).isEqualTo("100");
         assertThat(tokens.get(0).type()).isEqualTo(TokenType.CLOSE_BRACKET);
         assertThat(tokens.get(1).type()).isEqualTo(TokenType.STATE);
         assertThat(tokens.get(2).type()).isEqualTo(TokenType.OPEN_BRACKET);
-        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OTHER);
-        assertThat(tokens.get(4).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(5).type()).isEqualTo(TokenType.UNIT);
-        assertThat(tokens.get(6).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(7).type()).isEqualTo(TokenType.QUANTITY);
-        assertThat(tokens.size()).isEqualTo(8);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(8).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(9);
     }
 
     @Test
@@ -171,22 +173,46 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(2).value()).isEqualTo(" ");
         assertThat(tokens.get(3).value()).isEqualTo("140");
         assertThat(tokens.get(4).value()).isEqualTo("(");
-        assertThat(tokens.get(5).value()).isEqualTo("onion");
-        assertThat(tokens.get(6).value()).isEqualTo(" ");
-        assertThat(tokens.get(7).value()).isEqualTo("medium");
-        assertThat(tokens.get(8).value()).isEqualTo(" ");
-        assertThat(tokens.get(9).value()).isEqualTo("1");
+        assertThat(tokens.get(5).value()).isEqualTo(" ");
+        assertThat(tokens.get(6).value()).isEqualTo("onion");
+        assertThat(tokens.get(7).value()).isEqualTo(" ");
+        assertThat(tokens.get(8).value()).isEqualTo("medium");
+        assertThat(tokens.get(9).value()).isEqualTo(" ");
+        assertThat(tokens.get(10).value()).isEqualTo("1");
         assertThat(tokens.get(0).type()).isEqualTo(TokenType.CLOSE_BRACKET);
         assertThat(tokens.get(1).type()).isEqualTo(TokenType.UNIT);
         assertThat(tokens.get(2).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(3).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.get(4).type()).isEqualTo(TokenType.OPEN_BRACKET);
-        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OTHER);
-        assertThat(tokens.get(6).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(7).type()).isEqualTo(TokenType.STATE);
-        assertThat(tokens.get(8).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(9).type()).isEqualTo(TokenType.QUANTITY);
-        assertThat(tokens.size()).isEqualTo(10);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(8).type()).isEqualTo(TokenType.STATE);
+        assertThat(tokens.get(9).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(10).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(11);
+    }
+
+    @Test
+    public void testToListBracketsInMiddle() {
+        IngredientTokenizer tokenizer = new IngredientTokenizer("1 (chopped) onion");
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo("onion");
+        assertThat(tokens.get(1).value()).isEqualTo(" ");
+        assertThat(tokens.get(2).value()).isEqualTo(")");
+        assertThat(tokens.get(3).value()).isEqualTo("chopped");
+        assertThat(tokens.get(4).value()).isEqualTo("(");
+        assertThat(tokens.get(5).value()).isEqualTo(" ");
+        assertThat(tokens.get(6).value()).isEqualTo("1");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.CLOSE_BRACKET);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.STATE);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.OPEN_BRACKET);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(7);
     }
 
     @Test
@@ -201,11 +227,12 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(4).value()).isEqualTo(" ");
         assertThat(tokens.get(5).value()).isEqualTo("140");
         assertThat(tokens.get(6).value()).isEqualTo("(");
-        assertThat(tokens.get(7).value()).isEqualTo("red onion");
-        assertThat(tokens.get(8).value()).isEqualTo(" ");
-        assertThat(tokens.get(9).value()).isEqualTo("medium");
-        assertThat(tokens.get(10).value()).isEqualTo(" ");
-        assertThat(tokens.get(11).value()).isEqualTo("1");
+        assertThat(tokens.get(7).value()).isEqualTo(" ");
+        assertThat(tokens.get(8).value()).isEqualTo("red onion");
+        assertThat(tokens.get(9).value()).isEqualTo(" ");
+        assertThat(tokens.get(10).value()).isEqualTo("medium");
+        assertThat(tokens.get(11).value()).isEqualTo(" ");
+        assertThat(tokens.get(12).value()).isEqualTo("1");
         assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
         assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(2).type()).isEqualTo(TokenType.CLOSE_BRACKET);
@@ -213,12 +240,13 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(4).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(5).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.OPEN_BRACKET);
-        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OTHER);
-        assertThat(tokens.get(8).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(9).type()).isEqualTo(TokenType.STATE);
-        assertThat(tokens.get(10).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(11).type()).isEqualTo(TokenType.QUANTITY);
-        assertThat(tokens.size()).isEqualTo(12);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(8).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(9).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(10).type()).isEqualTo(TokenType.STATE);
+        assertThat(tokens.get(11).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(12).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(13);
     }
 
     @Test
@@ -236,11 +264,12 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(7).value()).isEqualTo("1");
         assertThat(tokens.get(8).value()).isEqualTo("substitute with");
         assertThat(tokens.get(9).value()).isEqualTo("(");
-        assertThat(tokens.get(10).value()).isEqualTo("honey");
-        assertThat(tokens.get(11).value()).isEqualTo(" ");
-        assertThat(tokens.get(12).value()).isEqualTo("tbsp");
-        assertThat(tokens.get(13).value()).isEqualTo(" ");
-        assertThat(tokens.get(14).value()).isEqualTo("1");
+        assertThat(tokens.get(10).value()).isEqualTo(" ");
+        assertThat(tokens.get(11).value()).isEqualTo("honey");
+        assertThat(tokens.get(12).value()).isEqualTo(" ");
+        assertThat(tokens.get(13).value()).isEqualTo("tbsp");
+        assertThat(tokens.get(14).value()).isEqualTo(" ");
+        assertThat(tokens.get(15).value()).isEqualTo("1");
         assertThat(tokens.get(0).type()).isEqualTo(TokenType.CLOSE_BRACKET);
         assertThat(tokens.get(1).type()).isEqualTo(TokenType.OTHER);
         assertThat(tokens.get(2).type()).isEqualTo(TokenType.OPERAND);
@@ -251,12 +280,13 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(7).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.get(8).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(9).type()).isEqualTo(TokenType.OPEN_BRACKET);
-        assertThat(tokens.get(10).type()).isEqualTo(TokenType.OTHER);
-        assertThat(tokens.get(11).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(12).type()).isEqualTo(TokenType.UNIT);
-        assertThat(tokens.get(13).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(14).type()).isEqualTo(TokenType.QUANTITY);
-        assertThat(tokens.size()).isEqualTo(15);
+        assertThat(tokens.get(10).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(11).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(12).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(13).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(14).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(15).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(16);
     }
 
     @Test

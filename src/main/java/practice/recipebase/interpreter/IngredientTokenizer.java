@@ -138,8 +138,7 @@ public class IngredientTokenizer {
     private boolean needsPrecedingSpaceOperand(TokenType prevType, TokenType currType) {
         // if prev and curr token do not have an operand between them, then curr token needs preceding operand
         return currType != TokenType.OPERAND && prevType != TokenType.OPERAND
-                && currType != TokenType.OPEN_BRACKET && prevType != TokenType.OPEN_BRACKET
-                && currType != TokenType.CLOSE_BRACKET && prevType != TokenType.CLOSE_BRACKET;
+                && prevType != TokenType.OPEN_BRACKET && currType != TokenType.CLOSE_BRACKET;
     }
 
 
