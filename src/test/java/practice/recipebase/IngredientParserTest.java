@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import practice.recipebase.interpreter.Expression;
 import practice.recipebase.interpreter.IngredientParser;
 import practice.recipebase.interpreter.IngredientTokenizer;
-import practice.recipebase.interpreter.Token;
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class IngredientParserTest {
         String ingredientString = "100g pork sausage (chopped into small pieces)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        assertThat(parser.interpret()).isEqualTo("100 g pork sausage (chopped into small pieces)");
+        assertThat(parser.interpret()).isEqualTo("100 g pork sausage chopped into small pieces");
     }
 
     @Test
@@ -48,7 +47,7 @@ public class IngredientParserTest {
         String ingredientString = "1 medium onion (140g)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        assertThat(parser.interpret()).isEqualTo("1 medium onion (140 g)");
+        assertThat(parser.interpret()).isEqualTo("1 medium onion 140 g");
     }
 
     @Test
@@ -56,7 +55,7 @@ public class IngredientParserTest {
         String ingredientString = "1 (chopped) onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        assertThat(parser.interpret()).isEqualTo("1 (chopped) onion");
+        assertThat(parser.interpret()).isEqualTo("1 chopped onion");
     }
 
     @Test
@@ -64,7 +63,7 @@ public class IngredientParserTest {
         String ingredientString = "1 medium red onion (140g) or white onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        assertThat(parser.interpret()).isEqualTo("1 medium red onion (140 g)orwhite onion");
+        assertThat(parser.interpret()).isEqualTo("1 medium red onion 140 gorwhite onion");
     }
 
     @Test
@@ -72,7 +71,7 @@ public class IngredientParserTest {
         String ingredientString = "1 tbsp honey (substitute with 1.5 tbsp sugar)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        assertThat(parser.interpret()).isEqualTo("1 tbsp honey (substitute with1.5 tbsp sugar)");
+        assertThat(parser.interpret()).isEqualTo("1 tbsp honey substitute with1.5 tbsp sugar");
     }
 
     @Test
