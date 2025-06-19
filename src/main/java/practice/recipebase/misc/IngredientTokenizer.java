@@ -113,6 +113,11 @@ public class IngredientTokenizer {
     }
 
 
+    public int size() {
+        return this.tokens.size();
+    }
+
+
     private List<String> getPatterns(String ingredientData) {
         ingredientData = ingredientData.toLowerCase();
         Pattern pattern = Pattern.compile("[A-Za-z_]+|[0-9]+|\\S");
@@ -137,7 +142,7 @@ public class IngredientTokenizer {
 
     private boolean areOneTerm(TokenType prevType, TokenType currType) {
         // two tokens with same type (except brackets) are most likely one word
-        return prevType == currType  && currType != TokenType.OPEN_BRACKET && currType != TokenType.CLOSE_BRACKET;
+        return prevType == currType && currType != TokenType.OPEN_BRACKET && currType != TokenType.CLOSE_BRACKET;
     }
 
 
