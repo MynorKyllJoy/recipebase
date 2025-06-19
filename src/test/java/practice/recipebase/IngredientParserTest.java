@@ -1,13 +1,12 @@
 package practice.recipebase;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 
 import org.junit.jupiter.api.Test;
 import practice.recipebase.interpreter.Expression;
 import practice.recipebase.interpreter.IngredientParser;
 import practice.recipebase.interpreter.IngredientTokenizer;
-
-import java.util.List;
 
 public class IngredientParserTest {
     @Test
@@ -71,7 +70,7 @@ public class IngredientParserTest {
         String ingredientString = "1 tbsp honey (substitute with 1.5 tbsp sugar)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        assertThat(parser.interpret()).isEqualTo("1 tbsp honey substitute with1.5 tbsp sugar");
+        assertThat(parser.interpret()).isEqualTo("1 tbsp honey 1.5 tbsp sugar");
     }
 
     @Test
@@ -89,5 +88,13 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         assertThat(parser.interpret()).isEqualTo("1/2 an onion");
+    }
+
+    @Test
+    public void testParseAlternativeWithoutBrackets() throws Exception {
+        String ingredientString = "500g apple or pear";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        assertThat(parser.interpret()).isEqualTo("500 g appleorpear");
     }
 }
