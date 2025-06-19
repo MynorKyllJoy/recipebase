@@ -6,10 +6,12 @@ public class IngredientParser {
     private final IngredientTokenizer tokenizer;
     private final int minPrecedence;
 
+
     public IngredientParser(IngredientTokenizer tokenizer, int minPrecedence) {
         this.tokenizer = tokenizer;
         this.minPrecedence = minPrecedence;
     }
+
 
     public Expression parse() throws Exception {
         Token firstToken = this.tokenizer.next();
@@ -19,8 +21,14 @@ public class IngredientParser {
         }
         Expression leftExpr = new TerminalExpression(firstToken);
 
+        if(firstToken.type() == TokenType.OPEN_BRACKET) {
+            // process contents inside brackets and skip closed bracket
+            leftExpr = new IngredientParser(tokenizer, 0).parse();
+            tokenizer.next();
+        }
+
         Token nextToken = this.tokenizer.peek();
-        while(nextToken.type() != TokenType.END) {
+        while(nextToken.type() != TokenType.END && nextToken.type() != TokenType.CLOSE_BRACKET) {
             Precedence precedence = this.get_precedence(nextToken);
             if(precedence.left() < this.minPrecedence)
                 break;
@@ -33,6 +41,7 @@ public class IngredientParser {
         }
         return leftExpr;
     }
+
 
     private Precedence get_precedence(Token token) throws Exception {
         String errorMessage = token.value() + " is from type " + token.type()
@@ -54,6 +63,7 @@ public class IngredientParser {
             throw new Exception(errorMessage);
         }
     }
+
 
     private boolean isIn(String value, String[] constantArray) {
         for(String element : constantArray) {
