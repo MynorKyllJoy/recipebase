@@ -12,7 +12,10 @@ import java.util.regex.Pattern;
  There is little consistency on how these additional information is written down within a single website
  let alone between different websites.
  This tokenizer and its respective parser attempt to extract the necessary information.
- The tokenizer tries to put each word/symbol in a category, so the parser can properly sort the information
+ The tokenizer tries to put each word/symbol in a category, so the parser can properly sort the information.
+ The output of the tokenizer should have a similar structure to a math term.
+ No operands at the beginning, end or following each other. No two other tokens types without an operand inbetween
+ unless they are brackets. Brackets work like they would in math.
 */
 
 public class IngredientTokenizer {
