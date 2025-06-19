@@ -36,7 +36,8 @@ public class IngredientTokenizer {
             "inch(es)?", "spoonful(s)?", "sprinkle(s)?", "drizzle", "a", "an", "some", "more"
     };
     private final String[] PREPOSITION = {"in", "into", "with", "of", "across", "on"};
-    private final String[] OPERANDS = {"-", "/", ".", "x", ",", " ", "or", "use", "substitute", "plus", "and"};
+    private final String[] OPERANDS = {"-", "/", ".", "x", ",", " ", "plus", "and"};
+    private final String[] ALTERNATIVE = {"or", "use", "substitute"};
     private final String[] OPEN_BRACKETS = {"(", "[", "{"};
     private final String[] CLOSE_BRACKET = {")", "]", "}"};
 
@@ -138,6 +139,7 @@ public class IngredientTokenizer {
     private boolean needsPrecedingSpaceOperand(TokenType prevType, TokenType currType) {
         // if prev and curr token do not have an operand between them, then curr token needs preceding operand
         return currType != TokenType.OPERAND && prevType != TokenType.OPERAND
+                && currType != TokenType.ALTERNATIVE && prevType != TokenType.ALTERNATIVE
                 && prevType != TokenType.OPEN_BRACKET && currType != TokenType.CLOSE_BRACKET;
     }
 
@@ -157,9 +159,11 @@ public class IngredientTokenizer {
             type = TokenType.UNIT;
         } else if(this.isQuantity(pattern)) {
             type = TokenType.QUANTITY;
+        } else if(this.isIn(pattern, this.ALTERNATIVE)) {
+            type = TokenType.ALTERNATIVE;
         } else if(this.isIn(pattern, this.OPERANDS)) {
             type = TokenType.OPERAND;
-        } else if(this.isIn(pattern, this.OPEN_BRACKETS)) {
+        }  else if(this.isIn(pattern, this.OPEN_BRACKETS)) {
             type = TokenType.OPEN_BRACKET;
         } else if(this.isIn(pattern, this.CLOSE_BRACKET)) {
             type = TokenType.CLOSE_BRACKET;

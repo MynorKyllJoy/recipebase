@@ -16,14 +16,20 @@ public class IngredientParser {
     public Expression parse() throws Exception {
         Token firstToken = this.tokenizer.next();
 
-        if(firstToken.type() == TokenType.OPERAND) {
-            throw new Exception(firstToken.value() + " is an operand und should not come first.");
+        if(firstToken.type() == TokenType.OPERAND || firstToken.type() == TokenType.ALTERNATIVE) {
+            throw new Exception(firstToken.value() + " is " + firstToken.type() + " and should not come first.");
         }
         Expression leftExpr = new TerminalExpression(firstToken);
 
         if(firstToken.type() == TokenType.OPEN_BRACKET) {
             // process contents inside brackets and skip closed bracket
-            leftExpr = new IngredientParser(tokenizer, 0).parse();
+            if(tokenizer.peek().type() == TokenType.ALTERNATIVE) {
+                //it is possible that an alternative operand follows immediately after an open bracket
+                tokenizer.next();
+                leftExpr = new AlternativeExpression(new IngredientParser(tokenizer, 0).parse());
+            } else {
+                leftExpr = new IngredientParser(tokenizer, 0).parse();
+            }
             tokenizer.next();
         }
 
@@ -35,8 +41,10 @@ public class IngredientParser {
 
             Token operand = tokenizer.next();
             Expression rightExpr = new IngredientParser(this.tokenizer, precedence.right()).parse();
+            if(operand.type() == TokenType.ALTERNATIVE) {
+                rightExpr = new AlternativeExpression(rightExpr);
+            }
             leftExpr = new OperandExpression(operand, leftExpr, rightExpr);
-
             nextToken = tokenizer.peek();
         }
         return leftExpr;
@@ -45,8 +53,9 @@ public class IngredientParser {
 
     private Precedence get_precedence(Token token) throws Exception {
         String errorMessage = token.value() + " is from type " + token.type()
-                + " not TokenType.Operand. It has no precedence and should not appear at this position";
-        if(token.type() != TokenType.OPERAND) {
+                + " neither TokenType.OPERAND nor TokenType.ALTERNATIVE. " +
+                "It has no precedence and should not appear at this position";
+        if(token.type() != TokenType.OPERAND && token.type() != TokenType.ALTERNATIVE) {
             throw new Exception(errorMessage);
         }
 

@@ -9,5 +9,6 @@ public enum TokenType {
     OPEN_BRACKET,
     CLOSE_BRACKET,
     PREPOSITION,
+    ALTERNATIVE,
     OTHER
 }
