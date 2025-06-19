@@ -8,6 +8,6 @@ public enum TokenType {
     OPERAND,
     OPEN_BRACKET,
     CLOSE_BRACKET,
-    BINDING_PREPOSITION,
+    PREPOSITION,
     OTHER
 }
