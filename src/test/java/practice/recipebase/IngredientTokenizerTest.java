@@ -2,8 +2,8 @@ package practice.recipebase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
-import practice.recipebase.misc.IngredientTokenizer;
-import practice.recipebase.misc.Token;
+import practice.recipebase.interpreter.IngredientTokenizer;
+import practice.recipebase.interpreter.Token;
 
 import java.util.List;
 
@@ -71,9 +71,26 @@ public class IngredientTokenizerTest {
         assertThat(endToken).isEqualTo(tokenizer.next());
     }
 
-
     @Test
     public void testToListSimple() {
+        IngredientTokenizer tokenizer = new IngredientTokenizer("3 diced potato");
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo("potato");
+        assertThat(tokens.get(1).value()).isEqualTo(" ");
+        assertThat(tokens.get(2).value()).isEqualTo("diced");
+        assertThat(tokens.get(3).value()).isEqualTo(" ");
+        assertThat(tokens.get(4).value()).isEqualTo("3");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.STATE);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(5);
+    }
+
+    @Test
+    public void testToListCommaOperand() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("3 medium onion, chopped");
         List<Token> tokens = tokenizer.toList();
 
