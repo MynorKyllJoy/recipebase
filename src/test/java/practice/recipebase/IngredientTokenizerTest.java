@@ -9,11 +9,74 @@ import java.util.List;
 
 public class IngredientTokenizerTest {
     @Test
+    public void testSize() {
+        IngredientTokenizer tokenizer = new IngredientTokenizer("3 medium onion, chopped");
+        assertThat(tokenizer.size()).isEqualTo(7);
+    }
+
+
+    @Test
+    public void testNext() {
+        IngredientTokenizer tokenizer = new IngredientTokenizer("1 carrot");
+        assertThat(tokenizer.size()).isEqualTo(3);
+
+        Token quantityToken = tokenizer.next();
+        assertThat(quantityToken.value()).isEqualTo("1");
+        assertThat(quantityToken.type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokenizer.size()).isEqualTo(2);
+
+        Token operandToken = tokenizer.next();
+        assertThat(operandToken.value()).isEqualTo(" ");
+        assertThat(operandToken.type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokenizer.size()).isEqualTo(1);
+
+        Token ingredientToken = tokenizer.next();
+        assertThat(ingredientToken.value()).isEqualTo("carrot");
+        assertThat(ingredientToken.type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokenizer.size()).isEqualTo(0);
+
+        Token endToken = tokenizer.next();
+        assertThat(endToken.type()).isEqualTo(TokenType.END);
+        assertThat(endToken.value()).isEqualTo("");
+        assertThat(tokenizer.size()).isEqualTo(0);
+    }
+
+
+    @Test
+    public void testPeek() {
+        IngredientTokenizer tokenizer = new IngredientTokenizer("1 carrot");
+
+        Token quantityToken = tokenizer.peek();
+        assertThat(quantityToken.value()).isEqualTo("1");
+        assertThat(quantityToken.type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokenizer.size()).isEqualTo(3);
+        assertThat(quantityToken).isEqualTo(tokenizer.next());
+
+        Token operandToken = tokenizer.peek();
+        assertThat(operandToken.value()).isEqualTo(" ");
+        assertThat(operandToken.type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokenizer.size()).isEqualTo(2);
+        assertThat(operandToken).isEqualTo(tokenizer.next());
+
+        Token ingredientToken = tokenizer.peek();
+        assertThat(ingredientToken.value()).isEqualTo("carrot");
+        assertThat(ingredientToken.type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokenizer.size()).isEqualTo(1);
+        assertThat(ingredientToken).isEqualTo(tokenizer.next());
+
+        Token endToken = tokenizer.peek();
+        assertThat(endToken.type()).isEqualTo(TokenType.END);
+        assertThat(endToken.value()).isEqualTo("");
+        assertThat(tokenizer.size()).isEqualTo(0);
+        assertThat(endToken).isEqualTo(tokenizer.next());
+    }
+
+
+    @Test
     public void testToListSimple() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("3 medium onion, chopped");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.size()).isEqualTo(7);
         assertThat(tokens.get(0).value()).isEqualTo("chopped");
         assertThat(tokens.get(1).value()).isEqualTo(",");
         assertThat(tokens.get(2).value()).isEqualTo("onion");
@@ -28,6 +91,7 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(4).type()).isEqualTo(TokenType.STATE);
         assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(7);
     }
 
     @Test
@@ -35,7 +99,6 @@ public class IngredientTokenizerTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer("ginger, grated, 1\" knob");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.size()).isEqualTo(9);
         assertThat(tokens.get(0).value()).isEqualTo("knob");
         assertThat(tokens.get(1).value()).isEqualTo(" ");
         assertThat(tokens.get(2).value()).isEqualTo("\"");
@@ -54,6 +117,7 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.STATE);
         assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(8).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.size()).isEqualTo(9);
     }
 
     @Test
@@ -61,7 +125,6 @@ public class IngredientTokenizerTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer("100g pork sausage (chopped into small pieces)");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.size()).isEqualTo(8);
         assertThat(tokens.get(0).value()).isEqualTo(")");
         assertThat(tokens.get(1).value()).isEqualTo("chopped into small pieces");
         assertThat(tokens.get(2).value()).isEqualTo("(");
@@ -78,6 +141,7 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(5).type()).isEqualTo(TokenType.UNIT);
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(7).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(8);
     }
 
     @Test
@@ -85,7 +149,6 @@ public class IngredientTokenizerTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1 medium onion (140g)");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.size()).isEqualTo(10);
         assertThat(tokens.get(0).value()).isEqualTo(")");
         assertThat(tokens.get(1).value()).isEqualTo("g");
         assertThat(tokens.get(2).value()).isEqualTo(" ");
@@ -106,6 +169,7 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(7).type()).isEqualTo(TokenType.STATE);
         assertThat(tokens.get(8).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(9).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(10);
     }
 
     @Test
@@ -113,7 +177,6 @@ public class IngredientTokenizerTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1 medium red onion (140g) or white onion");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.size()).isEqualTo(12);
         assertThat(tokens.get(0).value()).isEqualTo("white onion");
         assertThat(tokens.get(1).value()).isEqualTo("or");
         assertThat(tokens.get(2).value()).isEqualTo(")");
@@ -138,6 +201,7 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(9).type()).isEqualTo(TokenType.STATE);
         assertThat(tokens.get(10).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(11).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(12);
     }
 
     @Test
@@ -145,7 +209,6 @@ public class IngredientTokenizerTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1 tbsp honey (substitute with 1.5 tbsp sugar)");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.size()).isEqualTo(15);
         assertThat(tokens.get(0).value()).isEqualTo(")");
         assertThat(tokens.get(1).value()).isEqualTo("sugar");
         assertThat(tokens.get(2).value()).isEqualTo(" ");
@@ -176,6 +239,7 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(12).type()).isEqualTo(TokenType.UNIT);
         assertThat(tokens.get(13).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(14).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(15);
     }
 
     @Test
@@ -183,7 +247,6 @@ public class IngredientTokenizerTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer("200g pork belly with skin scored crosswise into 1 inch cubes");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.size()).isEqualTo(13);
         assertThat(tokens.get(0).value()).isEqualTo("cubes");
         assertThat(tokens.get(1).value()).isEqualTo(" ");
         assertThat(tokens.get(2).value()).isEqualTo("inch");
@@ -210,15 +273,14 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(10).type()).isEqualTo(TokenType.UNIT);
         assertThat(tokens.get(11).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(12).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(13);
     }
 
     @Test
     public void testToListIgnorePreposition() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1/2 of an onion");
         List<Token> tokens = tokenizer.toList();
-        System.out.println(tokens);
 
-        assertThat(tokens.size()).isEqualTo(7);
         assertThat(tokens.get(0).value()).isEqualTo("onion");
         assertThat(tokens.get(1).value()).isEqualTo(" ");
         assertThat(tokens.get(2).value()).isEqualTo("an");
@@ -233,5 +295,6 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(4).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(7);
     }
 }
