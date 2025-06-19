@@ -1,7 +1,6 @@
 package practice.recipebase;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 import org.junit.jupiter.api.Test;
 import practice.recipebase.interpreter.Expression;

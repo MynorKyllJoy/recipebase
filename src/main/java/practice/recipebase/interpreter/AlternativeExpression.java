@@ -1,7 +1,7 @@
 package practice.recipebase.interpreter;
 
 public class AlternativeExpression implements Expression {
-    private Expression expression;
+    private final Expression expression;
 
     public AlternativeExpression(Expression expression) {
         this.expression = expression;
