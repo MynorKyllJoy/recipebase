@@ -17,7 +17,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListCommaOperand() throws Exception {
+    public void testParseCommaOperand() throws Exception {
         String ingredientString = "3 medium onion, chopped";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -25,7 +25,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListDifferentOrder() throws Exception {
+    public void testParseDifferentOrder() throws Exception {
         String ingredientString = "ginger, grated, 1\" knob";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -33,7 +33,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListBindingWord() throws Exception {
+    public void testParseBindingWord() throws Exception {
         String ingredientString = "100g pork sausage (chopped into small pieces)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -41,7 +41,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListBrackets() throws Exception {
+    public void testParseBrackets() throws Exception {
         String ingredientString = "1 medium onion (140g)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -49,7 +49,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListAlternativeIngredient() throws Exception {
+    public void testParseAlternativeIngredient() throws Exception {
         String ingredientString = "1 medium red onion (140g) or white onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -57,7 +57,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListPrepositionCombinePrev() throws Exception {
+    public void testParsePrepositionCombinePrev() throws Exception {
         String ingredientString = "1 tbsp honey (substitute with 1.5 tbsp sugar)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -65,7 +65,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListPrepositionCombinePrevAndNext() throws Exception {
+    public void testParsePrepositionCombinePrevAndNext() throws Exception {
         String ingredientString = "200g pork belly with skin scored crosswise into 1 inch cubes";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -74,7 +74,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testToListIgnorePreposition() throws Exception {
+    public void testParseIgnorePreposition() throws Exception {
         String ingredientString = "1/2 of an onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
