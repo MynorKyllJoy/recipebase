@@ -2,8 +2,7 @@ package practice.recipebase;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
-import practice.recipebase.interpreter.IngredientTokenizer;
-import practice.recipebase.interpreter.Token;
+import practice.recipebase.interpreter.*;
 
 import java.util.List;
 
@@ -353,5 +352,111 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.size()).isEqualTo(7);
+    }
+
+    @Test
+    public void testParseComplexAdditionalInfo() throws Exception {
+        String ingredientString = "400g peeled apple (14.1 ounces) or 500g peeled pear (17.6 ounces)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo(")");
+        assertThat(tokens.get(1).value()).isEqualTo("ounces");
+        assertThat(tokens.get(2).value()).isEqualTo(" ");
+        assertThat(tokens.get(3).value()).isEqualTo("6");
+        assertThat(tokens.get(4).value()).isEqualTo(".");
+        assertThat(tokens.get(5).value()).isEqualTo("17");
+        assertThat(tokens.get(6).value()).isEqualTo("(");
+        assertThat(tokens.get(7).value()).isEqualTo(" ");
+        assertThat(tokens.get(8).value()).isEqualTo("pear");
+        assertThat(tokens.get(9).value()).isEqualTo(" ");
+        assertThat(tokens.get(10).value()).isEqualTo("peeled");
+        assertThat(tokens.get(11).value()).isEqualTo(" ");
+        assertThat(tokens.get(12).value()).isEqualTo("g");
+        assertThat(tokens.get(13).value()).isEqualTo(" ");
+        assertThat(tokens.get(14).value()).isEqualTo("500");
+        assertThat(tokens.get(15).value()).isEqualTo("or");
+        assertThat(tokens.get(16).value()).isEqualTo(")");
+        assertThat(tokens.get(17).value()).isEqualTo("ounces");
+        assertThat(tokens.get(18).value()).isEqualTo(" ");
+        assertThat(tokens.get(19).value()).isEqualTo("1");
+        assertThat(tokens.get(20).value()).isEqualTo(".");
+        assertThat(tokens.get(21).value()).isEqualTo("14");
+        assertThat(tokens.get(22).value()).isEqualTo("(");
+        assertThat(tokens.get(23).value()).isEqualTo(" ");
+        assertThat(tokens.get(24).value()).isEqualTo("apple");
+        assertThat(tokens.get(25).value()).isEqualTo(" ");
+        assertThat(tokens.get(26).value()).isEqualTo("peeled");
+        assertThat(tokens.get(27).value()).isEqualTo(" ");
+        assertThat(tokens.get(28).value()).isEqualTo("g");
+        assertThat(tokens.get(29).value()).isEqualTo(" ");
+        assertThat(tokens.get(30).value()).isEqualTo("400");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.CLOSE_BRACKET);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.OPEN_BRACKET);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(8).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(9).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(10).type()).isEqualTo(TokenType.STATE);
+        assertThat(tokens.get(11).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(12).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(13).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(14).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(15).type()).isEqualTo(TokenType.ALTERNATIVE);
+        assertThat(tokens.get(16).type()).isEqualTo(TokenType.CLOSE_BRACKET);
+        assertThat(tokens.get(17).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(18).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(19).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(20).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(21).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(22).type()).isEqualTo(TokenType.OPEN_BRACKET);
+        assertThat(tokens.get(23).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(24).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(25).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(26).type()).isEqualTo(TokenType.STATE);
+        assertThat(tokens.get(27).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(28).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(29).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(30).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(31);
+    }
+
+    @Test
+    public void testParseSeriesOfAlternatives() throws Exception {
+        String ingredientString = "3.5 kg minced lamb or beef or chicken";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo("chicken");
+        assertThat(tokens.get(1).value()).isEqualTo("or");
+        assertThat(tokens.get(2).value()).isEqualTo("beef");
+        assertThat(tokens.get(3).value()).isEqualTo("or");
+        assertThat(tokens.get(4).value()).isEqualTo("lamb");
+        assertThat(tokens.get(5).value()).isEqualTo(" ");
+        assertThat(tokens.get(6).value()).isEqualTo("minced");
+        assertThat(tokens.get(7).value()).isEqualTo(" ");
+        assertThat(tokens.get(8).value()).isEqualTo("kg");
+        assertThat(tokens.get(9).value()).isEqualTo(" ");
+        assertThat(tokens.get(10).value()).isEqualTo("5");
+        assertThat(tokens.get(11).value()).isEqualTo(".");
+        assertThat(tokens.get(12).value()).isEqualTo("3");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.ALTERNATIVE);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.OTHER);;
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.ALTERNATIVE);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.STATE);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(8).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(9).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(10).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(11).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(12).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(13);
     }
 }
