@@ -63,7 +63,7 @@ public class IngredientParser {
         if(this.isIn(value, new String[]{"-", "/", "x", "."})) {
             return new Precedence(7, 6);
         } else if(value.equals(" ")) {
-            return new Precedence(5, 4);
+            return new Precedence(4, 5);
         } else if(value.equals(",")) {
             return new Precedence(3, 2);
         } else if(this.isIn(value, new String[]{"or", "use", "substitute"})) {
