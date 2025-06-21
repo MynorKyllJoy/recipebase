@@ -8,7 +8,9 @@ public class TerminalExpression implements Expression {
     }
 
     @Override
-    public String interpret() {
-        return this.token.value();
+    public InterpretedIngredient interpret() {
+        InterpretedIngredient ingredient = new InterpretedIngredient();
+        ingredient.setValue(token);
+        return ingredient;
     }
 }

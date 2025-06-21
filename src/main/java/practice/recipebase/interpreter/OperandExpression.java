@@ -1,5 +1,7 @@
 package practice.recipebase.interpreter;
 
+import practice.recipebase.TokenType;
+
 public class OperandExpression implements Expression {
     private final Token operand;
     private final Expression leftExpr;
@@ -12,7 +14,23 @@ public class OperandExpression implements Expression {
     }
 
     @Override
-    public String interpret() {
-        return leftExpr.interpret() + operand.value() + rightExpr.interpret();
+    public InterpretedIngredient interpret() {
+        InterpretedIngredient left = leftExpr.interpret();
+        InterpretedIngredient right = rightExpr.interpret();
+
+        // number handling
+        if(operand.value().equals(".") && left.amount != null && right.amount != null) {
+            // create float number, the amounts before combining should be integers
+            String combinedFloat = left.amount.intValue() + "." + right.amount.intValue();
+            left.setValue(new Token(combinedFloat, TokenType.QUANTITY));
+            right.setValue(new Token(null, TokenType.QUANTITY));
+        } else if(operand.value().equals("/")) {
+            // divide, the amounts before combining should be integers
+            float combinedFloat = left.amount / right.amount;
+            left.setValue(new Token(Float.toString(combinedFloat), TokenType.QUANTITY));
+            right.setValue(new Token(null, TokenType.QUANTITY));
+        }
+
+        return right.merge(left);
     }
 }
