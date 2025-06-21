@@ -19,14 +19,14 @@ public class OperandExpression implements Expression {
         InterpretedIngredient right = rightExpr.interpret();
 
         // number handling
-        if(operand.value().equals(".") && left.amount != null && right.amount != null) {
+        if(operand.value().equals(".") && left.getAmount() != null && right.getAmount() != null) {
             // create float number, the amounts before combining should be integers
-            String combinedFloat = left.amount.intValue() + "." + right.amount.intValue();
+            String combinedFloat = left.getAmount().intValue() + "." + right.getAmount().intValue();
             left.setValue(new Token(combinedFloat, TokenType.QUANTITY));
             right.setValue(new Token(null, TokenType.QUANTITY));
         } else if(operand.value().equals("/")) {
             // divide, the amounts before combining should be integers
-            float combinedFloat = left.amount / right.amount;
+            float combinedFloat = left.getAmount() / right.getAmount();
             left.setValue(new Token(Float.toString(combinedFloat), TokenType.QUANTITY));
             right.setValue(new Token(null, TokenType.QUANTITY));
         }

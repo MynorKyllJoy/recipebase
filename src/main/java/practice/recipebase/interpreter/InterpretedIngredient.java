@@ -10,12 +10,12 @@ import java.util.Set;
 
 @Getter
 public class InterpretedIngredient {
-    String name;
-    String unit;
-    Float amount;
-    Set<String> states;
-    List<InterpretedIngredient> additionalInfo;
-    List<InterpretedIngredient> alternativeIngredients;
+    private String name;
+    private String unit;
+    private Float amount;
+    private final Set<String> states;
+    private final List<InterpretedIngredient> additionalInfo;
+    private final List<InterpretedIngredient> alternativeIngredients;
 
     public InterpretedIngredient() {
         this.name = null;
@@ -40,10 +40,15 @@ public class InterpretedIngredient {
 
     public InterpretedIngredient merge(InterpretedIngredient ingredient) {
         if(this.hasOverlap(this.name, ingredient.name)) {
+            // if the overlap is in the name, it has to be an alternative ingredient
             this.alternativeIngredients.add(ingredient);
-        } else if(this.hasOverlap(this.unit, ingredient.unit) || this.hasOverlap(this.amount, ingredient.amount)) {
+        } else if(this.hasOverlap(this.amount, ingredient.amount)) {
+            // if there is an overlap in amount, it is additional information
+            // it should not be possible for unit overlap to occur, unless an amount exists
+            // since the parse should always merge the unit with its respective amount first
             this.additionalInfo.add(ingredient);
         } else {
+            // no overlap, so merge
             this.name = this.getValueOrNull(this.name, ingredient.name);
             this.unit = this.getValueOrNull(this.unit, ingredient.unit);
             this.amount = this.getValueOrNull(this.amount, ingredient.amount);
