@@ -30,7 +30,9 @@ public class OperandExpression implements Expression {
             left.setValue(new Token(Float.toString(combinedFloat), TokenType.QUANTITY));
             right.setValue(new Token(null, TokenType.QUANTITY));
         }
-
+        if(right.getName() == null) {
+            return left.merge(right);
+        }
         return right.merge(left);
     }
 }
