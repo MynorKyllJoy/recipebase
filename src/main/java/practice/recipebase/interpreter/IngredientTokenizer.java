@@ -48,10 +48,11 @@ public class IngredientTokenizer {
         reversedTokens.add(this.createToken(patterns.getFirst()));
         int index = 1;
 
+        // TODO: Shorten the loop, its too long and too spaghetti
         while(index < patterns.size()) {
             Token prevToken = reversedTokens.getLast();
             Token currToken = this.createToken(patterns.get(index));
-            String combinedTerm = prevToken.value() + " " + currToken.value();
+            StringBuilder combinedTerm = new StringBuilder(prevToken.value()).append(" ").append(currToken.value());
 
             if(this.areOneTerm(prevToken.type(), currToken.type())) {
                 /*
@@ -59,7 +60,7 @@ public class IngredientTokenizer {
                  cannot happen with quantities due to regex, 1 1/2 in Unicode could become a problem though
                 */
                 reversedTokens.pop();
-                currToken = new Token(combinedTerm, currToken.type());
+                currToken = new Token(combinedTerm.toString(), currToken.type());
             } else if(currToken.type() == TokenType.PREPOSITION) {
                 Token nextToken = this.createToken(patterns.get(index+1));
                 if(prevToken.type() == nextToken.type()) {
@@ -68,17 +69,29 @@ public class IngredientTokenizer {
                      "pork belly" "with" "skin" -> "pork belly with skin"
                     */
                     reversedTokens.pop();
-                    combinedTerm += " " + nextToken.value();
-                    currToken = new Token(combinedTerm, prevToken.type());
+                    combinedTerm.append(" ").append(nextToken.value());
+                    currToken = new Token(combinedTerm.toString(), prevToken.type());
                     index += 1;
+                } else if(prevToken.type() == TokenType.STATE) {
+                    /*
+                     if it is not a quantity and prev token has different type than next
+                     preposition belongs to previous token "substitute" "with" "1" -> "substitute with" "1"
+                    */
+                    reversedTokens.pop();
+                    while (nextToken.type() != currToken.type() && index < patterns.size()-1) {
+                        nextToken = this.createToken(patterns.get(index+1));
+                        combinedTerm.append(" ").append(nextToken.value());
+                        index += 1;
+                    }
+                    currToken = new Token(combinedTerm.toString(), prevToken.type());
                 } else if(prevToken.type() != TokenType.QUANTITY) {
                     /*
                      if it is not a quantity and prev token has different type than next
                      preposition belongs to previous token "substitute" "with" "1" -> "substitute with" "1"
                     */
                     reversedTokens.pop();
-                    currToken = new Token(combinedTerm, prevToken.type());
-                } else {
+                    currToken = new Token(combinedTerm.toString(), prevToken.type());
+                }  else {
                     // if prev token is quantity, replace with space: "2" "of" -> "2" " "
                     currToken = new Token(" ", TokenType.OPERAND);
                 }
@@ -89,7 +102,6 @@ public class IngredientTokenizer {
             reversedTokens.add(currToken);
             index += 1;
         }
-
         this.tokens = new Stack<>();
         this.tokens.addAll(reversedTokens.reversed());
     }
