@@ -294,33 +294,21 @@ public class IngredientTokenizerTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer("200g pork belly with skin scored crosswise into 1 inch cubes");
         List<Token> tokens = tokenizer.toList();
 
-        assertThat(tokens.get(0).value()).isEqualTo("cubes");
+        assertThat(tokens.get(0).value()).isEqualTo("scored crosswise into 1 inch cubes");
         assertThat(tokens.get(1).value()).isEqualTo(" ");
-        assertThat(tokens.get(2).value()).isEqualTo("inch");
+        assertThat(tokens.get(2).value()).isEqualTo("pork belly with skin");
         assertThat(tokens.get(3).value()).isEqualTo(" ");
-        assertThat(tokens.get(4).value()).isEqualTo("1");
+        assertThat(tokens.get(4).value()).isEqualTo("g");
         assertThat(tokens.get(5).value()).isEqualTo(" ");
-        assertThat(tokens.get(6).value()).isEqualTo("scored crosswise into");
-        assertThat(tokens.get(7).value()).isEqualTo(" ");
-        assertThat(tokens.get(8).value()).isEqualTo("pork belly with skin");
-        assertThat(tokens.get(9).value()).isEqualTo(" ");
-        assertThat(tokens.get(10).value()).isEqualTo("g");
-        assertThat(tokens.get(11).value()).isEqualTo(" ");
-        assertThat(tokens.get(12).value()).isEqualTo("200");
+        assertThat(tokens.get(6).value()).isEqualTo("200");
         assertThat(tokens.get(0).type()).isEqualTo(TokenType.STATE);
         assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(2).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.OTHER);
         assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(4).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.UNIT);
         assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(6).type()).isEqualTo(TokenType.STATE);
-        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(8).type()).isEqualTo(TokenType.OTHER);
-        assertThat(tokens.get(9).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(10).type()).isEqualTo(TokenType.UNIT);
-        assertThat(tokens.get(11).type()).isEqualTo(TokenType.OPERAND);
-        assertThat(tokens.get(12).type()).isEqualTo(TokenType.QUANTITY);
-        assertThat(tokens.size()).isEqualTo(13);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(7);
     }
 
     @Test

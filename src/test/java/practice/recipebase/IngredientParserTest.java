@@ -1,7 +1,6 @@
 package practice.recipebase;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 import org.junit.jupiter.api.Test;
 import practice.recipebase.interpreter.Expression;
@@ -160,15 +159,13 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         InterpretedIngredient ingredient = parser.interpret();
-        InterpretedIngredient additionalInfo = ingredient.getAdditionalInfo().getFirst();
 
-        // maybe state and binding word should be after next state reached???
         assertThat(ingredient.getName()).isEqualTo("pork belly with skin");
         assertThat(ingredient.getStates().contains("scored crosswise into 1 inch cubes")).isTrue();
         assertThat(ingredient.getUnit()).isEqualTo("g");
         assertThat(ingredient.getAmount()).isEqualTo(200);
         assertThat(ingredient.getAdditionalInfo().isEmpty()).isTrue();
-        assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
     }
 
     @Test
