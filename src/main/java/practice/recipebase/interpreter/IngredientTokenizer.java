@@ -84,16 +84,13 @@ public class IngredientTokenizer {
                         index += 1;
                     }
                     currToken = new Token(combinedTerm.toString(), prevToken.type());
-                } else if(prevToken.type() != TokenType.QUANTITY) {
-                    /*
-                     if it is not a quantity and prev token has different type than next
-                     preposition belongs to previous token "substitute" "with" "1" -> "substitute with" "1"
-                    */
-                    reversedTokens.pop();
-                    currToken = new Token(combinedTerm.toString(), prevToken.type());
-                }  else {
+                } else if(prevToken.type() == TokenType.QUANTITY) {
                     // if prev token is quantity, replace with space: "2" "of" -> "2" " "
                     currToken = new Token(" ", TokenType.OPERAND);
+                } else {
+                    // skip preposition
+                    currToken = nextToken;
+                    index += 1;
                 }
             } else if(this.needsPrecedingSpaceOperand(prevToken.type(), currToken.type())) {
                 // if there is no operand between tokens of different types, add space as operand
