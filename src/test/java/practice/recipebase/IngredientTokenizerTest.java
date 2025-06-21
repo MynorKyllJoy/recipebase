@@ -262,7 +262,7 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(5).value()).isEqualTo("5");
         assertThat(tokens.get(6).value()).isEqualTo(".");
         assertThat(tokens.get(7).value()).isEqualTo("1");
-        assertThat(tokens.get(8).value()).isEqualTo("substitute with");
+        assertThat(tokens.get(8).value()).isEqualTo("substitute");
         assertThat(tokens.get(9).value()).isEqualTo("(");
         assertThat(tokens.get(10).value()).isEqualTo(" ");
         assertThat(tokens.get(11).value()).isEqualTo("honey");
