@@ -1,6 +1,7 @@
 package practice.recipebase.interpreter;
 
 import practice.recipebase.TokenType;
+import practice.recipebase.exceptions.WrongTokenTypeException;
 
 public class IngredientParser {
     private final IngredientTokenizer tokenizer;
@@ -13,11 +14,11 @@ public class IngredientParser {
     }
 
 
-    public Expression parse() throws Exception {
+    public Expression parse() throws WrongTokenTypeException {
         Token firstToken = this.tokenizer.next();
 
         if(firstToken.type() == TokenType.OPERAND || firstToken.type() == TokenType.ALTERNATIVE) {
-            throw new Exception(firstToken.value() + " is " + firstToken.type() + " and should not come first.");
+            throw new WrongTokenTypeException(firstToken.value() + " is " + firstToken.type() + " and should not come first.");
         }
         Expression leftExpr = new TerminalExpression(firstToken);
 
@@ -35,7 +36,7 @@ public class IngredientParser {
 
         Token nextToken = this.tokenizer.peek();
         while(nextToken.type() != TokenType.END && nextToken.type() != TokenType.CLOSE_BRACKET) {
-            Precedence precedence = this.get_precedence(nextToken);
+            Precedence precedence = this.getPrecedence(nextToken);
             if(precedence.left() < this.minPrecedence)
                 break;
 
@@ -51,12 +52,11 @@ public class IngredientParser {
     }
 
 
-    private Precedence get_precedence(Token token) throws Exception {
-        String errorMessage = token.value() + " is from type " + token.type()
-                + " neither TokenType.OPERAND nor TokenType.ALTERNATIVE. " +
-                "It has no precedence and should not appear at this position";
+    private Precedence getPrecedence(Token token) throws WrongTokenTypeException {
         if(token.type() != TokenType.OPERAND && token.type() != TokenType.ALTERNATIVE) {
-            throw new Exception(errorMessage);
+            throw new WrongTokenTypeException(token.value() + " is from type " + token.type()
+                    + " neither TokenType.OPERAND nor TokenType.ALTERNATIVE. " +
+                    "It has no precedence and should not appear at this position");
         }
 
         String value = token.value();
@@ -69,7 +69,10 @@ public class IngredientParser {
         } else if(this.isIn(value, new String[]{"or", "use", "substitute"})) {
             return new Precedence(0, 1);
         } else {
-            throw new Exception(errorMessage);
+            throw new WrongTokenTypeException(
+                    "The token has correct type of " + token.type() + " but the value '"
+                    + token.value() + "' should not have this type!"
+            );
         }
     }
 
