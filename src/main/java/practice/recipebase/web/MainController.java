@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.service.RecipeService;
@@ -35,8 +36,10 @@ public class MainController {
             model.addAttribute("recipe", scrapedRecipe);
             return "showScrapedRecipe";
         } catch (IOException | WrongTokenTypeException ex) {
-            System.out.println(ex);
             return "index";
+        } catch (RecipeAlreadyExistsException e) {
+            model.addAttribute(e.getMessage());
+            return "error";
         }
     }
 }
