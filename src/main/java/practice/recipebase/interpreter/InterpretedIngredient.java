@@ -2,6 +2,8 @@ package practice.recipebase.interpreter;
 
 import lombok.Getter;
 import practice.recipebase.TokenType;
+import practice.recipebase.model.Ingredient;
+import practice.recipebase.model.Requirement;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,7 +16,7 @@ public class InterpretedIngredient {
     private String unit;
     private Float amount;
     private final Set<String> states;
-    private final List<InterpretedIngredient> additionalInfo;
+    private final List<Measurement> alternativeMeasurements;
     private final List<InterpretedIngredient> alternativeIngredients;
 
     public InterpretedIngredient() {
@@ -22,7 +24,7 @@ public class InterpretedIngredient {
         this.unit = null;
         this.amount = null;
         this.states = new HashSet<>();
-        this.additionalInfo = new ArrayList<>();
+        this.alternativeMeasurements = new ArrayList<>();
         this.alternativeIngredients = new ArrayList<>();
     }
 
@@ -46,7 +48,7 @@ public class InterpretedIngredient {
             // if there is an overlap in amount, it is additional information
             // it should not be possible for unit overlap to occur, unless an amount exists
             // since the parse should always merge the unit with its respective amount first
-            this.additionalInfo.add(ingredient);
+            this.alternativeMeasurements.add(new Measurement(ingredient.unit, ingredient.amount));
         } else {
             // no overlap, so merge
             this.name = this.getValueOrNull(this.name, ingredient.name);
@@ -54,7 +56,7 @@ public class InterpretedIngredient {
             this.amount = this.getValueOrNull(this.amount, ingredient.amount);
             this.states.addAll(ingredient.states);
             this.alternativeIngredients.addAll(ingredient.alternativeIngredients);
-            this.additionalInfo.addAll(ingredient.additionalInfo);
+            this.alternativeMeasurements.addAll(ingredient.alternativeMeasurements);
         }
         return this;
     }
@@ -62,6 +64,23 @@ public class InterpretedIngredient {
     public InterpretedIngredient addAlternativeIngredient(InterpretedIngredient alternativeIngredient) {
         this.alternativeIngredients.add(alternativeIngredient);
         return this;
+    }
+
+    public List<Requirement> getRequirements() {
+        List<Requirement> requirements = new ArrayList<>();
+        requirements.add(new Requirement(null, this.states, this.unit, this.amount, new Ingredient(this.name)));
+
+        for(Measurement measurement : this.alternativeMeasurements) {
+            requirements.add(new Requirement(
+                    null, this.states, measurement.unit(), measurement.amount(), new Ingredient(this.name)
+            ));
+        }
+
+        for(InterpretedIngredient altIngredient : this.alternativeIngredients) {
+            requirements.addAll(altIngredient.getRequirements());
+        }
+
+        return requirements;
     }
 
     private Float setAmount(String value) {

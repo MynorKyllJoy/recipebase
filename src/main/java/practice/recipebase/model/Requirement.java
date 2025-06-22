@@ -8,6 +8,8 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,8 +17,10 @@ import org.springframework.data.neo4j.core.schema.TargetNode;
 public class Requirement {
     @Id @GeneratedValue
     private Long id;
-    private float amount;
-    private String state;
+    private Set<String> states;
+    private String unit;
+    private Float amount;
     @TargetNode
     Ingredient ingredient;
+
 }
