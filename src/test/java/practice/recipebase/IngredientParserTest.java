@@ -283,6 +283,27 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
     }
 
+
+    @Test
+    public void testParseMultipleMeasurements() throws WrongTokenTypeException {
+        String ingredientString = "1 apple (200g, 7oz)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        InterpretedIngredient ingredient = parser.interpret();
+        Measurement altMeasurementGrams = ingredient.getAlternativeMeasurements().get(0);
+
+        assertThat(ingredient.getName()).isEqualTo("apple");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeMeasurements().size()).isEqualTo(2);
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
+
+        assertThat(altMeasurementGrams.amount()).isEqualTo(200);
+        assertThat(altMeasurementGrams.unit()).isEqualTo("g");
+    }
+
+
     @Test
     public void testParseIncorrectTokenTypeOrderOperandException() {
         String ingredientString = ", fail";
