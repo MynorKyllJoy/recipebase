@@ -4,12 +4,21 @@
     - [] Proper exception handling in controllers
 - [] Ingredient-Recipe-Relationship
     - [x] Extract quantities, states, alternatives, and additional information from scrapes ingredient listings.
-    - [] Integrate Requirement relationship class into Recipe and Ingredient
+    - [x] Integrate Requirement relationship class into Recipe and Ingredient
+    - [] A recipe can be an ingredient too (like bread), inheritance?
+    - [] Superclasses? Sugar as super class for white and brown sugar?
 - [] Data access
     - [x] integrate neo4j database into spring application
-    - [] save recipes and ingredients in database
+    - [x] save recipes and ingredients in database
     - [x] add repositories
     - [] add query with quantity condition
+- [] interpreter
+    - [] IngredientCleaner
+      - [] remove and "or more", "about", "around"
+      - [] handle something like: "pork shoulder or belly", so there is no ingredient with just belly
+      - [] handle something like: "a combination of x and y"
+      - [] throw exception if ingredient has no name
+      - [] ugly fractions: 1 1/2 etc.
 - [] Additional Features
     - [] Upload/Create own recipes
     - [] Search recipes via list of ingredients and quantities
