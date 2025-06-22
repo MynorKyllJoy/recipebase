@@ -66,7 +66,7 @@ public class IngredientParser {
             return new Precedence(4, 5);
         } else if(value.equals(",")) {
             return new Precedence(3, 2);
-        } else if(this.isIn(value, new String[]{"or", "use", "substitute"})) {
+        } else if(this.isIn(value, new String[]{"or", "use", "substitute", "plus"})) {
             return new Precedence(0, 1);
         } else {
             throw new WrongTokenTypeException(

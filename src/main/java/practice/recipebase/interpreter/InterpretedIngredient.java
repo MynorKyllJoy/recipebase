@@ -49,6 +49,7 @@ public class InterpretedIngredient {
             // it should not be possible for unit overlap to occur, unless an amount exists
             // since the parse should always merge the unit with its respective amount first
             this.alternativeMeasurements.add(new Measurement(ingredient.unit, ingredient.amount));
+            this.alternativeMeasurements.addAll(ingredient.getAlternativeMeasurements());
         } else {
             // no overlap, so merge
             this.name = this.getValueOrNull(this.name, ingredient.name);

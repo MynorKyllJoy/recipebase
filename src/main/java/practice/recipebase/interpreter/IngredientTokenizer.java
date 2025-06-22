@@ -22,10 +22,11 @@ public class IngredientTokenizer {
     private Stack<Token> tokens;
     // temporary list of constants, create a database later or a separate static constant class
     private final String[] STATES = {
+            // hyphens are used here, not minus
             "julienned", "smashed", "minced", "peeled", "sieved", "regular",
             "washed", "drained", "shelled", "grated", "pounded", "chopped", "scored",
-            "thawed", "frozen", "(well_)?fermented", "(hard_|soft_)?boiled", "hal(ved|f)", "(de)?seed(ded|less)",
-            "bone(less|_in)", "cube(d|s)?", "dr(y|ied)?", "can(ned|s)?", "dice(d|s)?", "slice(d|s)?",
+            "thawed", "frozen", "(well‐)?fermented", "(hard‐|soft‐)?boiled", "hal(ved|f)", "(de)?seed(ded|less)",
+            "bone(less|‐in)", "cube(d|s)?", "dr(y|ied)?", "can(ned|s)?", "dice(d|s)?", "slice(d|s)?",
             "thick(ly)?", "thin(ly)?", "rough(ly)?", "fine(ly)?", "crosswise", "optional", "cut",
             "bite_size", "matchsticks", "chunks", "small", "medium", "large", "pieces", "knob",
     };
@@ -35,9 +36,9 @@ public class IngredientTokenizer {
             "ounce(s)?", "oz", "pound(s)?", "lb", "(kilo)?gram(s)?", "(k)?g",
             "inch(es)?", "spoonful(s)?", "sprinkle(s)?", "drizzle", "a", "an", "some", "more"
     };
-    private final String[] PREPOSITION = {"in", "into", "with", "of", "across", "on"};
-    private final String[] OPERANDS = {"-", "/", ".", "x", ",", " ", "plus", "and"};
-    private final String[] ALTERNATIVE = {"or", "use", "substitute"};
+    private final String[] PREPOSITION = {"in", "into", "with", "of", "across", "on", "and"};
+    private final String[] OPERANDS = {"-", "/", ".", "x", ",", " "};
+    private final String[] ALTERNATIVE = {"or", "use", "substitute", "plus"};
     private final String[] OPEN_BRACKETS = {"(", "[", "{"};
     private final String[] CLOSE_BRACKET = {")", "]", "}"};
 
@@ -84,7 +85,7 @@ public class IngredientTokenizer {
                         index += 1;
                     }
                     currToken = new Token(combinedTerm.toString(), prevToken.type());
-                } else if(prevToken.type() == TokenType.QUANTITY) {
+                } else if(prevToken.type() == TokenType.QUANTITY || prevToken.type() == TokenType.UNIT) {
                     // if prev token is quantity, replace with space: "2" "of" -> "2" " "
                     currToken = new Token(" ", TokenType.OPERAND);
                 } else {
@@ -133,7 +134,8 @@ public class IngredientTokenizer {
 
     private List<String> getPatterns(String ingredientData) {
         ingredientData = ingredientData.toLowerCase();
-        Pattern pattern = Pattern.compile("[A-Za-z_]+|[0-9]+|\\S");
+        // the special character in A-Za-z‐ is a hyphen, which looks nearly indistinguishable to a minus -
+        Pattern pattern = Pattern.compile("[A-Za-z‐]+|[0-9]+|\\S");
         Matcher matcher = pattern.matcher(ingredientData);
         List<String> ingredients = new ArrayList<>();
 
