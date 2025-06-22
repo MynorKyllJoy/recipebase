@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import practice.recipebase.model.Ingredient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,12 +74,11 @@ public class ScrapedRecipe extends RecipeTemplate {
     }
 
     @Override
-    List<Ingredient> getIngredients() throws IOException {
+    List<String> getIngredientInfos() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode ingredientNode = this.recipeNode.get("recipeIngredient");
         TypeReference<List<String>> typeRef = new TypeReference<>() {};
-        List<String> ingredientStrings = mapper.readValue(ingredientNode.traverse(), typeRef);
-        return ingredientStrings.stream().map(Ingredient::new).toList();
+        return mapper.readValue(ingredientNode.traverse(), typeRef);
     }
 
     @Override

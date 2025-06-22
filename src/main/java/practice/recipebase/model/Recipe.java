@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.List;
 
@@ -19,15 +20,16 @@ public class Recipe {
     private String title;
     private String description;
     private String source;
-    private List<Ingredient> ingredients;
     private List<String> instructions;
+    @Relationship(type="REQUIREMENT", direction=Relationship.Direction.OUTGOING)
+    private List<Requirement> requiredIngredients;
 
     public Recipe(String title, String description, String source,
-                  List<Ingredient> ingredients, List<String> instructions) {
+                  List<Requirement> requiredIngredients, List<String> instructions) {
         this.title = title;
         this.description = description;
         this.source = source;
-        this.ingredients = ingredients;
         this.instructions = instructions;
+        this.requiredIngredients = requiredIngredients;
     }
 }

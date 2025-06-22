@@ -2,6 +2,7 @@ package practice.recipebase.service;
 
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Service;
+import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.misc.RecipeSiteRequestAdapter;
 import practice.recipebase.misc.ScrapedRecipe;
 import practice.recipebase.model.Recipe;
@@ -10,9 +11,12 @@ import java.io.IOException;
 
 @Service
 public class RecipeService {
-    public Recipe getRecipeMetaData(String URL) throws IOException {
+    public Recipe getRecipeMetaData(String URL) throws IOException, WrongTokenTypeException {
         Document recipeSite = RecipeSiteRequestAdapter.getRecipeSite(URL);
         ScrapedRecipe scrapedRecipe = new ScrapedRecipe(recipeSite, URL);
         return scrapedRecipe.createRecipe();
+    }
+
+    public void save(Recipe scrapedRecipe) {
     }
 }
