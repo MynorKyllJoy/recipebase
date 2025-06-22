@@ -42,6 +42,7 @@ abstract class RecipeTemplate {
                     .replaceSlashesNextToWordsWithComma()
                     .enumerationCommaToOr()
                     .useHyphenForWords() // add hyphen as Unicode character
+                    .replaceToWithMinusForRanges()
                     .getCleanedIngredient();
             cleanedIngredients.add(cleanedInfo);
         }

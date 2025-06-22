@@ -107,4 +107,10 @@ public class IngredientCleaner {
         this.cleanedIngredient = slashBeforeWord.matcher(this.cleanedIngredient).replaceAll(",");
         return this;
     }
+
+    public IngredientCleaner replaceToWithMinusForRanges() {
+        Pattern slashAfterWord = Pattern.compile("(?<=[0-9]) to (?=[0-9])");
+        this.cleanedIngredient = slashAfterWord.matcher(this.cleanedIngredient).replaceAll("-");
+        return this;
+    }
 }
