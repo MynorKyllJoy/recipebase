@@ -33,7 +33,7 @@ public class IngredientParserTest {
         assertThat(ingredient.getName()).isEqualTo("onion");
         assertThat(ingredient.getStates().contains("chopped")).isTrue();
         assertThat(ingredient.getStates().contains("medium")).isTrue();
-        assertThat(ingredient.getStates().size()).isEqualTo(2);;
+        assertThat(ingredient.getStates().size()).isEqualTo(2);
         assertThat(ingredient.getUnit()).isEqualTo(null);
         assertThat(ingredient.getAmount()).isEqualTo(3);
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
@@ -291,6 +291,7 @@ public class IngredientParserTest {
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         InterpretedIngredient ingredient = parser.interpret();
         Measurement altMeasurementGrams = ingredient.getAlternativeMeasurements().get(0);
+        Measurement altMeasurementOunces = ingredient.getAlternativeMeasurements().get(1);
 
         assertThat(ingredient.getName()).isEqualTo("apple");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
@@ -301,6 +302,29 @@ public class IngredientParserTest {
 
         assertThat(altMeasurementGrams.amount()).isEqualTo(200);
         assertThat(altMeasurementGrams.unit()).isEqualTo("g");
+
+        assertThat(altMeasurementOunces.amount()).isEqualTo(7);
+        assertThat(altMeasurementOunces.unit()).isEqualTo("oz");
+    }
+
+
+    @Test
+    public void testParseMeasurementRange() throws WrongTokenTypeException {
+        String ingredientString = "1-3 apples";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        InterpretedIngredient ingredient = parser.interpret();
+        Measurement altMeasurement = ingredient.getAlternativeMeasurements().getFirst();
+
+        assertThat(ingredient.getName()).isEqualTo("apples");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeMeasurements().size()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
+
+        assertThat(altMeasurement.amount()).isEqualTo(3);
+        assertThat(altMeasurement.unit()).isEqualTo(null);
     }
 
 
