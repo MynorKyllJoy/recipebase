@@ -7,15 +7,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
- In many recipes the ingredient list often contains additional information like
- how the ingredient is supposed to be chopped or potential substitutes.
- There is little consistency on how these additional information is written down within a single website
- let alone between different websites.
- This tokenizer and its respective parser attempt to extract the necessary information.
- The tokenizer tries to put each word/symbol in a category, so the parser can properly sort the information.
+ In many recipes the ingredient list often contains additional information like how cut the ingredient or substitutes.
+ There is little consistency on how these additions is written down within a recipe let alone between websites.
+ The tokenizer attempts to extract and categorize each word adn symbol.
  The output of the tokenizer should have a similar structure to a math term.
- No operands at the beginning, end or following each other. No two other tokens types without an operand inbetween
- unless they are brackets. Brackets work like they would in math.
+ No (alternative) operands at the beginning, end or following each other.
+ No two other tokens types without an (alternative) operand in between unless they are brackets.
+ Brackets work like they would in math.
 */
 
 public class IngredientTokenizer {
@@ -36,8 +34,9 @@ public class IngredientTokenizer {
 
             if(this.areOneTerm(prevToken.type(), currToken.type())) {
                 /*
-                 if they aren't brackets, combine two tokens of same type into one: "garlic" "clove" -> "garlic clove"
-                 cannot happen with quantities due to regex, 1 1/2 in Unicode could become a problem though
+                 if pattern aren't brackets, combine two tokens of same type into one: "garlic"+"clove"->"garlic clove"
+                 cannot happen with quantities due to regex,
+                 ERROR: 1 ½ and 1½ in Unicode could become a problem
                 */
                 reversedTokens.pop();
                 currToken = new Token(combinedTerm.toString(), currToken.type());
@@ -54,8 +53,9 @@ public class IngredientTokenizer {
                     index += 1;
                 } else if(prevToken.type() == TokenType.STATE) {
                     /*
-                     if it is not a quantity and prev token has different type than next
-                     preposition belongs to previous token "substitute" "with" "1" -> "substitute with" "1"
+                     If a preposition preceded by a state is followed by a non-state token, this token most likely
+                     belong to the state until the next state is reached, e.g.:
+                     cut into 4 quarters, scored crosswise into 1 inch cubes, etc.
                     */
                     reversedTokens.pop();
                     while (nextToken.type() != currToken.type() && index < patterns.size()-1) {
@@ -65,7 +65,7 @@ public class IngredientTokenizer {
                     }
                     currToken = new Token(combinedTerm.toString(), prevToken.type());
                 } else if(prevToken.type() == TokenType.QUANTITY || prevToken.type() == TokenType.UNIT) {
-                    // if prev token is quantity, replace with space: "2" "of" -> "2" " "
+                    // if prev token is quantity, replace with space: "1/2" "of" "an" "apple" -> "1/2" " " "an" "apple"
                     currToken = new Token(" ", TokenType.OPERAND);
                 } else {
                     // skip preposition
@@ -79,12 +79,18 @@ public class IngredientTokenizer {
             reversedTokens.add(currToken);
             index += 1;
         }
+        /*
+         We read from left to right, so the left most word is at the bottom and the right most is at the top.
+         Since we want to process the tokens from left to right, we need to reverse the stack, since the Stack works
+         with LIFO
+         */
         this.tokens = new Stack<>();
         this.tokens.addAll(reversedTokens.reversed());
     }
 
 
     public Token next() {
+        // removes the top token from the stack and returns it, or an END token if stack is empty
         try {
             return this.tokens.pop();
         } catch (EmptyStackException ex) {
@@ -94,6 +100,7 @@ public class IngredientTokenizer {
 
 
     public Token peek() {
+        // returns top token of the stack, or an END token if stack is empty
         try {
             return this.tokens.getLast();
         } catch (NoSuchElementException ex) {
@@ -113,7 +120,7 @@ public class IngredientTokenizer {
 
     private List<String> getPatterns(String ingredientData) {
         ingredientData = ingredientData.toLowerCase();
-        // the special character in A-Za-z‐ is a hyphen, which looks nearly indistinguishable to a minus -
+        // the special character in [A-Za-z‐] is a hyphen, which looks nearly indistinguishable to a minus -
         Pattern pattern = Pattern.compile("[A-Za-z‐]+|[0-9]+|\\S");
         Matcher matcher = pattern.matcher(ingredientData);
         List<String> ingredients = new ArrayList<>();
@@ -121,7 +128,6 @@ public class IngredientTokenizer {
         while (matcher.find()) {
             ingredients.add(matcher.group());
         }
-
         return ingredients;
     }
 
@@ -135,12 +141,13 @@ public class IngredientTokenizer {
 
 
     private boolean areOneTerm(TokenType prevType, TokenType currType) {
-        // two tokens with same type (except brackets) are most likely one word
+        // two tokens with same type (except brackets) are one term
         return prevType == currType && currType != TokenType.OPEN_BRACKET && currType != TokenType.CLOSE_BRACKET;
     }
 
 
     private Token createToken(String pattern) {
+        // checks if the pattern is in a constant and returns a token with the appropriate type
         TokenType type = TokenType.OTHER;
 
         if(TypeConstants.isWordIn(pattern, TypeConstants.STATES)) {
