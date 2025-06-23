@@ -20,27 +20,6 @@ import java.util.regex.Pattern;
 
 public class IngredientTokenizer {
     private Stack<Token> tokens;
-    // temporary list of constants, create a database later or a separate static constant class
-    private final String[] STATES = {
-            // hyphens are used here, not minus
-            "julienned", "smashed", "minced", "peeled", "sieved", "regular",
-            "washed", "drained", "shelled", "grated", "pounded", "chopped", "scored",
-            "thawed", "frozen", "(well‐)?fermented", "(hard‐|soft‐)?boiled", "hal(ved|f)", "(de)?seed(ded|less)",
-            "bone(less|‐in)", "cube(d|s)?", "dr(y|ied)?", "can(ned|s)?", "dice(d|s)?", "slice(d|s)?",
-            "thick(ly)?", "thin(ly)?", "rough(ly)?", "fine(ly)?", "crosswise", "optional", "cut",
-            "bite_size", "matchsticks", "chunks", "small", "medium", "large", "pieces", "knob",
-    };
-    private final String[] UNITS = {
-            "tsp", "teaspoon(s)?", "tbsp", "tablespoon(s)?",
-            "(m)?l", "(mili)?lit(er|re)s?", "cc", "cup(s)?", "quart(s)?",
-            "ounce(s)?", "oz", "pound(s)?", "lb", "(kilo)?gram(s)?", "(k)?g",
-            "inch(es)?", "spoonful(s)?", "sprinkle(s)?", "drizzle", "a", "an", "some", "more"
-    };
-    private final String[] PREPOSITION = {"in", "into", "with", "of", "across", "on", "and"};
-    private final String[] OPERANDS = {"-", "/", ".", "x", ",", " "};
-    private final String[] ALTERNATIVE = {"or", "use", "substitute", "plus"};
-    private final String[] OPEN_BRACKETS = {"(", "[", "{"};
-    private final String[] CLOSE_BRACKET = {")", "]", "}"};
 
     public IngredientTokenizer(String ingredientData) {
         // Split the ingredient information into whole words, numbers and special characters
@@ -164,61 +143,23 @@ public class IngredientTokenizer {
     private Token createToken(String pattern) {
         TokenType type = TokenType.OTHER;
 
-        if(this.isState(pattern)) {
+        if(TypeConstants.isWordIn(pattern, TypeConstants.STATES)) {
             type = TokenType.STATE;
-        } else if(this.isUnit(pattern)) {
+        } else if(TypeConstants.isWordIn(pattern, TypeConstants.UNITS) || pattern.equals("\"")) {
             type = TokenType.UNIT;
-        } else if(this.isQuantity(pattern)) {
+        } else if(TypeConstants.isQuantity(pattern)) {
             type = TokenType.QUANTITY;
-        } else if(this.isIn(pattern, this.ALTERNATIVE)) {
+        } else if(TypeConstants.isPatternIn(pattern, TypeConstants.ALTERNATIVE)) {
             type = TokenType.ALTERNATIVE;
-        } else if(this.isIn(pattern, this.OPERANDS)) {
+        } else if(TypeConstants.isPatternIn(pattern, TypeConstants.OPERANDS)) {
             type = TokenType.OPERAND;
-        }  else if(this.isIn(pattern, this.OPEN_BRACKETS)) {
+        }  else if(TypeConstants.isPatternIn(pattern, TypeConstants.OPEN_BRACKETS)) {
             type = TokenType.OPEN_BRACKET;
-        } else if(this.isIn(pattern, this.CLOSE_BRACKET)) {
+        } else if(TypeConstants.isPatternIn(pattern, TypeConstants.CLOSE_BRACKET)) {
             type = TokenType.CLOSE_BRACKET;
-        } else if(this.isIn(pattern, this.PREPOSITION)) {
+        } else if(TypeConstants.isPatternIn(pattern, TypeConstants.PREPOSITION)) {
             type = TokenType.PREPOSITION;
         }
         return new Token(pattern, type);
-    }
-
-
-    private boolean isState(String tokenPattern) {
-        for(String state : this.STATES) {
-            Matcher matcher = Pattern.compile("\\b" + state + "\\b").matcher(tokenPattern);
-            if(matcher.find()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    private boolean isUnit(String tokenPattern) {
-        for(String unit : this.UNITS) {
-            Matcher matcher = Pattern.compile("\\b" + unit + "\\b").matcher(tokenPattern);
-            if(matcher.find()) {
-                return true;
-            }
-        }
-        // There is a problem with quotation marks in regex, so this is currently done separately
-        return tokenPattern.equals("\"");
-    }
-
-
-    private boolean isQuantity(String tokenPattern) {
-        Pattern regexNumber = Pattern.compile("[0-9]+");
-        return regexNumber.matcher(tokenPattern).find();
-    }
-
-    private boolean isIn(String tokenPattern, String[] constantArray) {
-        for(String word : constantArray) {
-            if(tokenPattern.equals(word)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
