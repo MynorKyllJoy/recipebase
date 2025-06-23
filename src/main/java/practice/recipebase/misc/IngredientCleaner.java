@@ -1,4 +1,4 @@
-package practice.recipebase.interpreter;
+package practice.recipebase.misc;
 
 import lombok.Getter;
 
