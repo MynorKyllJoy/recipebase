@@ -1,7 +1,6 @@
 package practice.recipebase.misc;
 
 import practice.recipebase.exceptions.WrongTokenTypeException;
-import practice.recipebase.interpreter.IngredientCleaner;
 import practice.recipebase.interpreter.IngredientParser;
 import practice.recipebase.interpreter.IngredientTokenizer;
 import practice.recipebase.model.Recipe;

@@ -14,9 +14,9 @@ public class OperandExpression implements Expression {
     }
 
     @Override
-    public InterpretedIngredient interpret() {
-        InterpretedIngredient left = leftExpr.interpret();
-        InterpretedIngredient right = rightExpr.interpret();
+    public IngredientRequirements interpret() {
+        IngredientRequirements left = leftExpr.interpret();
+        IngredientRequirements right = rightExpr.interpret();
 
         // number handling
         if(operand.value().equals(".") && left.getAmount() != null && right.getAmount() != null) {

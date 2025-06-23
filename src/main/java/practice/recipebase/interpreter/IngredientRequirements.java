@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Set;
 
 @Getter
-public class InterpretedIngredient {
+public class IngredientRequirements {
     private String name;
     private String unit;
     private Float amount;
     private final Set<String> states;
     private final List<Measurement> alternativeMeasurements;
-    private final List<InterpretedIngredient> alternativeIngredients;
+    private final List<IngredientRequirements> alternativeIngredients;
 
-    public InterpretedIngredient() {
+    public IngredientRequirements() {
         this.name = null;
         this.unit = null;
         this.amount = null;
@@ -40,7 +40,7 @@ public class InterpretedIngredient {
         }
     }
 
-    public InterpretedIngredient merge(InterpretedIngredient ingredient) {
+    public IngredientRequirements merge(IngredientRequirements ingredient) {
         if(this.hasOverlap(this.name, ingredient.name)) {
             // if the overlap is in the name, it has to be an alternative ingredient
             this.alternativeIngredients.add(ingredient);
@@ -62,7 +62,7 @@ public class InterpretedIngredient {
         return this;
     }
 
-    public InterpretedIngredient addAlternativeIngredient(InterpretedIngredient alternativeIngredient) {
+    public IngredientRequirements addAlternativeIngredient(IngredientRequirements alternativeIngredient) {
         this.alternativeIngredients.add(alternativeIngredient);
         return this;
     }
@@ -77,7 +77,7 @@ public class InterpretedIngredient {
             ));
         }
 
-        for(InterpretedIngredient altIngredient : this.alternativeIngredients) {
+        for(IngredientRequirements altIngredient : this.alternativeIngredients) {
             requirements.addAll(altIngredient.getRequirements());
         }
 

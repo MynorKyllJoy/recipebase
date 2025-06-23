@@ -13,7 +13,7 @@ public class IngredientParserTest {
         String ingredientString = "3 diced potato";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("potato");
         assertThat(ingredient.getStates().contains("diced")).isTrue();
@@ -28,7 +28,7 @@ public class IngredientParserTest {
         String ingredientString = "3 medium onion, chopped";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("onion");
         assertThat(ingredient.getStates().contains("chopped")).isTrue();
@@ -44,7 +44,7 @@ public class IngredientParserTest {
         String ingredientString = "ginger, grated, 1\" knob";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("ginger");
         assertThat(ingredient.getStates().contains("grated")).isTrue();
@@ -60,7 +60,7 @@ public class IngredientParserTest {
         String ingredientString = "100g pork sausage (chopped into small pieces)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("pork sausage");
         assertThat(ingredient.getStates().contains("chopped into small pieces")).isTrue();
@@ -75,7 +75,7 @@ public class IngredientParserTest {
         String ingredientString = "1 medium onion (140g)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
         Measurement altMeasurement = ingredient.getAlternativeMeasurements().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("onion");
@@ -94,7 +94,7 @@ public class IngredientParserTest {
         String ingredientString = "1 (chopped) onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("onion");
         assertThat(ingredient.getStates().contains("chopped")).isTrue();
@@ -109,8 +109,8 @@ public class IngredientParserTest {
         String ingredientString = "1 medium red onion (140g) or white onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
-        InterpretedIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        IngredientRequirements ingredient = parser.interpret();
+        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
         Measurement altMeasurement = ingredient.getAlternativeMeasurements().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("red onion");
@@ -137,8 +137,8 @@ public class IngredientParserTest {
         String ingredientString = "1 tbsp honey (substitute with 1.5 tbsp sugar)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
-        InterpretedIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        IngredientRequirements ingredient = parser.interpret();
+        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("honey");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
@@ -160,7 +160,7 @@ public class IngredientParserTest {
         String ingredientString = "200g pork belly with skin scored crosswise into 1 inch cubes";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("pork belly with skin");
         assertThat(ingredient.getStates().contains("scored crosswise into 1 inch cubes")).isTrue();
@@ -176,7 +176,7 @@ public class IngredientParserTest {
         String ingredientString = "1/2 of an onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("onion");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
@@ -191,8 +191,8 @@ public class IngredientParserTest {
         String ingredientString = "500g apple or pear";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
-        InterpretedIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        IngredientRequirements ingredient = parser.interpret();
+        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("apple");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
@@ -214,8 +214,8 @@ public class IngredientParserTest {
         String ingredientString = "400g peeled apple (14.1 ounces) or 500g peeled pear (17.6 ounces)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
-        InterpretedIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        IngredientRequirements ingredient = parser.interpret();
+        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("apple");
         assertThat(ingredient.getStates().contains("peeled")).isTrue();
@@ -239,9 +239,9 @@ public class IngredientParserTest {
         String ingredientString = "3.5 kg minced lamb or beef or chicken";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
-        InterpretedIngredient beefIngredient = ingredient.getAlternativeIngredients().get(0);
-        InterpretedIngredient chickenIngredient = ingredient.getAlternativeIngredients().get(1);
+        IngredientRequirements ingredient = parser.interpret();
+        IngredientRequirements beefIngredient = ingredient.getAlternativeIngredients().get(0);
+        IngredientRequirements chickenIngredient = ingredient.getAlternativeIngredients().get(1);
 
         assertThat(ingredient.getName()).isEqualTo("lamb");
         assertThat(ingredient.getStates().contains("minced")).isTrue();
@@ -271,7 +271,7 @@ public class IngredientParserTest {
         String ingredientString = "1 peeled apple, finely diced";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
 
         assertThat(ingredient.getName()).isEqualTo("apple");
         assertThat(ingredient.getStates().contains("peeled")).isTrue();
@@ -289,7 +289,7 @@ public class IngredientParserTest {
         String ingredientString = "1 apple (200g, 7oz)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
         Measurement altMeasurementGrams = ingredient.getAlternativeMeasurements().get(0);
         Measurement altMeasurementOunces = ingredient.getAlternativeMeasurements().get(1);
 
@@ -313,7 +313,7 @@ public class IngredientParserTest {
         String ingredientString = "1-3 apples";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
-        InterpretedIngredient ingredient = parser.interpret();
+        IngredientRequirements ingredient = parser.interpret();
         Measurement altMeasurement = ingredient.getAlternativeMeasurements().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("apples");
