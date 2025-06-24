@@ -35,10 +35,8 @@ public class MainController {
             recipeService.save(scrapedRecipe);
             model.addAttribute("recipe", scrapedRecipe);
             return "showScrapedRecipe";
-        } catch (IOException | WrongTokenTypeException ex) {
-            return "index";
-        } catch (RecipeAlreadyExistsException e) {
-            model.addAttribute(e.getMessage());
+        } catch (IOException | WrongTokenTypeException | RecipeAlreadyExistsException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
             return "error";
         }
     }
