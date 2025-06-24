@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public final class TypeConstants {
     static String[] STATES = {
             // hyphens are used here, not minus
+            // add colors?
             "bite‐size",
             "(hard‐|soft‐)?boiled",
             "bone(less|‐in)",
@@ -22,6 +23,7 @@ public final class TypeConstants {
             "dr(y|ied)?",
             "(well‐)?fermented",
             "fine(ly)?",
+            "fresh(ly)",
             "frozen",
             "grated",
             "ground",
@@ -69,8 +71,8 @@ public final class TypeConstants {
             "an",
             "drizzle",
             "handful",
-            "more",
-            "portions",
+            "portion(s)?",
+            "blocks(s)?",
             "spoonful(s)?",
             "sprinkle(s)?",
             "some",
