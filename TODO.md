@@ -1,10 +1,16 @@
 ## TODO
+- [] chores:
+    - [] improve comments
+    - [] write documentation :(
+    - [] Search for "ERROR" and fix edge cases
 - [] Exception Handling
     - [] Search for "EX" comments
     - [] Proper exception handling in controllers
 - [] Ingredient-Recipe-Relationship
     - [x] Extract quantities, states, alternatives, and additional information from scrapes ingredient listings.
     - [x] Integrate Requirement relationship class into Recipe and Ingredient
+    - [] add amounts to alternative if there are NONE!
+    - [] add the actual list of ingredients with info to recipe, so they can be displayed too
     - [] A recipe can be an ingredient too (like bread), inheritance?
     - [] Superclasses? Sugar as super class for white and brown sugar?
 - [] Data access
@@ -13,12 +19,19 @@
     - [x] add repositories
     - [] add query with quantity condition
 - [] interpreter
+    - [] tokenizer:
+      - [] try to shorten the for loop
+    - [] parser:
+      - [] try to shorten the parse function
     - [] IngredientCleaner
-      - [] remove and "or more", "about", "around"
+      - [] remove and "or more", "about", "around", "other", "if not"
       - [] handle something like: "pork shoulder or belly", so there is no ingredient with just belly
       - [] handle something like: "a combination of x and y"
       - [] throw exception if ingredient has no name
       - [] ugly fractions: 1 1/2 etc.
+      - [] remove unnecessary notes like "I used...", "you can...", "see notes", etc.
+      - [] update constants
+      - [] deal with overlap with types, e.g.: sprinkles as ingredient and sprinkles as unit
 - [] Additional Features
     - [] Upload/Create own recipes
     - [] Search recipes via list of ingredients and quantities
