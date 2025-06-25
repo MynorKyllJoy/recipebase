@@ -93,6 +93,7 @@ public final class TypeConstants {
             "x",
             ",",
             " ",
+            "+"
     };
     static String[] ALTERNATIVE = {
             "or",

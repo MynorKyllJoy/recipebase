@@ -71,20 +71,23 @@ public class IngredientParser {
                     "It has no precedence and should not appear at this position");
         }
 
-        String value = token.value();
-        if(TypeConstants.isPatternIn(value, new String[]{"-", "/", "x", "."})) {
-            return new Precedence(7, 6);
-        } else if(value.equals(" ")) {
-            return new Precedence(4, 5);
-        } else if(token.type() == TokenType.ALTERNATIVE) {
-            return new Precedence(2, 3);
-        } else if(value.equals(",")) {
-            return new Precedence(0, 1);
-        } else {
-            throw new WrongTokenTypeException(
-                    "The token has correct type of " + token.type() + " but the value '"
-                    + token.value() + "' should not have this type!"
-            );
+        switch (token.value()) {
+            case ".": return new Precedence(15, 14);  // create decimal numbers first
+            case "/": return new Precedence(13, 12);  // followed by fractions
+            case "+": return new Precedence(11, 10);  // take care of hybrid fractions 1 1/2
+            case "x": return new Precedence(9, 8);    // for areas
+            case "-": return new Precedence(7, 6);    // ranges
+            case " ": return new Precedence(4, 5);    // words
+            case ",": return new Precedence(0, 1);    // sentences last, alternatives before sentences
+            default: {
+                if(token.type() == TokenType.ALTERNATIVE)
+                    return new Precedence(2, 3);      // alternatives
+                else
+                    throw new WrongTokenTypeException(
+                            "The token has correct type of " + token.type() + " but the value '"
+                                    + token.value() + "' should not have this type!"
+                    );
+            }
         }
     }
 }

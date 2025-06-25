@@ -29,6 +29,11 @@ public class OperandExpression implements Expression {
             float combinedFloat = left.getAmount() / right.getAmount();
             left.setValue(new Token(Float.toString(combinedFloat), TokenType.QUANTITY));
             right.setValue(new Token(null, TokenType.QUANTITY));
+        } else if(operand.value().equals("+")) {
+            // for 1+1/2, "/" has higher precedence, so it won't calculate 1+1 first
+            float combinedFloat = left.getAmount() + right.getAmount();
+            left.setValue(new Token(Float.toString(combinedFloat), TokenType.QUANTITY));
+            right.setValue(new Token(null, TokenType.QUANTITY));
         } else if (operand.value().equals("-")) {  // minus not hyphen
             // for a range, add minimum and maximum as measurements
             if(left.getUnit() == null) {

@@ -24,13 +24,12 @@
     - [] parser:
       - [] try to shorten the parse function
     - [] IngredientCleaner
-      - [] remove and "or more", "about", "around", "other", "if not"
+      - [x] remove "or more", "about", "around", "other", "if not", "I used...", "you can...", "see notes", etc.
       - [] handle something like: "pork shoulder or belly", so there is no ingredient with just belly
       - [] handle something like: "a combination of x and y"
       - [] throw exception if ingredient has no name
-      - [] ugly fractions: 1 1/2 etc.
-      - [] remove unnecessary notes like "I used...", "you can...", "see notes", etc.
-      - [] update constants
+      - [x] ugly fractions: 1 1/2 etc.
+      - [x] update constants
       - [] deal with overlap with types, e.g.: sprinkles as ingredient and sprinkles as unit
 - [] Additional Features
     - [] Upload/Create own recipes
