@@ -539,4 +539,60 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(4).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.size()).isEqualTo(5);
     }
+
+
+    @Test
+    public void testToListHybridFraction() throws WrongTokenTypeException {
+        String ingredientString = "1+1/3 apples";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo("apples");
+        assertThat(tokens.get(1).value()).isEqualTo(" ");
+        assertThat(tokens.get(2).value()).isEqualTo("3");
+        assertThat(tokens.get(3).value()).isEqualTo("/");
+        assertThat(tokens.get(4).value()).isEqualTo("1");
+        assertThat(tokens.get(5).value()).isEqualTo("+");
+        assertThat(tokens.get(6).value()).isEqualTo("1");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(7);
+    }
+
+
+    @Test
+    public void testToListUglyFraction() throws WrongTokenTypeException {
+        String ingredientString = "1.1+1.5/3 apples";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo("apples");
+        assertThat(tokens.get(1).value()).isEqualTo(" ");
+        assertThat(tokens.get(2).value()).isEqualTo("3");
+        assertThat(tokens.get(3).value()).isEqualTo("/");
+        assertThat(tokens.get(4).value()).isEqualTo("5");
+        assertThat(tokens.get(5).value()).isEqualTo(".");
+        assertThat(tokens.get(6).value()).isEqualTo("1");
+        assertThat(tokens.get(7).value()).isEqualTo("+");
+        assertThat(tokens.get(8).value()).isEqualTo("1");
+        assertThat(tokens.get(9).value()).isEqualTo(".");
+        assertThat(tokens.get(10).value()).isEqualTo("1");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(8).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(9).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(10).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(11);
+    }
 }

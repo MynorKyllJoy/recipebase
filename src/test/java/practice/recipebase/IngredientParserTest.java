@@ -329,6 +329,38 @@ public class IngredientParserTest {
 
 
     @Test
+    public void testParseHybridFraction() throws WrongTokenTypeException {
+        String ingredientString = "1+1/3 apples";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("apples");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1+1f/3);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
+    }
+
+
+    @Test
+    public void testParseUglyFraction() throws WrongTokenTypeException {
+        String ingredientString = "1.1+1.5/3 apples";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("apples");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1.1f+1.5f/3);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
+    }
+
+
+    @Test
     public void testParseIncorrectTokenTypeOrderOperandException() {
         String ingredientString = ", fail";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
