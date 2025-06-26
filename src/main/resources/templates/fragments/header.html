@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Index</title>
+</head>
+<body>
+<div th:fragment="header">
+    <a href="#" th:href="@{/}">Home</a>
+    <a href="#" th:href="@{/scrapeRecipe}">Scrape Recipe</a>
+    <a href="#" th:href="@{/listRecipe}">All Recipes</a>
+    <a href="#" th:href="@{/searchRecipe}">Search Recipe</a>
+</div>
+</body>
+</html>

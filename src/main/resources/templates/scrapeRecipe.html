@@ -5,12 +5,15 @@
     <title>Scraper</title>
 </head>
 <body>
-<form th:action="@{/scrapeRecipe}" th:object="${recipeSiteURL}" method="post">
-    <label>
-        Recipe Site:
-        <input type="text" name="recipeSiteURL" placeholder="Recipe Site URL">
-    </label>
-    <input type="submit" value="Scrape">
-</form>
+<div th:replace="fragments/header"></div>
+<div>
+    <form th:action="@{/scrapeRecipe}" th:object="${recipeSiteURL}" method="post">
+        <label>
+            Recipe Site:
+            <input type="text" name="recipeSiteURL" placeholder="Recipe Site URL">
+        </label>
+        <input type="submit" value="Scrape">
+    </form>
+</div>
 </body>
 </html>
