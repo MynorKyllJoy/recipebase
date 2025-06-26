@@ -16,7 +16,7 @@ import java.util.Set;
 @RelationshipProperties
 public class Requirement {
     @Id @GeneratedValue
-    private Long id;
+    private String id;
     private Set<String> states;
     private String unit;
     private Float amount;
