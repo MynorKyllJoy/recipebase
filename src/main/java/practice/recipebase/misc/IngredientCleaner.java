@@ -71,7 +71,7 @@ public class IngredientCleaner {
     }
 
     public IngredientCleaner replaceEnumerationCommaToOr() {
-        Pattern pattern = Pattern.compile("(?=[a-zA-Z]),\\s(?=[a-zA-Z\\s]+\\sor)");
+        Pattern pattern = Pattern.compile("(?<=[a-zA-Z]), (?=[a-zA-Z ]+ or)");
         Matcher matcher = pattern.matcher(this.cleanedIngredient);
         while(matcher.find()) {
             this.cleanedIngredient = matcher.replaceAll(" or ");
@@ -114,8 +114,8 @@ public class IngredientCleaner {
     }
 
     public IngredientCleaner cleanBrackets() {
-        this.cleanedIngredient = this.cleanedIngredient.replaceAll("\\(,", "(");
-        this.cleanedIngredient = this.cleanedIngredient.replaceAll(",\\)", ")");
+        this.cleanedIngredient = this.cleanedIngredient.replaceAll("\\( *, *", "(");
+        this.cleanedIngredient = this.cleanedIngredient.replaceAll(" *, *\\)", ")");
         return this;
     }
 
