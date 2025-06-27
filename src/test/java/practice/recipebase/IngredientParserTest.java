@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.interpreter.*;
 
+import java.util.List;
+
 public class IngredientParserTest {
     @Test
     public void testParseSimple() throws WrongTokenTypeException {
@@ -355,6 +357,41 @@ public class IngredientParserTest {
         assertThat(ingredient.getStates().isEmpty()).isTrue();
         assertThat(ingredient.getUnit()).isEqualTo(null);
         assertThat(ingredient.getAmount()).isEqualTo(1.1f+1.5f/3);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
+    }
+
+
+    @Test
+    public void testParseOrBetweenStates() throws WrongTokenTypeException {
+        String ingredientString = "1 chopped or diced apple";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("apple");
+        assertThat(ingredient.getStates().contains("chopped")).isTrue();
+        assertThat(ingredient.getStates().contains("diced")).isTrue();
+        assertThat(ingredient.getStates().size()).isEqualTo(2);
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testParseOrBetweenStatesComma() throws WrongTokenTypeException {
+        String ingredientString = "1 apple, chopped or diced";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("apple");
+        assertThat(ingredient.getStates().contains("chopped")).isTrue();
+        assertThat(ingredient.getStates().contains("diced")).isTrue();
+        assertThat(ingredient.getStates().size()).isEqualTo(2);
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1);
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
     }
