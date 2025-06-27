@@ -40,6 +40,12 @@ public class IngredientTokenizer {
                 */
                 reversedTokens.pop();
                 currToken = new Token(combinedTerm.toString(), currToken.type());
+            } else if(currToken.type() == TokenType.ALTERNATIVE) {
+                Token nextToken = this.createToken(patterns.get(index+1));
+                if(nextToken.type() == TokenType.STATE && prevToken.type() == TokenType.STATE) {
+                    // replace or with space for case: chopped or diced or minced ...
+                    currToken = new Token(" ", TokenType.OPERAND);
+                }
             } else if(currToken.type() == TokenType.PREPOSITION) {
                 Token nextToken = this.createToken(patterns.get(index+1));
                 if(prevToken.type() == nextToken.type()) {
