@@ -75,6 +75,15 @@ public class IngredientCleanerTest {
     }
 
     @Test
+    public void testRemoveUnneededComments() {
+        String testString = "see note, or more, more, around, about, if unavailable, I used X brand, you can skip, "
+                + "for garnish, as garnish";
+        String expected = ", , , , , , , , , ";
+        String result = new IngredientCleaner(testString).removeUnneededComments().getCleanedIngredient();
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     public void testRemoveEmptyBrackets() {
         String testString = "100g Chocolate (), chopped";
         String expected = "100g Chocolate , chopped";

@@ -105,7 +105,7 @@ public class IngredientCleaner {
     public IngredientCleaner removeUnneededComments() {
         String[] comments = {
                 "see note", "(or )?more", "around", "about", "if [a-zA-Z]+",
-                "([iI] [a-zA-Z ]+)", "([yY]ou [a-zA-Z ]+)"
+                "([iI] [a-zA-Z ]+)", "([yY]ou [a-zA-Z ]+)", "(for |as )?garnish"
         };
         for(String comment : comments) {
             this.cleanedIngredient = this.cleanedIngredient.replaceAll(comment, "");

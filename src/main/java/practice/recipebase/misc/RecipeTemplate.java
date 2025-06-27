@@ -22,7 +22,6 @@ abstract class RecipeTemplate {
             // process ingredient information
             List<String> ingredientInfos = this.getIngredientInfos();
             ingredientInfos = this.cleanIngredientInfos(ingredientInfos);
-            System.out.println(ingredientInfos);
             List<Requirement> requiredIngredients = this.getRequirements(ingredientInfos);
             // get instruction information
             List<String> instructions = this.getInstructions();
