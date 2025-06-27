@@ -5,7 +5,7 @@
     <title>Scraper</title>
 </head>
 <body>
-<div th:replace="fragments/header"></div>
+<div th:replace="~{fragments/header}"></div>
 <div>
     <form th:action="@{/scrapeRecipe}" th:object="${recipeSiteURL}" method="post">
         <label>

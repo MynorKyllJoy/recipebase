@@ -5,6 +5,8 @@
   <title>Index</title>
 </head>
 <body>
+<div th:replace="~{fragments/header}"></div>
+<div>
   <h1>[[${recipe.getTitle()}]]</h1>
   <p>[[${recipe.getDescription()}]]</p>
   <p>[[${recipe.getSource()}]]</p>
@@ -31,5 +33,6 @@
     <p>Instructions</p>
     <p>[[${recipe.getInstructions().get(0)}]]</p>
   </div>
+</div>
 </body>
 </html>

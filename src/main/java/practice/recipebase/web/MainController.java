@@ -6,12 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.service.RecipeService;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -23,6 +25,13 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/listRecipe")
+    public String listAllRecipes(Model model) {
+        List<Recipe> allRecipes = recipeService.getAllRecipes();
+        model.addAttribute("recipes", allRecipes);
+        return "listAllRecipes";
+    }
+
     @GetMapping("/scrapeRecipe")
     public String scrapeRecipe() {
         return "scrapeRecipe";
@@ -32,12 +41,19 @@ public class MainController {
     public String showScrapedRecipe(@RequestParam("recipeSiteURL") String URL, Model model) {
         try {
             Recipe scrapedRecipe = recipeService.getRecipeMetaData(URL);
-            recipeService.save(scrapedRecipe);
+            recipeService.saveRecipe(scrapedRecipe);
             model.addAttribute("recipe", scrapedRecipe);
-            return "showScrapedRecipe";
+            return "showRecipe";
         } catch (IOException | WrongTokenTypeException | RecipeAlreadyExistsException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";
         }
+    }
+
+    @GetMapping("/showRecipe")
+    public String showRecipe(@RequestParam(name="id") String recipeId, Model model) {
+        Recipe recipe = recipeService.getRecipeById(recipeId);
+        model.addAttribute("recipe", recipe);
+        return "showRecipe";
     }
 }

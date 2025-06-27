@@ -11,6 +11,7 @@ import practice.recipebase.model.Recipe;
 import practice.recipebase.repository.RecipeRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class RecipeService {
@@ -26,7 +27,15 @@ public class RecipeService {
         return scrapedRecipe.createRecipe();
     }
 
-    public void save(Recipe scrapedRecipe) {
+    public void saveRecipe(Recipe scrapedRecipe) {
         recipeRepository.save(scrapedRecipe);
+    }
+
+    public List<Recipe> getAllRecipes() {
+        return recipeRepository.findAll();
+    }
+
+    public Recipe getRecipeById(String recipeId) {
+        return recipeRepository.findById(recipeId).orElse(new Recipe());
     }
 }

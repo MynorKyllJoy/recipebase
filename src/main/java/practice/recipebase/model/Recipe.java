@@ -9,6 +9,8 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -31,5 +33,9 @@ public class Recipe {
         this.source = source;
         this.instructions = instructions;
         this.requiredIngredients = requiredIngredients;
+    }
+
+    public Set<String> getIngredientNames() {
+        return requiredIngredients.stream().map(i -> i.getIngredient().getName()).collect(Collectors.toSet());
     }
 }
