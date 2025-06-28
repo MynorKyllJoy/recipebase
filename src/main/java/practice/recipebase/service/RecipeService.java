@@ -19,7 +19,7 @@ public class RecipeService {
     RecipeRepository recipeRepository;
 
     public Recipe getRecipeMetaData(String URL) throws IOException, WrongTokenTypeException, RecipeAlreadyExistsException {
-        if(this.getRecipeBySource(URL).isEmpty()) {
+        if(!this.getRecipeBySource(URL).isEmpty()) {
             throw new RecipeAlreadyExistsException("The recipe you are trying to scrape is already in the database.");
         }
         Document recipeSite = RecipeSiteRequestAdapter.getRecipeSite(URL);
