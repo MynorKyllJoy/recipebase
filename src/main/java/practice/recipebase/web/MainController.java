@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.model.Recipe;
@@ -38,12 +38,12 @@ public class MainController {
     }
 
     @PostMapping("/scrapeRecipe")
-    public String showScrapedRecipe(@RequestParam("recipeSiteURL") String URL, Model model) {
+    public String showScrapedRecipe(@RequestParam("recipeSiteURL") String URL, Model model, RedirectAttributes redirectAttributes) {
         try {
             Recipe scrapedRecipe = recipeService.getRecipeMetaData(URL);
-            recipeService.saveRecipe(scrapedRecipe);
-            model.addAttribute("recipe", scrapedRecipe);
-            return "showRecipe";
+            Recipe recipe = recipeService.saveRecipe(scrapedRecipe);
+            redirectAttributes.addAttribute("id", recipe.getId());
+            return "redirect:/showRecipe";
         } catch (IOException | WrongTokenTypeException | RecipeAlreadyExistsException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "error";

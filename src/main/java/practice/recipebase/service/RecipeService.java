@@ -19,7 +19,7 @@ public class RecipeService {
     RecipeRepository recipeRepository;
 
     public Recipe getRecipeMetaData(String URL) throws IOException, WrongTokenTypeException, RecipeAlreadyExistsException {
-        if(!recipeRepository.findRecipeBySource(URL).isEmpty()) {
+        if(this.getRecipeBySource(URL).isEmpty()) {
             throw new RecipeAlreadyExistsException("The recipe you are trying to scrape is already in the database.");
         }
         Document recipeSite = RecipeSiteRequestAdapter.getRecipeSite(URL);
@@ -27,8 +27,8 @@ public class RecipeService {
         return scrapedRecipe.createRecipe();
     }
 
-    public void saveRecipe(Recipe scrapedRecipe) {
-        recipeRepository.save(scrapedRecipe);
+    public Recipe saveRecipe(Recipe scrapedRecipe) {
+        return recipeRepository.save(scrapedRecipe);
     }
 
     public List<Recipe> getAllRecipes() {
@@ -37,5 +37,9 @@ public class RecipeService {
 
     public Recipe getRecipeById(String recipeId) {
         return recipeRepository.findById(recipeId).orElse(new Recipe());
+    }
+
+    public List<Recipe> getRecipeBySource(String url) {
+        return recipeRepository.findRecipeBySource(url);
     }
 }
