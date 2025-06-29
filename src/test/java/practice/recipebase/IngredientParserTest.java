@@ -396,6 +396,60 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
     }
 
+    @Test
+    public void testParseOrInBrackets() throws WrongTokenTypeException {
+        String ingredientString = "1 apple (or pear)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+
+        assertThat(ingredient.getName()).isEqualTo("apple");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
+
+        assertThat(alternativeIngredient.getName()).isEqualTo("pear");
+        assertThat(alternativeIngredient.getStates().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.getUnit()).isEqualTo(null);
+        assertThat(alternativeIngredient.getAmount()).isEqualTo(null);
+        assertThat(alternativeIngredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testParseDoubleOrInBrackets() throws WrongTokenTypeException {
+        String ingredientString = "1 apple (or pear or pineapple)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("apple");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(2);
+
+        IngredientRequirements pear = ingredient.getAlternativeIngredients().get(0);
+        assertThat(pear.getName()).isEqualTo("pineapple");
+        assertThat(pear.getStates().isEmpty()).isTrue();
+        assertThat(pear.getUnit()).isEqualTo(null);
+        assertThat(pear.getAmount()).isEqualTo(null);
+        assertThat(pear.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(pear.getAlternativeIngredients().isEmpty()).isTrue();
+
+        IngredientRequirements pineapple = ingredient.getAlternativeIngredients().get(1);
+        assertThat(pineapple.getName()).isEqualTo("pear");
+        assertThat(pineapple.getStates().isEmpty()).isTrue();
+        assertThat(pineapple.getUnit()).isEqualTo(null);
+        assertThat(pineapple.getAmount()).isEqualTo(null);
+        assertThat(pineapple.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(pineapple.getAlternativeIngredients().isEmpty()).isTrue();
+    }
+
 
     @Test
     public void testParseIncorrectTokenTypeOrderOperandException() {

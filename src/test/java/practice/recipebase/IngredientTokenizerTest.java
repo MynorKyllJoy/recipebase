@@ -641,4 +641,58 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.size()).isEqualTo(7);
     }
+
+    @Test
+    public void testToListOrInBrackets() throws WrongTokenTypeException {
+        String ingredientString = "1 apple (or pear)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo(")");
+        assertThat(tokens.get(1).value()).isEqualTo("pear");
+        assertThat(tokens.get(2).value()).isEqualTo("or");
+        assertThat(tokens.get(3).value()).isEqualTo("(");
+        assertThat(tokens.get(4).value()).isEqualTo(" ");
+        assertThat(tokens.get(5).value()).isEqualTo("apple");
+        assertThat(tokens.get(4).value()).isEqualTo(" ");
+        assertThat(tokens.get(7).value()).isEqualTo("1");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.CLOSE_BRACKET);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.ALTERNATIVE);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPEN_BRACKET);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(8);
+    }
+
+    @Test
+    public void testToListDoubleOrInBrackets() throws WrongTokenTypeException {
+        String ingredientString = "1 apple (or pear or pineapple)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo(")");
+        assertThat(tokens.get(1).value()).isEqualTo("pineapple");
+        assertThat(tokens.get(2).value()).isEqualTo("or");
+        assertThat(tokens.get(3).value()).isEqualTo("pear");
+        assertThat(tokens.get(4).value()).isEqualTo("or");
+        assertThat(tokens.get(5).value()).isEqualTo("(");
+        assertThat(tokens.get(6).value()).isEqualTo(" ");
+        assertThat(tokens.get(7).value()).isEqualTo("apple");
+        assertThat(tokens.get(8).value()).isEqualTo(" ");
+        assertThat(tokens.get(9).value()).isEqualTo("1");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.CLOSE_BRACKET);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.ALTERNATIVE);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.ALTERNATIVE);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPEN_BRACKET);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(7).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(8).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(9).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(10);
+    }
 }
