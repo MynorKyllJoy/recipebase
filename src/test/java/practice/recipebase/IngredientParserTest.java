@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.interpreter.*;
 
-import java.util.List;
-
 public class IngredientParserTest {
     @Test
     public void testParseSimple() throws WrongTokenTypeException {
@@ -340,7 +338,7 @@ public class IngredientParserTest {
         assertThat(ingredient.getName()).isEqualTo("apples");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
         assertThat(ingredient.getUnit()).isEqualTo(null);
-        assertThat(ingredient.getAmount()).isEqualTo(1+1f/3);
+        assertThat(ingredient.getAmount()).isEqualTo(1+1d/3);
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
     }
@@ -356,7 +354,7 @@ public class IngredientParserTest {
         assertThat(ingredient.getName()).isEqualTo("apples");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
         assertThat(ingredient.getUnit()).isEqualTo(null);
-        assertThat(ingredient.getAmount()).isEqualTo(1.1f+1.5f/3);
+        assertThat(ingredient.getAmount()).isEqualTo(1.1d+1.5d/3);
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
     }
