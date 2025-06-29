@@ -20,19 +20,19 @@ public class OperandExpression implements Expression {
 
         // number handling
         if(operand.value().equals(".") && left.getAmount() != null && right.getAmount() != null) {
-            // create float number, the amounts before combining should be integers
-            String combinedFloat = left.getAmount().intValue() + "." + right.getAmount().intValue();
-            left.setValue(new Token(combinedFloat, TokenType.QUANTITY));
+            // create double number, the amounts before combining should be integers
+            String combinedDouble = left.getAmount().intValue() + "." + right.getAmount().intValue();
+            left.setValue(new Token(combinedDouble, TokenType.QUANTITY));
             right.setValue(new Token(null, TokenType.QUANTITY));
         } else if(operand.value().equals("/")) {
             // divide, the amounts before combining should be integers
-            float combinedFloat = left.getAmount() / right.getAmount();
-            left.setValue(new Token(Float.toString(combinedFloat), TokenType.QUANTITY));
+            double combinedDouble = left.getAmount() / right.getAmount();
+            left.setValue(new Token(Double.toString(combinedDouble), TokenType.QUANTITY));
             right.setValue(new Token(null, TokenType.QUANTITY));
         } else if(operand.value().equals("+")) {
             // for 1+1/2, "/" has higher precedence, so it won't calculate 1+1 first
-            float combinedFloat = left.getAmount() + right.getAmount();
-            left.setValue(new Token(Float.toString(combinedFloat), TokenType.QUANTITY));
+            double combinedDouble = left.getAmount() + right.getAmount();
+            left.setValue(new Token(Double.toString(combinedDouble), TokenType.QUANTITY));
             right.setValue(new Token(null, TokenType.QUANTITY));
         } else if (operand.value().equals("-")) {  // minus not hyphen
             // for a range, add minimum and maximum as measurements

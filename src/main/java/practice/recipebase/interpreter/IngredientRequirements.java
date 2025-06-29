@@ -14,7 +14,7 @@ import java.util.Set;
 public class IngredientRequirements {
     private String name;
     private String unit;
-    private Float amount;
+    private Double amount;
     private final Set<String> states;
     private final List<Measurement> alternativeMeasurements;
     private final List<IngredientRequirements> alternativeIngredients;
@@ -76,11 +76,11 @@ public class IngredientRequirements {
 
     public List<Requirement> getRequirements() {
         List<Requirement> requirements = new ArrayList<>();
-        requirements.add(new Requirement(null, this.states, this.unit, this.amount, new Ingredient(this.name)));
+        requirements.add(new Requirement(this.states, this.unit, this.amount, new Ingredient(this.name)));
 
         for(Measurement measurement : this.alternativeMeasurements) {
             requirements.add(new Requirement(
-                    null, this.states, measurement.unit(), measurement.amount(), new Ingredient(this.name)
+                    this.states, measurement.unit(), measurement.amount(), new Ingredient(this.name)
             ));
         }
 
@@ -91,17 +91,17 @@ public class IngredientRequirements {
         return requirements;
     }
 
-    private Float setAmount(String value) {
+    private Double setAmount(String value) {
         if(value == null)
             return null;
-        return Float.parseFloat(value);
+        return Double.parseDouble(value);
     }
 
     private boolean hasOverlap(String thisValue, String otherValue) {
         return thisValue != null && otherValue != null;
     }
 
-    private boolean hasOverlap(Float thisValue, Float otherValue) {
+    private boolean hasOverlap(Double thisValue, Double otherValue) {
         return thisValue != null && otherValue != null;
     }
 
@@ -112,7 +112,7 @@ public class IngredientRequirements {
         return otherValue;
     }
 
-    private Float getValueOrNull(Float thisValue, Float otherValue) {
+    private Double getValueOrNull(Double thisValue, Double otherValue) {
         if(thisValue != null) {
             return thisValue;
         }
