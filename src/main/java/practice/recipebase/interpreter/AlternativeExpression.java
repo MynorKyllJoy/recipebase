@@ -9,7 +9,13 @@ public class AlternativeExpression implements Expression {
 
     @Override
     public IngredientRequirements interpret() {
-        IngredientRequirements ingredient = new IngredientRequirements();
-        return ingredient.addAlternativeIngredient(expression.interpret());
+        // the alternative ingredients in the final IngredientRequirements object should not have alternative
+        // ingredients themselves
+        IngredientRequirements currIngredient = expression.interpret();
+        IngredientRequirements altIngredient = new IngredientRequirements();
+        altIngredient.addAllAlternativeIngredients(currIngredient.getAlternativeIngredients());
+        currIngredient.removeAltIngredients();
+        altIngredient.addAlternativeIngredient(currIngredient);
+        return altIngredient;
     }
 }

@@ -62,9 +62,16 @@ public class IngredientRequirements {
         return this;
     }
 
-    public IngredientRequirements addAlternativeIngredient(IngredientRequirements alternativeIngredient) {
+    public void addAlternativeIngredient(IngredientRequirements alternativeIngredient) {
         this.alternativeIngredients.add(alternativeIngredient);
-        return this;
+    }
+
+    public void addAllAlternativeIngredients(List<IngredientRequirements> alternativeIngredients) {
+        this.alternativeIngredients.addAll(alternativeIngredients);
+    }
+
+    public void removeAltIngredients() {
+        this.alternativeIngredients.clear();
     }
 
     public List<Requirement> getRequirements() {
