@@ -42,7 +42,7 @@ public class IngredientRequirements {
 
     public IngredientRequirements merge(IngredientRequirements ingredient) {
         if(this.hasOverlap(this.name, ingredient.name)) {
-            // if the overlap is in the name, it has to be an alternative ingredient
+            // if the overlap is in the name, it has to be an alternative ingredien
             this.alternativeIngredients.add(ingredient);
         } else if(this.hasOverlap(this.amount, ingredient.amount)) {
             // if there is an overlap in amount, it is additional information
@@ -78,16 +78,33 @@ public class IngredientRequirements {
         List<Requirement> requirements = new ArrayList<>();
         requirements.add(new Requirement(this.states, this.unit, this.amount, new Ingredient(this.name)));
 
-        for(Measurement measurement : this.alternativeMeasurements) {
-            requirements.add(new Requirement(
-                    this.states, measurement.unit(), measurement.amount(), new Ingredient(this.name)
-            ));
-        }
+        requirements.addAll(this.createRequirementsWithAltMeasurements(this.states, this.name));
 
         for(IngredientRequirements altIngredient : this.alternativeIngredients) {
-            requirements.addAll(altIngredient.getRequirements());
+            // ERROR: What about shared states?
+            if(altIngredient.getAmount() == null) {
+                altIngredient.amount = this.amount;
+                altIngredient.unit = this.unit;
+                requirements.addAll(
+                        this.createRequirementsWithAltMeasurements(altIngredient.states, altIngredient.name))
+                ;
+            }
+            requirements.add(new Requirement(
+                    altIngredient.getStates(), altIngredient.getUnit(), altIngredient.getAmount(),
+                    new Ingredient(altIngredient.getName()))
+            );
         }
 
+        return requirements;
+    }
+
+    private List<Requirement> createRequirementsWithAltMeasurements(Set<String> states, String ingredientName) {
+        List<Requirement> requirements = new ArrayList<>();
+        for(Measurement measurement : this.alternativeMeasurements) {
+            requirements.add(new Requirement(
+                    states, measurement.unit(), measurement.amount(), new Ingredient(ingredientName)
+            ));
+        }
         return requirements;
     }
 

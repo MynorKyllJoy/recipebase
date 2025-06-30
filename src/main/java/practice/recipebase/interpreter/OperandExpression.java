@@ -42,7 +42,8 @@ public class OperandExpression implements Expression {
                 right.setValue(new Token(left.getUnit(), TokenType.UNIT));
             }
         }
-        if(right.getName() == null) {
+        // merge the one without name into the one with name. if both have a name, prioritise the one with amount
+        if(right.getName() == null || (right.getAmount() == null && left.getName() != null)) {
             return left.merge(right);
         }
         return right.merge(left);
