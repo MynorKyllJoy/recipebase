@@ -695,4 +695,27 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(9).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.size()).isEqualTo(10);
     }
+
+    @Test
+    public void testToListAlternativeIngredientWithoutToken() throws WrongTokenTypeException {
+        String ingredientString = "1 bread bun (kaiser bun)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo(")");
+        assertThat(tokens.get(1).value()).isEqualTo("kaiser bun");
+        assertThat(tokens.get(2).value()).isEqualTo("(");
+        assertThat(tokens.get(3).value()).isEqualTo(" ");
+        assertThat(tokens.get(4).value()).isEqualTo("bread bun");
+        assertThat(tokens.get(5).value()).isEqualTo(" ");
+        assertThat(tokens.get(6).value()).isEqualTo("1");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.CLOSE_BRACKET);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.OPEN_BRACKET);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(7);
+    }
 }

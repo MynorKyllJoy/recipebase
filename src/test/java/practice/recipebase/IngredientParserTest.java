@@ -448,6 +448,28 @@ public class IngredientParserTest {
         assertThat(pineapple.getAlternativeIngredients().isEmpty()).isTrue();
     }
 
+    @Test
+    public void testParseAlternativeIngredientWithoutToken() throws WrongTokenTypeException {
+        String ingredientString = "1 bread bun (kaiser bun)";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("bread bun");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo(null);
+        assertThat(ingredient.getAmount()).isEqualTo(1);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
+
+        IngredientRequirements alternative = ingredient.getAlternativeIngredients().getFirst();
+        assertThat(alternative.getName()).isEqualTo("kaiser bun");
+        assertThat(alternative.getStates().isEmpty()).isTrue();
+        assertThat(alternative.getUnit()).isEqualTo(null);
+        assertThat(alternative.getAmount()).isEqualTo(null);
+        assertThat(alternative.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(alternative.getAlternativeIngredients().isEmpty()).isTrue();
+    }
 
     @Test
     public void testParseIncorrectTokenTypeOrderOperandException() {
