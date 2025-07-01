@@ -110,7 +110,7 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         IngredientRequirements ingredient = parser.interpret();
-        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        AlternativeIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
         Measurement altMeasurement = ingredient.getAlternativeMeasurements().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("red onion");
@@ -124,12 +124,11 @@ public class IngredientParserTest {
         assertThat(altMeasurement.unit()).isEqualTo("g");
         assertThat(altMeasurement.amount()).isEqualTo(140);
 
-        assertThat(alternativeIngredient.getName()).isEqualTo("white onion");
-        assertThat(alternativeIngredient.getUnit()).isEqualTo(null);
-        assertThat(alternativeIngredient.getAmount()).isEqualTo(null);
-        assertThat(alternativeIngredient.getStates().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.name()).isEqualTo("white onion");
+        assertThat(alternativeIngredient.unit()).isEqualTo(null);
+        assertThat(alternativeIngredient.amount()).isEqualTo(null);
+        assertThat(alternativeIngredient.states().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.alternativeMeasurements().isEmpty()).isTrue();
     }
 
     @Test
@@ -138,7 +137,7 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         IngredientRequirements ingredient = parser.interpret();
-        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        AlternativeIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("honey");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
@@ -147,12 +146,11 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
 
-        assertThat(alternativeIngredient.getName()).isEqualTo("sugar");
-        assertThat(alternativeIngredient.getStates().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getUnit()).isEqualTo("tbsp");
-        assertThat(alternativeIngredient.getAmount()).isEqualTo(1.5f);
-        assertThat(alternativeIngredient.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.name()).isEqualTo("sugar");
+        assertThat(alternativeIngredient.states().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.unit()).isEqualTo("tbsp");
+        assertThat(alternativeIngredient.amount()).isEqualTo(1.5f);
+        assertThat(alternativeIngredient.alternativeMeasurements().isEmpty()).isTrue();
     }
 
     @Test
@@ -192,7 +190,7 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         IngredientRequirements ingredient = parser.interpret();
-        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        AlternativeIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("apple");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
@@ -201,12 +199,11 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
 
-        assertThat(alternativeIngredient.getName()).isEqualTo("pear");
-        assertThat(alternativeIngredient.getStates().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getUnit()).isEqualTo(null);
-        assertThat(alternativeIngredient.getAmount()).isEqualTo(null);
-        assertThat(alternativeIngredient.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.name()).isEqualTo("pear");
+        assertThat(alternativeIngredient.states().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.unit()).isEqualTo(null);
+        assertThat(alternativeIngredient.amount()).isEqualTo(null);
+        assertThat(alternativeIngredient.alternativeMeasurements().isEmpty()).isTrue();
     }
 
     @Test
@@ -215,7 +212,7 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         IngredientRequirements ingredient = parser.interpret();
-        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        AlternativeIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("apple");
         assertThat(ingredient.getStates().contains("peeled")).isTrue();
@@ -225,13 +222,12 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().size()).isEqualTo(1);
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
 
-        assertThat(alternativeIngredient.getName()).isEqualTo("pear");
-        assertThat(alternativeIngredient.getStates().contains("peeled")).isTrue();
-        assertThat(alternativeIngredient.getStates().size()).isEqualTo(1);
-        assertThat(alternativeIngredient.getUnit()).isEqualTo("g");
-        assertThat(alternativeIngredient.getAmount()).isEqualTo(500);
-        assertThat(alternativeIngredient.getAlternativeMeasurements().size()).isEqualTo(1);
-        assertThat(alternativeIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.name()).isEqualTo("pear");
+        assertThat(alternativeIngredient.states().contains("peeled")).isTrue();
+        assertThat(alternativeIngredient.states().size()).isEqualTo(1);
+        assertThat(alternativeIngredient.unit()).isEqualTo("g");
+        assertThat(alternativeIngredient.amount()).isEqualTo(500);
+        assertThat(alternativeIngredient.alternativeMeasurements().size()).isEqualTo(1);
     }
 
     @Test
@@ -240,8 +236,8 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         IngredientRequirements ingredient = parser.interpret();
-        IngredientRequirements beefIngredient = ingredient.getAlternativeIngredients().get(0);
-        IngredientRequirements chickenIngredient = ingredient.getAlternativeIngredients().get(1);
+        AlternativeIngredient beefIngredient = ingredient.getAlternativeIngredients().get(0);
+        AlternativeIngredient chickenIngredient = ingredient.getAlternativeIngredients().get(1);
 
         assertThat(ingredient.getName()).isEqualTo("lamb");
         assertThat(ingredient.getStates().contains("minced")).isTrue();
@@ -251,19 +247,17 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(2);
 
-        assertThat(beefIngredient.getName()).isEqualTo("beef");
-        assertThat(beefIngredient.getStates().isEmpty()).isTrue();
-        assertThat(beefIngredient.getUnit()).isEqualTo(null);
-        assertThat(beefIngredient.getAmount()).isEqualTo(null);
-        assertThat(beefIngredient.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(beefIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+        assertThat(beefIngredient.name()).isEqualTo("beef");
+        assertThat(beefIngredient.states().isEmpty()).isTrue();
+        assertThat(beefIngredient.unit()).isEqualTo(null);
+        assertThat(beefIngredient.amount()).isEqualTo(null);
+        assertThat(beefIngredient.alternativeMeasurements().isEmpty()).isTrue();
 
-        assertThat(chickenIngredient.getName()).isEqualTo("chicken");
-        assertThat(chickenIngredient.getStates().isEmpty()).isTrue();
-        assertThat(chickenIngredient.getUnit()).isEqualTo(null);
-        assertThat(chickenIngredient.getAmount()).isEqualTo(null);
-        assertThat(chickenIngredient.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(chickenIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+        assertThat(chickenIngredient.name()).isEqualTo("chicken");
+        assertThat(chickenIngredient.states().isEmpty()).isTrue();
+        assertThat(chickenIngredient.unit()).isEqualTo(null);
+        assertThat(chickenIngredient.amount()).isEqualTo(null);
+        assertThat(chickenIngredient.alternativeMeasurements().isEmpty()).isTrue();
     }
 
     @Test
@@ -400,7 +394,7 @@ public class IngredientParserTest {
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
         IngredientRequirements ingredient = parser.interpret();
-        IngredientRequirements alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
+        AlternativeIngredient alternativeIngredient = ingredient.getAlternativeIngredients().getFirst();
 
         assertThat(ingredient.getName()).isEqualTo("apple");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
@@ -409,12 +403,11 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
 
-        assertThat(alternativeIngredient.getName()).isEqualTo("pear");
-        assertThat(alternativeIngredient.getStates().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getUnit()).isEqualTo(null);
-        assertThat(alternativeIngredient.getAmount()).isEqualTo(null);
-        assertThat(alternativeIngredient.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(alternativeIngredient.getAlternativeIngredients().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.name()).isEqualTo("pear");
+        assertThat(alternativeIngredient.states().isEmpty()).isTrue();
+        assertThat(alternativeIngredient.unit()).isEqualTo(null);
+        assertThat(alternativeIngredient.amount()).isEqualTo(null);
+        assertThat(alternativeIngredient.alternativeMeasurements().isEmpty()).isTrue();
     }
 
     @Test
@@ -431,21 +424,19 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(2);
 
-        IngredientRequirements pear = ingredient.getAlternativeIngredients().get(0);
-        assertThat(pear.getName()).isEqualTo("pineapple");
-        assertThat(pear.getStates().isEmpty()).isTrue();
-        assertThat(pear.getUnit()).isEqualTo(null);
-        assertThat(pear.getAmount()).isEqualTo(null);
-        assertThat(pear.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(pear.getAlternativeIngredients().isEmpty()).isTrue();
+        AlternativeIngredient pear = ingredient.getAlternativeIngredients().get(0);
+        assertThat(pear.name()).isEqualTo("pineapple");
+        assertThat(pear.states().isEmpty()).isTrue();
+        assertThat(pear.unit()).isEqualTo(null);
+        assertThat(pear.amount()).isEqualTo(null);
+        assertThat(pear.alternativeMeasurements().isEmpty()).isTrue();
 
-        IngredientRequirements pineapple = ingredient.getAlternativeIngredients().get(1);
-        assertThat(pineapple.getName()).isEqualTo("pear");
-        assertThat(pineapple.getStates().isEmpty()).isTrue();
-        assertThat(pineapple.getUnit()).isEqualTo(null);
-        assertThat(pineapple.getAmount()).isEqualTo(null);
-        assertThat(pineapple.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(pineapple.getAlternativeIngredients().isEmpty()).isTrue();
+        AlternativeIngredient pineapple = ingredient.getAlternativeIngredients().get(1);
+        assertThat(pineapple.name()).isEqualTo("pear");
+        assertThat(pineapple.states().isEmpty()).isTrue();
+        assertThat(pineapple.unit()).isEqualTo(null);
+        assertThat(pineapple.amount()).isEqualTo(null);
+        assertThat(pineapple.alternativeMeasurements().isEmpty()).isTrue();
     }
 
     @Test
@@ -462,13 +453,12 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(1);
 
-        IngredientRequirements alternative = ingredient.getAlternativeIngredients().getFirst();
-        assertThat(alternative.getName()).isEqualTo("kaiser bun");
-        assertThat(alternative.getStates().isEmpty()).isTrue();
-        assertThat(alternative.getUnit()).isEqualTo(null);
-        assertThat(alternative.getAmount()).isEqualTo(null);
-        assertThat(alternative.getAlternativeMeasurements().isEmpty()).isTrue();
-        assertThat(alternative.getAlternativeIngredients().isEmpty()).isTrue();
+        AlternativeIngredient alternative = ingredient.getAlternativeIngredients().getFirst();
+        assertThat(alternative.name()).isEqualTo("kaiser bun");
+        assertThat(alternative.states().isEmpty()).isTrue();
+        assertThat(alternative.unit()).isEqualTo(null);
+        assertThat(alternative.amount()).isEqualTo(null);
+        assertThat(alternative.alternativeMeasurements().isEmpty()).isTrue();
     }
 
     @Test
