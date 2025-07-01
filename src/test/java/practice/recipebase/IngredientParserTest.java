@@ -170,7 +170,7 @@ public class IngredientParserTest {
     }
 
     @Test
-    public void testParseIgnorePreposition() throws WrongTokenTypeException {
+    public void testParseIgnorePrepositionPrefixAmount() throws WrongTokenTypeException {
         String ingredientString = "1/2 of an onion";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         Expression parser = new IngredientParser(tokenizer, 0).parse();
@@ -179,6 +179,21 @@ public class IngredientParserTest {
         assertThat(ingredient.getName()).isEqualTo("onion");
         assertThat(ingredient.getStates().isEmpty()).isTrue();
         assertThat(ingredient.getUnit()).isEqualTo("an");
+        assertThat(ingredient.getAmount()).isEqualTo(0.5f);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testParseIgnorePrepositionPrefixUnit() throws WrongTokenTypeException {
+        String ingredientString = "1/2 tsp of sugar";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("sugar");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo("tsp");
         assertThat(ingredient.getAmount()).isEqualTo(0.5f);
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
@@ -424,7 +439,7 @@ public class IngredientParserTest {
         assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
         assertThat(ingredient.getAlternativeIngredients().size()).isEqualTo(2);
 
-        AlternativeIngredient pear = ingredient.getAlternativeIngredients().get(0);
+        AlternativeIngredient pear = ingredient.getAlternativeIngredients().getFirst();
         assertThat(pear.name()).isEqualTo("pineapple");
         assertThat(pear.states().isEmpty()).isTrue();
         assertThat(pear.unit()).isEqualTo(null);
@@ -459,6 +474,21 @@ public class IngredientParserTest {
         assertThat(alternative.unit()).isEqualTo(null);
         assertThat(alternative.amount()).isEqualTo(null);
         assertThat(alternative.alternativeMeasurements().isEmpty()).isTrue();
+    }
+
+    @Test
+    public void testParseNoConcreteAmount() throws WrongTokenTypeException {
+        String ingredientString = "some salt";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        Expression parser = new IngredientParser(tokenizer, 0).parse();
+        IngredientRequirements ingredient = parser.interpret();
+
+        assertThat(ingredient.getName()).isEqualTo("salt");
+        assertThat(ingredient.getStates().isEmpty()).isTrue();
+        assertThat(ingredient.getUnit()).isEqualTo("some");
+        assertThat(ingredient.getAmount()).isEqualTo(null);
+        assertThat(ingredient.getAlternativeMeasurements().isEmpty()).isTrue();
+        assertThat(ingredient.getAlternativeIngredients().isEmpty()).isTrue();
     }
 
     @Test

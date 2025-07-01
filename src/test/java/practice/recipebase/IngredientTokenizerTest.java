@@ -72,7 +72,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListSimple() {
+    public void testTokenStackSimple() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("3 diced potato");
         List<Token> tokens = tokenizer.toList();
 
@@ -90,7 +90,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListCommaOperand() {
+    public void testTokenStackCommaOperand() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("3 medium onion, chopped");
         List<Token> tokens = tokenizer.toList();
 
@@ -112,7 +112,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListDifferentOrder() {
+    public void testTokenStackDifferentOrder() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("ginger, grated, 1\" knob");
         List<Token> tokens = tokenizer.toList();
 
@@ -138,7 +138,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListBindingWord() {
+    public void testTokenStackBindingWord() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("100g pork sausage (chopped into small pieces)");
         List<Token> tokens = tokenizer.toList();
 
@@ -164,7 +164,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListBrackets() {
+    public void testTokenStackBrackets() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1 medium onion (140g)");
         List<Token> tokens = tokenizer.toList();
 
@@ -194,7 +194,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListBracketsInMiddle() {
+    public void testTokenStackBracketsInMiddle() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1 (chopped) onion");
         List<Token> tokens = tokenizer.toList();
 
@@ -216,7 +216,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListAlternativeIngredient() {
+    public void testTokenStackAlternativeIngredient() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1 medium red onion (140g) or white onion");
         List<Token> tokens = tokenizer.toList();
 
@@ -250,7 +250,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListPrepositionCombinePrev() {
+    public void testTokenStackPrepositionCombinePrev() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1 tbsp honey (substitute with 1.5 tbsp sugar)");
         List<Token> tokens = tokenizer.toList();
 
@@ -290,7 +290,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListPrepositionCombinePrevAndNext() {
+    public void testTokenStackPrepositionCombinePrevAndNext() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("200g pork belly with skin scored crosswise into 1 inch cubes");
         List<Token> tokens = tokenizer.toList();
 
@@ -312,7 +312,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListIgnorePreposition() {
+    public void testTokenStackIgnorePrepositionPrefixAmount() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("1/2 of an onion");
         List<Token> tokens = tokenizer.toList();
 
@@ -334,7 +334,29 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListAlternativeWithoutBrackets() {
+    public void testTokenStackIgnorePrepositionPrefixUnit() {
+        IngredientTokenizer tokenizer = new IngredientTokenizer("1/2 tsp of sugar");
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo("sugar");
+        assertThat(tokens.get(1).value()).isEqualTo(" ");
+        assertThat(tokens.get(2).value()).isEqualTo("tsp");
+        assertThat(tokens.get(3).value()).isEqualTo(" ");
+        assertThat(tokens.get(4).value()).isEqualTo("2");
+        assertThat(tokens.get(5).value()).isEqualTo("/");
+        assertThat(tokens.get(6).value()).isEqualTo("1");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.get(3).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(4).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
+        assertThat(tokens.size()).isEqualTo(7);
+    }
+
+    @Test
+    public void testTokenStackAlternativeWithoutBrackets() {
         IngredientTokenizer tokenizer = new IngredientTokenizer("500g apple or pear");
         List<Token> tokens = tokenizer.toList();
 
@@ -356,7 +378,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListComplexAdditionalInfo() throws Exception {
+    public void testTokenStackComplexAdditionalInfo() throws Exception {
         String ingredientString = "400g peeled apple (14.1 ounces) or 500g peeled pear (17.6 ounces)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -427,7 +449,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListSeriesOfAlternatives() throws Exception {
+    public void testTokenStackSeriesOfAlternatives() throws Exception {
         String ingredientString = "3.5 kg minced lamb or beef or chicken";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -462,7 +484,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListMultipleStates() throws WrongTokenTypeException {
+    public void testTokenStackMultipleStates() throws WrongTokenTypeException {
         String ingredientString = "1 peeled apple, finely diced";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -486,7 +508,7 @@ public class IngredientTokenizerTest {
 
 
     @Test
-    public void testToListMultipleMeasurements() throws WrongTokenTypeException {
+    public void testTokenStackMultipleMeasurements() throws WrongTokenTypeException {
         String ingredientString = "1 apple (200g, 7oz)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -522,7 +544,7 @@ public class IngredientTokenizerTest {
 
 
     @Test
-    public void testToListMeasurementRange() throws WrongTokenTypeException {
+    public void testTokenStackMeasurementRange() throws WrongTokenTypeException {
         String ingredientString = "1-3 apples";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -542,7 +564,7 @@ public class IngredientTokenizerTest {
 
 
     @Test
-    public void testToListHybridFraction() throws WrongTokenTypeException {
+    public void testTokenStackHybridFraction() throws WrongTokenTypeException {
         String ingredientString = "1+1/3 apples";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -566,7 +588,7 @@ public class IngredientTokenizerTest {
 
 
     @Test
-    public void testToListUglyFraction() throws WrongTokenTypeException {
+    public void testTokenStackUglyFraction() throws WrongTokenTypeException {
         String ingredientString = "1.1+1.5/3 apples";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -597,7 +619,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListOrBetweenStates() throws WrongTokenTypeException {
+    public void testTokenStackOrBetweenStates() throws WrongTokenTypeException {
         String ingredientString = "1 chopped or diced apple";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -620,7 +642,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListOrBetweenStatesComma() throws WrongTokenTypeException {
+    public void testTokenStackOrBetweenStatesComma() throws WrongTokenTypeException {
         String ingredientString = "1 apple, chopped or diced";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -643,7 +665,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListOrInBrackets() throws WrongTokenTypeException {
+    public void testTokenStackOrInBrackets() throws WrongTokenTypeException {
         String ingredientString = "1 apple (or pear)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -668,7 +690,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListDoubleOrInBrackets() throws WrongTokenTypeException {
+    public void testTokenStackDoubleOrInBrackets() throws WrongTokenTypeException {
         String ingredientString = "1 apple (or pear or pineapple)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -697,7 +719,7 @@ public class IngredientTokenizerTest {
     }
 
     @Test
-    public void testToListAlternativeIngredientWithoutToken() throws WrongTokenTypeException {
+    public void testTokenStackAlternativeIngredientWithoutToken() throws WrongTokenTypeException {
         String ingredientString = "1 bread bun (kaiser bun)";
         IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
         List<Token> tokens = tokenizer.toList();
@@ -717,5 +739,20 @@ public class IngredientTokenizerTest {
         assertThat(tokens.get(5).type()).isEqualTo(TokenType.OPERAND);
         assertThat(tokens.get(6).type()).isEqualTo(TokenType.QUANTITY);
         assertThat(tokens.size()).isEqualTo(7);
+    }
+
+    @Test
+    public void testTokenStackNoConcreteAmount() throws WrongTokenTypeException {
+        String ingredientString = "some salt";
+        IngredientTokenizer tokenizer = new IngredientTokenizer(ingredientString);
+        List<Token> tokens = tokenizer.toList();
+
+        assertThat(tokens.get(0).value()).isEqualTo("salt");
+        assertThat(tokens.get(1).value()).isEqualTo(" ");
+        assertThat(tokens.get(2).value()).isEqualTo("some");
+        assertThat(tokens.get(0).type()).isEqualTo(TokenType.OTHER);
+        assertThat(tokens.get(1).type()).isEqualTo(TokenType.OPERAND);
+        assertThat(tokens.get(2).type()).isEqualTo(TokenType.UNIT);
+        assertThat(tokens.size()).isEqualTo(3);
     }
 }

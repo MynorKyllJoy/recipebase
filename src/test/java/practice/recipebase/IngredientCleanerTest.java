@@ -103,7 +103,15 @@ public class IngredientCleanerTest {
     public void testReplaceToWithMinusForRanges() {
         String testString = "100 to 200g chicken stock";
         String expected = "100-200g chicken stock";
-        String result = new IngredientCleaner(testString).replaceToWithMinusForRanges().getCleanedIngredient();
+        String result = new IngredientCleaner(testString).replaceWordWithMinusForRanges().getCleanedIngredient();
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    public void testReplaceOrWithMinusForRanges() {
+        String testString = "1 or 2 tsp chili flakes";
+        String expected = "1-2 tsp chili flakes";
+        String result = new IngredientCleaner(testString).replaceWordWithMinusForRanges().getCleanedIngredient();
         assertThat(result).isEqualTo(expected);
     }
 }
