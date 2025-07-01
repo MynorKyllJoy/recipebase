@@ -8,8 +8,8 @@ public class AlternativeExpression implements Expression {
     }
 
     @Override
-    public IngredientRequirements interpret() {
-        IngredientRequirements ingredient = expression.interpret();
+    public IngredientRequirementMaker interpret() {
+        IngredientRequirementMaker ingredient = expression.interpret();
         return ingredient.asAlternativeIngredient();
     }
 }

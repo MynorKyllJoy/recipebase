@@ -12,9 +12,9 @@ public class OperandExpression implements Expression {
     }
 
     @Override
-    public IngredientRequirements interpret() {
-        IngredientRequirements left = leftExpr.interpret();
-        IngredientRequirements right = rightExpr.interpret();
+    public IngredientRequirementMaker interpret() {
+        IngredientRequirementMaker left = leftExpr.interpret();
+        IngredientRequirementMaker right = rightExpr.interpret();
 
         // number handling
         switch (operand.value()) {

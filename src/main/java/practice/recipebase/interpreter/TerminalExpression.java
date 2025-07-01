@@ -8,8 +8,8 @@ public class TerminalExpression implements Expression {
     }
 
     @Override
-    public IngredientRequirements interpret() {
-        IngredientRequirements ingredient = new IngredientRequirements();
+    public IngredientRequirementMaker interpret() {
+        IngredientRequirementMaker ingredient = new IngredientRequirementMaker();
         ingredient.setValue(token);
         return ingredient;
     }

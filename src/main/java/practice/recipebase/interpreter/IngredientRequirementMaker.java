@@ -6,13 +6,10 @@ import practice.recipebase.TokenType;
 import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Requirement;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
-public class IngredientRequirements {
+public class IngredientRequirementMaker {
     private String name;
     @Setter
     private String unit;
@@ -22,7 +19,7 @@ public class IngredientRequirements {
     private final List<Measurement> alternativeMeasurements;
     private final List<AlternativeIngredient> alternativeIngredients;
 
-    public IngredientRequirements() {
+    public IngredientRequirementMaker() {
         this.name = null;
         this.unit = null;
         this.amount = null;
@@ -43,7 +40,7 @@ public class IngredientRequirements {
         }
     }
 
-    public IngredientRequirements merge(IngredientRequirements ingredient) {
+    public IngredientRequirementMaker merge(IngredientRequirementMaker ingredient) {
         // an overlap denotes that the member variable of this object and the other object are not null
         if(this.name != null && ingredient.name != null) {
             // if the overlap is in the name, it has to be an alternative ingredient
@@ -70,10 +67,10 @@ public class IngredientRequirements {
         return new AlternativeIngredient(this.name, this.unit, this.amount, this.states, this.alternativeMeasurements);
     }
 
-    public IngredientRequirements asAlternativeIngredient() {
+    public IngredientRequirementMaker asAlternativeIngredient() {
         // the alternative ingredients in the final IngredientRequirements object should not have alternative
         // ingredients themselves
-        IngredientRequirements altIngredient = new IngredientRequirements();
+        IngredientRequirementMaker altIngredient = new IngredientRequirementMaker();
         altIngredient.addAllAlternativeIngredients(this.getAlternativeIngredients());
         this.alternativeIngredients.clear();
         altIngredient.addAlternativeIngredient(this.toAlternativeIngredient());
@@ -90,21 +87,25 @@ public class IngredientRequirements {
 
     public List<Requirement> getRequirements() {
         List<Requirement> requirements = new ArrayList<>();
-        requirements.add(new Requirement(this.states, this.unit, this.amount, new Ingredient(this.name)));
+        // sometimes no specific amount is given. In that case use "some" as unit with an amount of 1
+        String mainUnit = this.amount != null ? this.unit : "some";
+        Double mainAmount = this.amount == null ? 1.0d : this.amount;
+
+        requirements.add(new Requirement(this.states, mainUnit, mainAmount, new Ingredient(this.name)));
 
         requirements.addAll(this.createRequirementsWithAltMeasurements(this.states, this.name));
 
         for(AlternativeIngredient altIngredient : this.alternativeIngredients) {
             // ERROR: What about shared states?
-            String unit = altIngredient.unit() != null ? altIngredient.unit() : this.unit;
-            Double amount = altIngredient.amount() != null ? altIngredient.amount() : this.amount;
+            String altUnit = altIngredient.unit() != null ? altIngredient.unit() : mainUnit;
+            Double altAmount = altIngredient.amount() != null ? altIngredient.amount() : mainAmount;
             if(altIngredient.amount() == null) {
                 requirements.addAll(
                         this.createRequirementsWithAltMeasurements(altIngredient.states(), altIngredient.name()))
                 ;
             }
             requirements.add(new Requirement(
-                    altIngredient.states(), unit, amount, new Ingredient(altIngredient.name()))
+                    altIngredient.states(), altUnit, altAmount, new Ingredient(altIngredient.name()))
             );
         }
 
