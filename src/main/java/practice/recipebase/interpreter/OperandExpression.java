@@ -20,26 +20,27 @@ public class OperandExpression implements Expression {
 
         // number handling
         switch (operand.value()) {
-            case ".": {
+            case "." -> {
                 // create double number, the amounts before combining should be integers
                 String combinedDouble = left.getAmount().intValue() + "." + right.getAmount().intValue();
                 left.setValue(new Token(combinedDouble, TokenType.QUANTITY));
                 right.setValue(new Token(null, TokenType.QUANTITY));
             }
-            case "/": {
+            case "/" -> {
                 // divide, the amounts before combining should be integers
                 double combinedDouble = left.getAmount() / right.getAmount();
                 left.setValue(new Token(Double.toString(combinedDouble), TokenType.QUANTITY));
                 right.setValue(new Token(null, TokenType.QUANTITY));
             }
-            case "+": {
+            case "+" -> {
                 // for 1+1/2, "/" has higher precedence, so it won't calculate 1+1 first
                 double combinedDouble = left.getAmount() + right.getAmount();
                 left.setValue(new Token(Double.toString(combinedDouble), TokenType.QUANTITY));
                 right.setValue(new Token(null, TokenType.QUANTITY));
             }
-            case "-":  // minus not hyphen, for a range, add minimum and maximum as measurements
-                    left.setValue(new Token(right.getUnit(), TokenType.UNIT));
+            case "-" -> {  // minus not hyphen, for a range, add minimum and maximum as measurements
+                left.setValue(new Token(right.getUnit(), TokenType.UNIT));
+            }
         }
         // merge the one without name into the one with name. if both have a name, prioritise the one with amount
         if(right.getName() == null || (right.getAmount() == null && left.getName() != null)) {
