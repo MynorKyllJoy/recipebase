@@ -64,7 +64,7 @@ public class IngredientTokenizer {
                      cut into 4 quarters, scored crosswise into 1 inch cubes, etc.
                     */
                     reversedTokens.pop();
-                    while (nextToken.type() != currToken.type() && index < patterns.size()-1) {
+                    while (nextToken.type() != prevToken.type() && index < patterns.size()-1) {
                         nextToken = this.createToken(patterns.get(index+1));
                         combinedTerm.append(" ").append(nextToken.value());
                         index += 1;

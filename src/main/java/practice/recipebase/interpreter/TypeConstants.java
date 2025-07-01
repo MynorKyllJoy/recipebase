@@ -15,6 +15,7 @@ public final class TypeConstants {
             "chunks",
             "coarse(ly)?",
             "cold",
+            "(un)cooked",
             "crosswise",
             "crumbled",
             "cube(d|s)?",
@@ -72,12 +73,12 @@ public final class TypeConstants {
             "a", // replace with 1
             "an", // replace with 1
             // replace with some
-            /*"drizzle",
+            "drizzle",
             "handful",
             "portion(s)?",
             "block(s)?",
             "spoonful(s)?",
-            "sprinkle(s)?",*/
+            "sprinkle(s)?",
             "some",
     };
     static String[] PREPOSITION = {
