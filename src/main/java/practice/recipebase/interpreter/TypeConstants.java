@@ -60,6 +60,7 @@ public final class TypeConstants {
     };
 
     static String[] UNITS = {
+            // replace long version with short form
             "tbsp", "tablespoon(s)?",
             "tsp", "teaspoon(s)?",
             "(m)?l", "(mili)?lit(er|re)s?", "cc",
@@ -68,14 +69,15 @@ public final class TypeConstants {
             "lb", "pound(s)?",
             "(k)?g", "(kilo)?gram(s)?",
             "inch(es)?",
-            "a",
-            "an",
-            "drizzle",
+            "a", // replace with 1
+            "an", // replace with 1
+            // replace with some
+            /*"drizzle",
             "handful",
             "portion(s)?",
             "block(s)?",
             "spoonful(s)?",
-            "sprinkle(s)?",
+            "sprinkle(s)?",*/
             "some",
     };
     static String[] PREPOSITION = {

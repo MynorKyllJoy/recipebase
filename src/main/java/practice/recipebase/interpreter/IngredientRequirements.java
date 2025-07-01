@@ -20,7 +20,7 @@ public class IngredientRequirements {
     private Double amount;
     private final Set<String> states;
     private final List<Measurement> alternativeMeasurements;
-    private final List<IngredientRequirements> alternativeIngredients;
+    private final List<AlternativeIngredient> alternativeIngredients;
 
     public IngredientRequirements() {
         this.name = null;
@@ -47,7 +47,7 @@ public class IngredientRequirements {
         // an overlap denotes that the member variable of this object and the other object are not null
         if(this.name != null && ingredient.name != null) {
             // if the overlap is in the name, it has to be an alternative ingredient
-            this.alternativeIngredients.add(ingredient);
+            this.alternativeIngredients.add(ingredient.toAlternativeIngredient());
         } else if(this.amount != null && ingredient.amount != null) {
             // if there is an overlap in amount, it is additional information
             // it should not be possible for unit overlap to occur, unless an amount exists
@@ -66,21 +66,25 @@ public class IngredientRequirements {
         return this;
     }
 
+    public AlternativeIngredient toAlternativeIngredient() {
+        return new AlternativeIngredient(this.name, this.unit, this.amount, this.states, this.alternativeMeasurements);
+    }
+
     public IngredientRequirements asAlternativeIngredient() {
         // the alternative ingredients in the final IngredientRequirements object should not have alternative
         // ingredients themselves
         IngredientRequirements altIngredient = new IngredientRequirements();
         altIngredient.addAllAlternativeIngredients(this.getAlternativeIngredients());
         this.alternativeIngredients.clear();
-        altIngredient.addAlternativeIngredient(this);
+        altIngredient.addAlternativeIngredient(this.toAlternativeIngredient());
         return altIngredient;
     }
 
-    public void addAlternativeIngredient(IngredientRequirements alternativeIngredient) {
+    public void addAlternativeIngredient(AlternativeIngredient alternativeIngredient) {
         this.alternativeIngredients.add(alternativeIngredient);
     }
 
-    public void addAllAlternativeIngredients(List<IngredientRequirements> alternativeIngredients) {
+    public void addAllAlternativeIngredients(List<AlternativeIngredient> alternativeIngredients) {
         this.alternativeIngredients.addAll(alternativeIngredients);
     }
 
@@ -90,18 +94,17 @@ public class IngredientRequirements {
 
         requirements.addAll(this.createRequirementsWithAltMeasurements(this.states, this.name));
 
-        for(IngredientRequirements altIngredient : this.alternativeIngredients) {
+        for(AlternativeIngredient altIngredient : this.alternativeIngredients) {
             // ERROR: What about shared states?
-            if(altIngredient.getAmount() == null) {
-                altIngredient.amount = this.amount;
-                altIngredient.unit = this.unit;
+            String unit = altIngredient.unit() != null ? altIngredient.unit() : this.unit;
+            Double amount = altIngredient.amount() != null ? altIngredient.amount() : this.amount;
+            if(altIngredient.amount() == null) {
                 requirements.addAll(
-                        this.createRequirementsWithAltMeasurements(altIngredient.states, altIngredient.name))
+                        this.createRequirementsWithAltMeasurements(altIngredient.states(), altIngredient.name()))
                 ;
             }
             requirements.add(new Requirement(
-                    altIngredient.getStates(), altIngredient.getUnit(), altIngredient.getAmount(),
-                    new Ingredient(altIngredient.getName()))
+                    altIngredient.states(), unit, amount, new Ingredient(altIngredient.name()))
             );
         }
 
