@@ -1,6 +1,7 @@
 package practice.recipebase.interpreter;
 
 import lombok.Getter;
+import lombok.Setter;
 import practice.recipebase.TokenType;
 import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Requirement;
@@ -13,7 +14,9 @@ import java.util.Set;
 @Getter
 public class IngredientRequirements {
     private String name;
+    @Setter
     private String unit;
+    @Setter
     private Double amount;
     private final Set<String> states;
     private final List<Measurement> alternativeMeasurements;
@@ -36,15 +39,16 @@ public class IngredientRequirements {
             case TokenType.STATE -> this.states.add(value);
             case TokenType.UNIT -> this.unit = value;
             case TokenType.OTHER -> this.name = value;
-            case TokenType.QUANTITY -> this.amount = this.setAmount(token.value());
+            case TokenType.QUANTITY -> this.amount = value != null ? Double.parseDouble(value) : null;
         }
     }
 
     public IngredientRequirements merge(IngredientRequirements ingredient) {
-        if(this.hasOverlap(this.name, ingredient.name)) {
-            // if the overlap is in the name, it has to be an alternative ingredien
+        // an overlap denotes that the member variable of this object and the other object are not null
+        if(this.name != null && ingredient.name != null) {
+            // if the overlap is in the name, it has to be an alternative ingredient
             this.alternativeIngredients.add(ingredient);
-        } else if(this.hasOverlap(this.amount, ingredient.amount)) {
+        } else if(this.amount != null && ingredient.amount != null) {
             // if there is an overlap in amount, it is additional information
             // it should not be possible for unit overlap to occur, unless an amount exists
             // since the parse should always merge the unit with its respective amount first
@@ -52,9 +56,9 @@ public class IngredientRequirements {
             this.alternativeMeasurements.addAll(ingredient.getAlternativeMeasurements());
         } else {
             // no overlap, so merge
-            this.name = this.getValueOrNull(this.name, ingredient.name);
-            this.unit = this.getValueOrNull(this.unit, ingredient.unit);
-            this.amount = this.getValueOrNull(this.amount, ingredient.amount);
+            this.name = this.name != null ? this.name : ingredient.name;
+            this.unit = this.unit != null ? this.unit : ingredient.unit;
+            this.amount = this.amount != null ? this.amount : ingredient.amount;
             this.states.addAll(ingredient.states);
             this.alternativeIngredients.addAll(ingredient.alternativeIngredients);
             this.alternativeMeasurements.addAll(ingredient.alternativeMeasurements);
@@ -112,33 +116,5 @@ public class IngredientRequirements {
             ));
         }
         return requirements;
-    }
-
-    private Double setAmount(String value) {
-        if(value == null)
-            return null;
-        return Double.parseDouble(value);
-    }
-
-    private boolean hasOverlap(String thisValue, String otherValue) {
-        return thisValue != null && otherValue != null;
-    }
-
-    private boolean hasOverlap(Double thisValue, Double otherValue) {
-        return thisValue != null && otherValue != null;
-    }
-
-    private String getValueOrNull(String thisValue, String otherValue) {
-        if(thisValue != null) {
-            return thisValue;
-        }
-        return otherValue;
-    }
-
-    private Double getValueOrNull(Double thisValue, Double otherValue) {
-        if(thisValue != null) {
-            return thisValue;
-        }
-        return otherValue;
     }
 }
