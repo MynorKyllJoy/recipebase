@@ -9,7 +9,9 @@
 - [] Ingredient-Recipe-Relationship
     - [x] Extract quantities, states, alternatives, and additional information from scrapes ingredient listings.
     - [x] Integrate Requirement relationship class into Recipe and Ingredient
-    - [] add amounts to alternative if there are NONE!
+    - [] it is possible for some IngredientRequirements to be empty resulting in a null ingredient in db!
+    - [x] add amounts to alternative if there are NONE!
+    - [] deal with ingredients that have no amounts and units given in recipe, e.g.: salt to taste
     - [] add the actual list of ingredients with info to recipe, so they can be displayed too
     - [] A recipe can be an ingredient too (like bread), inheritance?
     - [] Superclasses? Sugar as super class for white and brown sugar?
@@ -23,6 +25,7 @@
       - [] try to shorten the for loop
     - [] parser:
       - [] try to shorten the parse function
+    - [x] the interpret function and the IngredientRequirement class is too complex, SIMPLIFY!
     - [] IngredientCleaner
       - [x] remove "or more", "about", "around", "other", "if not", "I used...", "you can...", "see notes", etc.
       - [] handle something like: "pork shoulder or belly", so there is no ingredient with just belly
