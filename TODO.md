@@ -3,6 +3,7 @@
     - [] improve comments
     - [] write documentation :(
     - [] Search for "ERROR" and fix edge cases
+    - [] project is getting bigger than initially expected, start using pull request instead of just pushing
 - [] Exception Handling
     - [] Search for "EX" comments
     - [] Proper exception handling in controllers
@@ -34,6 +35,8 @@
       - [x] ugly fractions: 1 1/2 etc.
       - [x] update constants
       - [] deal with overlap with types, e.g.: sprinkles as ingredient and sprinkles as unit
+- [] test
+  - [] clean test code
 - [] Additional Features
     - [] Upload/Create own recipes
     - [] Search recipes via list of ingredients and quantities
