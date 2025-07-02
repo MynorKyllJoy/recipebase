@@ -1,4 +1,4 @@
-package practice.recipebase;
+package practice.recipebase.interpreter;
 
 import org.junit.jupiter.api.Test;
 import practice.recipebase.misc.IngredientCleaner;

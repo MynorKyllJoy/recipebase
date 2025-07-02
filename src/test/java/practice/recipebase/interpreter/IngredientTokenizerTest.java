@@ -1,9 +1,9 @@
-package practice.recipebase;
+package practice.recipebase.interpreter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
+import practice.recipebase.TokenType;
 import practice.recipebase.exceptions.WrongTokenTypeException;
-import practice.recipebase.interpreter.*;
 
 import java.util.List;
 
