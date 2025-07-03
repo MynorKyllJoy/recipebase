@@ -25,7 +25,7 @@ abstract class RecipeTemplate {
             List<Requirement> requiredIngredients = this.getRequirements(ingredientInfos);
             // get instruction information
             List<String> instructions = this.getInstructions();
-            return new Recipe(title, description, source, requiredIngredients, instructions);
+            return new Recipe(title, description, source, requiredIngredients, instructions, ingredientInfos);
         } catch (IOException ex) {
             return null;
         }

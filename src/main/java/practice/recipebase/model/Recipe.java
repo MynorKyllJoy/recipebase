@@ -23,19 +23,21 @@ public class Recipe {
     private String description;
     private String source;
     private List<String> instructions;
+    private List<String> ingredientInfos;
     @Relationship(type="REQUIREMENT", direction=Relationship.Direction.OUTGOING)
-    private List<Requirement> requiredIngredients;
+    private List<Requirement> requirements;
 
     public Recipe(String title, String description, String source,
-                  List<Requirement> requiredIngredients, List<String> instructions) {
+                  List<Requirement> requiredIngredients, List<String> instructions, List<String> ingredientInfos) {
         this.title = title;
         this.description = description;
         this.source = source;
         this.instructions = instructions;
-        this.requiredIngredients = requiredIngredients;
+        this.requirements = requiredIngredients;
+        this.ingredientInfos = ingredientInfos;
     }
 
     public Set<String> getIngredientNames() {
-        return requiredIngredients.stream().map(i -> i.getIngredient().getName()).collect(Collectors.toSet());
+        return requirements.stream().map(i -> i.getIngredient().getName()).collect(Collectors.toSet());
     }
 }

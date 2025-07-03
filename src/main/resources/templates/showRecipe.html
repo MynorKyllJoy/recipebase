@@ -10,8 +10,8 @@
   <h1>[[${recipe.getTitle()}]]</h1>
   <p>[[${recipe.getDescription()}]]</p>
   <p>[[${recipe.getSource()}]]</p>
-  <ul th:each="requirement:${recipe.getRequiredIngredients()}">
-    <li>[[${requirement.getIngredient().getName()}]]</li>
+  <ul th:each="ingredientInfo:${recipe.getIngredientInfos()}">
+    <li>[[${ingredientInfo}]]</li>
   </ul>
   <div th:if="${recipe.getInstructions().size() > 1}">
     <table>
