@@ -3,17 +3,18 @@
     - [] improve comments
     - [] write documentation :(
     - [] Search for "ERROR" and fix edge cases
-    - [] project is getting bigger than initially expected, start using pull request instead of just pushing
+    - [x] project is getting bigger than initially expected, start using pull request instead of just pushing
+    - [] create ci pipeline
 - [] Exception Handling
     - [] Search for "EX" comments
     - [] Proper exception handling in controllers
 - [] Ingredient-Recipe-Relationship
     - [x] Extract quantities, states, alternatives, and additional information from scrapes ingredient listings.
     - [x] Integrate Requirement relationship class into Recipe and Ingredient
-    - [] it is possible for some IngredientRequirements to be empty resulting in a null ingredient in db!
+    - [x] it is possible for some IngredientRequirements to be empty resulting in a null ingredient in db!
     - [x] add amounts to alternative if there are NONE!
-    - [] deal with ingredients that have no amounts and units given in recipe, e.g.: salt to taste
-    - [] add the actual list of ingredients with info to recipe, so they can be displayed too
+    - [x] deal with ingredients that have no amounts and units given in recipe, e.g.: salt to taste
+    - [x] add the actual list of ingredients with info to recipe, so they can be displayed too
     - [] A recipe can be an ingredient too (like bread), inheritance?
     - [] Superclasses? Sugar as super class for white and brown sugar?
 - [] Data access
@@ -31,10 +32,11 @@
       - [x] remove "or more", "about", "around", "other", "if not", "I used...", "you can...", "see notes", etc.
       - [] handle something like: "pork shoulder or belly", so there is no ingredient with just belly
       - [] handle something like: "a combination of x and y"
-      - [] throw exception if ingredient has no name
       - [x] ugly fractions: 1 1/2 etc.
       - [x] update constants
       - [] deal with overlap with types, e.g.: sprinkles as ingredient and sprinkles as unit
+- [] misc
+  - [] Move useragent out of wrapper 
 - [] test
   - [] clean test code
 - [] Additional Features
