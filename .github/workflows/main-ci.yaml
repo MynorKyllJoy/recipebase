@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v4.2.3
         with:
           path: ~/.gradle
-          key: ${{ runner.os }}-gradle-${{ hashFiles("**/build.gradle*") }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle*') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Give Gradlew Permission
         run: chmod +x gradlew
