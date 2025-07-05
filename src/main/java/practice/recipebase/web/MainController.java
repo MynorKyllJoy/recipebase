@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
+import practice.recipebase.misc.SelectedIngredientWrapper;
+import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Recipe;
+import practice.recipebase.service.IngredientService;
 import practice.recipebase.service.RecipeService;
 
 import java.io.IOException;
@@ -19,6 +22,9 @@ import java.util.List;
 public class MainController {
     @Autowired
     RecipeService recipeService;
+
+    @Autowired
+    IngredientService ingredientService;
 
     @GetMapping("/")
     public String index() {
@@ -55,5 +61,18 @@ public class MainController {
         Recipe recipe = recipeService.getRecipeById(recipeId);
         model.addAttribute("recipe", recipe);
         return "showRecipe";
+    }
+
+    @GetMapping("/searchRecipe")
+    public String searchRecipe(Model model) {
+        List<Ingredient> allIngredients = ingredientService.getAllIngredients();
+        model.addAttribute("selectedIngredientWrapper", new SelectedIngredientWrapper());
+        model.addAttribute("allIngredients", allIngredients);
+        return "searchRecipe";
+    }
+
+    @PostMapping("/searchRecipe")
+    public String showFilteredRecipes(@RequestParam("selectedIngredientWrapper") SelectedIngredientWrapper wrapper) {
+        return "showFilteredRecipeList";
     }
 }

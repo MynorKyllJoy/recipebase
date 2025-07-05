@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Index</title>
+</head>
+<body>
+<div th:replace="~{fragments/header}"></div>
+<div>
+  <form th:object="${selectedIngredientWrapper}" method="post">
+    <div th:each="ingredient : ${allIngredients}">
+      <input type="checkbox" name="selectedIngredients"
+             th:text="${ingredient.getName()}"
+             th:value="${ingredient.getName()}"
+             th:field="*{selectedIngredients}"
+      ><br>
+    </div>
+    <input type="submit" value="Search">
+  </form>
+</div>
+</body>
+</html>
