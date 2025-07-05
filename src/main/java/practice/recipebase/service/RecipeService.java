@@ -11,6 +11,8 @@ import practice.recipebase.model.Recipe;
 import practice.recipebase.repository.RecipeRepository;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,5 +43,9 @@ public class RecipeService {
 
     public List<Recipe> getRecipeBySource(String url) {
         return recipeRepository.findRecipeBySource(url);
+    }
+
+    public List<Recipe> getRecipeByConditions(List<String> ingredientNames) {
+        return recipeRepository.findRecipeByIngredientRequirements(ingredientNames);
     }
 }
