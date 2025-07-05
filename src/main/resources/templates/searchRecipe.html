@@ -7,7 +7,7 @@
 <body>
 <div th:replace="~{fragments/header}"></div>
 <div>
-  <form th:object="${selectedIngredientWrapper}" method="post">
+  <form th:object="${selectedIngredientWrapper}" method="post" th:action="@{/showFilteredRecipes}">
     <div th:each="ingredient : ${allIngredients}">
       <input type="checkbox" name="selectedIngredients"
              th:text="${ingredient.getName()}"

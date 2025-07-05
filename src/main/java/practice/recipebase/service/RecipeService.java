@@ -13,7 +13,9 @@ import practice.recipebase.repository.RecipeRepository;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RecipeService {
@@ -45,7 +47,7 @@ public class RecipeService {
         return recipeRepository.findRecipeBySource(url);
     }
 
-    public List<Recipe> getRecipeByConditions(List<String> ingredientNames) {
-        return recipeRepository.findRecipeByIngredientRequirements(ingredientNames);
+    public Set<Recipe> getRecipeByConditions(List<String> ingredientNames) {
+        return new HashSet<>(recipeRepository.findRecipeByIngredientRequirements(ingredientNames));
     }
 }
