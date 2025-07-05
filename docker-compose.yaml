@@ -10,21 +10,31 @@ services:
       - ./neo4j_db/plugins:/plugins
     environment:
       - NEO4J_AUTH_FILE=/run/secrets/neo4j_auth_file
+      - NEO4J_PLUGINS=["apoc"]
     ports:
       - "7474:7474"
       - "7687:7687"
     restart: always
     secrets:
       - neo4j_auth_file
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 1s
+      timeout: 10s
+      retries: 20
+      start_period: 5s
   spring-recipebase:
     image: "recipebase:0.0.1"
     container_name: spring-recipebase
     ports:
       - "8080:8080"
+    depends_on:
+      neo4j-db:
+        condition: service_healthy
+    links:
+      - neo4j-db
     env_file:
       - "secret/docker_spring.env"
-    depends_on:
-      - neo4j-db
 secrets:
   neo4j_auth_file:
     file: ./secret/neo4j_auth_file.txt
