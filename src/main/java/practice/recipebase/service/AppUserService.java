@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import practice.recipebase.model.AppUser;
+import practice.recipebase.model.AppUserRole;
 import practice.recipebase.repository.UserRepository;
 
 @Service
@@ -15,6 +16,7 @@ public class AppUserService {
     public void register(AppUser user) {
         String encodedPwd = encoder.encode(user.getPassword());
         user.setPassword(encodedPwd);
+        user.setRole(AppUserRole.USER);
         userRepository.save(user);
     }
 }

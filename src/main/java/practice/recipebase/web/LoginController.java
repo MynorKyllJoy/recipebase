@@ -2,6 +2,7 @@ package practice.recipebase.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,17 +15,14 @@ public class LoginController {
     AppUserService userService;
 
     @GetMapping("/login")
-    public String showLoginForm() {
+    public String showLoginForm(Model model) {
+        model.addAttribute("user", new AppUser());
         return "login";
     }
 
-    @PostMapping("/login")
-    public String loginUser() {
-        return "index";
-    }
-
     @GetMapping("/register")
-    public String showRegistrationForm() {
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new AppUser());
         return "register";
     }
 
