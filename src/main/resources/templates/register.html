@@ -5,7 +5,7 @@
   <title>Index</title>
 </head>
 <body>
-<div>
+<div th:replace="~{fragments/header}"></div>
   <form th:action="@{/register}" th:object="${user}" method="post">
     <label>
       Name
