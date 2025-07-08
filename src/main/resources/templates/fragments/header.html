@@ -13,7 +13,10 @@
     <a href="#" th:href="@{/searchRecipe}">Search Recipe</a>
     <a href="#" th:href="@{/login}">Login</a>
     <a href="#" th:href="@{/register}">Register</a>
-    <a href="#" th:href="@{/logout}">Logout</a>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    </form>
 </div>
 </body>
 </html>
