@@ -1,7 +1,6 @@
-package practice.recipebase.interpreter;
+package practice.recipebase.misc;
 
 import org.junit.jupiter.api.Test;
-import practice.recipebase.misc.IngredientCleaner;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

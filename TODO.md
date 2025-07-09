@@ -1,48 +1,41 @@
-## TODO
-- [] chores:
-    - [] improve comments
-    - [] write documentation :(
-    - [] Search for "ERROR" and fix edge cases
-    - [x] project is getting bigger than initially expected, start using pull request instead of just pushing
-    - [] create ci pipeline
-- [] Exception Handling
-    - [] Search for "EX" comments
-    - [] Proper exception handling in controllers
-- [] Ingredient-Recipe-Relationship
-    - [x] Extract quantities, states, alternatives, and additional information from scrapes ingredient listings.
-    - [x] Integrate Requirement relationship class into Recipe and Ingredient
-    - [x] it is possible for some IngredientRequirements to be empty resulting in a null ingredient in db!
-    - [x] add amounts to alternative if there are NONE!
-    - [x] deal with ingredients that have no amounts and units given in recipe, e.g.: salt to taste
-    - [x] add the actual list of ingredients with info to recipe, so they can be displayed too
-    - [] A recipe can be an ingredient too (like bread), inheritance?
-    - [] Superclasses? Sugar as super class for white and brown sugar?
-- [] Data access
-    - [x] integrate neo4j database into spring application
-    - [x] save recipes and ingredients in database
-    - [x] add repositories
-    - [] add query with quantity condition
-- [] interpreter
-    - [] tokenizer:
-      - [] try to shorten the for loop
-    - [] parser:
-      - [] try to shorten the parse function
-    - [x] the interpret function and the IngredientRequirement class is too complex, SIMPLIFY!
-    - [] IngredientCleaner
-      - [x] remove "or more", "about", "around", "other", "if not", "I used...", "you can...", "see notes", etc.
-      - [] handle something like: "pork shoulder or belly", so there is no ingredient with just belly
-      - [] handle something like: "a combination of x and y"
-      - [x] ugly fractions: 1 1/2 etc.
-      - [x] update constants
-      - [] deal with overlap with types, e.g.: sprinkles as ingredient and sprinkles as unit
-- [] misc
-  - [] Move useragent out of wrapper 
-- [] test
-  - [] clean test code
-- [] Additional Features
-    - [] Upload/Create own recipes
-    - [] Search recipes via list of ingredients and quantities
-    - [] Grocery list creation for selected recipes
-    - Random Ideas:
-      - [] States for the two above points?
-      - [] Multiple users
+# TODO
+A list of features that have been or have yet to be implemented and chores to complete.
+
+## Features:
+- [x] scrape the ld+json data from a recipe website URL
+- [x] get instructions and ingredient infos from ld+json
+- [x] extract amount, unit, state and ingredient name for each listed ingredient info
+- [ ] clean more complex ingredient info
+  - [ ] "pork belly or shoulder" add pork in front of shoulder
+  - [ ] handle something like: "a combination of x and y"
+  - [ ] deal with overlap with types, e.g.: sprinkles as ingredient and sprinkles as unit
+  - [ ] swap all units to their abbreviations, e.g: ounces -> oz
+- [x] save ingredients, recipe and requirements into Neo4j DB
+  - [ ] replace the temporary TypeConstants class
+  - [ ] deal with states
+  - [ ] add converter for gram to ounce, for cups to ml and only save one of these units
+  - [ ] improve tokenizer by using a mixture between a state machine and a builder instead of a simple for loop 
+       (might remove the need for the IngredientCleaner)
+- [x] add users
+  - [x] password encryption 
+  - [ ] add reviews 
+  - [ ] upload/save own recipes 
+  - [x] fix logout
+- [ ] filtered recipe search
+  - [x] filter for recipes that use a set of ingredients
+  - [ ] extend filtering to use amounts and units
+  - [ ] extend filtering to use states
+  - [ ] extend filtering to use at least this amount of a certain ingredient
+- [ ] move hardcoded userAgent string in RecipeSiteRequestAdapter
+- [ ] actual exception handling
+- [ ] react frontend?
+- [ ] optimize 
+- [ ] create grocery list for set of selected recipes
+- [ ] a dish can be an ingredient to (e.g.: bread), link to recipes for said dish (inheritance?)
+- [ ] Superclasses? Sugar as super class for white and brown sugar?
+## chores:
+  - [ ] write documentation
+  - [ ] search for "ERROR" and fix edge cases
+  - [ ] write tests
+  - [ ] improve code readability and cleanliness
+  - [ ] maintain ci pipeline

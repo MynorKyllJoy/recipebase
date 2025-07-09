@@ -40,7 +40,7 @@ public class RecipeService {
     }
 
     public Recipe getRecipeById(String recipeId) {
-        return recipeRepository.findById(recipeId).orElse(new Recipe());
+        return recipeRepository.findById(recipeId).orElse(null);
     }
 
     public List<Recipe> getRecipeBySource(String url) {
