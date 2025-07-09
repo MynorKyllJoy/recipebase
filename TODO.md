@@ -9,6 +9,7 @@ A list of features that have been or have yet to be implemented and chores to co
   - [ ] "pork belly or shoulder" add pork in front of shoulder
   - [ ] handle something like: "a combination of x and y"
   - [ ] deal with overlap with types, e.g.: sprinkles as ingredient and sprinkles as unit
+  - [ ] swap all units to their abbreviations, e.g: ounces -> oz
 - [x] save ingredients, recipe and requirements into Neo4j DB
   - [ ] replace the temporary TypeConstants class
   - [ ] deal with states
@@ -19,7 +20,7 @@ A list of features that have been or have yet to be implemented and chores to co
   - [x] password encryption 
   - [ ] add reviews 
   - [ ] upload/save own recipes 
-  - [ ] fix logout
+  - [x] fix logout
 - [ ] filtered recipe search
   - [x] filter for recipes that use a set of ingredients
   - [ ] extend filtering to use amounts and units
