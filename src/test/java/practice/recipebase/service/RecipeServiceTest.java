@@ -98,7 +98,7 @@ public class RecipeServiceTest {
         given(recipeRepo.findById(anyString())).willReturn(Optional.empty());
         Recipe actualRecipe = recipeService.getRecipeById("1");
 
-        assertThat(actualRecipe).isEqualTo(new Recipe());
+        assertThat(actualRecipe).isNull();
     }
 
     @Test

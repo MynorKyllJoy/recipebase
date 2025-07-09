@@ -1,8 +1,7 @@
 package practice.recipebase.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -13,8 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode
 @Node
 public class Recipe {
     @Id @GeneratedValue
