@@ -26,12 +26,12 @@ public class Recipe {
     private List<Requirement> requirements;
 
     public Recipe(String title, String description, String source,
-                  List<Requirement> requiredIngredients, List<String> instructions, List<String> ingredientInfos) {
+                  List<Requirement> requirements, List<String> instructions, List<String> ingredientInfos) {
         this.title = title;
         this.description = description;
         this.source = source;
         this.instructions = instructions;
-        this.requirements = requiredIngredients;
+        this.requirements = requirements;
         this.ingredientInfos = ingredientInfos;
     }
 
