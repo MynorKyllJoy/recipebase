@@ -25,8 +25,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle*') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Give Gradlew Permission
-        run: chmod +x ./spring-backend/gradlew
+        run: chmod +x gradlew
+        working-directory: spring-backend
       - name: Gradlew Build
-        run: ./spring-backend/gradlew build --no-daemon
+        run: ./gradlew build --no-daemon
+        working-directory: spring-backend
       - name: Run Tests
-        run: ./spring-backend/gradlew test --no-daemon
+        run: ./gradlew test --no-daemon
+        working-directory: spring-backend
