@@ -23,7 +23,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain createSecurityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(
                 auth -> auth
-                        .requestMatchers("/register", "/login", "/").permitAll()
+                        //.requestMatchers("/register", "/login", "/").permitAll()
+                        // ERROR: DEBUG ONLY, DELETE ALTER
+                        .requestMatchers("/register", "/login", "/", "/api/v1/recipes/**").permitAll()
                         .anyRequest().authenticated()
                 ).formLogin(form -> form
                         .loginPage("/login")

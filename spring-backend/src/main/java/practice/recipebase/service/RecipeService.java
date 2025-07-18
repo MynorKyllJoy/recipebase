@@ -7,12 +7,12 @@ import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.misc.RecipeSiteRequestAdapter;
 import practice.recipebase.misc.ScrapedRecipe;
+import practice.recipebase.misc.UploadedRecipe;
+import practice.recipebase.misc.UploadedRecipeWrapper;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.repository.RecipeRepository;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +29,11 @@ public class RecipeService {
         Document recipeSite = RecipeSiteRequestAdapter.getRecipeSite(URL);
         ScrapedRecipe scrapedRecipe = new ScrapedRecipe(recipeSite, URL);
         return scrapedRecipe.createRecipe();
+    }
+
+    public Recipe createUploadedRecipe(UploadedRecipeWrapper recipeWrapper) throws WrongTokenTypeException {
+        UploadedRecipe uploadedRecipe = new UploadedRecipe(recipeWrapper);
+        return uploadedRecipe.createRecipe();
     }
 
     public Recipe saveRecipe(Recipe scrapedRecipe) {

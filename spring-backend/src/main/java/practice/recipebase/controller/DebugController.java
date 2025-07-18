@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-public class MainController {
+public class DebugController {
     @Autowired
     RecipeService recipeService;
 
