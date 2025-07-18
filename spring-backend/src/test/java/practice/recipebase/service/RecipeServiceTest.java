@@ -9,7 +9,9 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
+import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.misc.RecipeSiteRequestAdapter;
+import practice.recipebase.misc.UploadedRecipeWrapper;
 import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.model.Requirement;
@@ -47,7 +49,9 @@ public class RecipeServiceTest {
                 List.of(
                         "Add all ingredients into a bowl and mix until everything is combined. Don't overmix.",
                         "Add oil into the frying pan. Heat up the oil over Medium high heat.",
-                        "Add enough pancake dough to cover the frying pan. Fry until bubbles form on top. Then flip the pancakes and fry for 1 or 2 more mins. Repeat until there is no more pancake dough.",
+                        "Add enough pancake dough to cover the frying pan. "
+                                + "Fry until bubbles form on top. Then flip the pancakes and fry for 1 or 2 more mins. "
+                                + "Repeat until there is no more pancake dough.",
                         "Serve the pancakes."
                 ),
                 List.of(
@@ -120,6 +124,22 @@ public class RecipeServiceTest {
 
         assertThat(actualRecipes.size()).isEqualTo(1);
         assertThat(actualRecipes.iterator().next()).isEqualTo(expectedRecipe);
+    }
+
+    @Test
+    void testCreateUploadedRecipe() throws WrongTokenTypeException {
+        Recipe expectedRecipe = this.getResultRecipe();
+        UploadedRecipeWrapper wrapper = new UploadedRecipeWrapper(
+                expectedRecipe.getTitle(),
+                expectedRecipe.getDescription(),
+                expectedRecipe.getSource(),
+                expectedRecipe.getIngredientInfos(),
+                expectedRecipe.getInstructions()
+        );
+
+        Recipe actualRecipe = recipeService.createUploadedRecipe(wrapper);
+
+        assertThat(actualRecipe).isEqualTo(expectedRecipe);
     }
 
 
