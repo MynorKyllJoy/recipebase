@@ -33,7 +33,9 @@ public class ScrapedRecipeTest {
                 List.of(
                         "Add all ingredients into a bowl and mix until everything is combined. Don't overmix.",
                         "Add oil into the frying pan. Heat up the oil over Medium high heat.",
-                        "Add enough pancake dough to cover the frying pan. Fry until bubbles form on top. Then flip the pancakes and fry for 1 or 2 more mins. Repeat until there is no more pancake dough.",
+                        "Add enough pancake dough to cover the frying pan. Fry until bubbles form on top. "
+                                + "Then flip the pancakes and fry for 1 or 2 more mins. "
+                                + "Repeat until there is no more pancake dough.",
                         "Serve the pancakes."
                 ),
                 List.of(
