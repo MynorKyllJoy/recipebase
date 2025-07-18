@@ -21,12 +21,12 @@ jobs:
       - name: Cache Gradle Packages
         uses: actions/cache@v4.2.3
         with:
-          path: ~/.gradle
+          path: ~/spring-backend/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle*') }}
           restore-keys: ${{ runner.os }}-gradle
       - name: Give Gradlew Permission
         run: chmod +x gradlew
       - name: Gradlew Build
-        run: ./gradlew build --no-daemon
+        run: ./spring-backend/gradlew build --no-daemon
       - name: Run Tests
-        run: ./gradlew test --no-daemon
+        run: ./spring-backend/gradlew test --no-daemon
