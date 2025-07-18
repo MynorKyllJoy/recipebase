@@ -34,8 +34,4 @@ public class Recipe {
         this.requirements = requirements;
         this.ingredientInfos = ingredientInfos;
     }
-
-    public Set<String> getIngredientNames() {
-        return requirements.stream().map(i -> i.getIngredient().getName()).collect(Collectors.toSet());
-    }
 }
