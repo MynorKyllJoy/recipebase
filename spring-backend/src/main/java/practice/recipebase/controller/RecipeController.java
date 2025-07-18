@@ -3,9 +3,10 @@ package practice.recipebase.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import practice.recipebase.exceptions.WrongTokenTypeException;
+import practice.recipebase.misc.UploadedRecipeWrapper;
+import practice.recipebase.model.Recipe;
 import practice.recipebase.service.RecipeService;
 
 @RestController
@@ -14,8 +15,11 @@ public class RecipeController {
     @Autowired
     RecipeService recipeService;
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<String>("Hello, World!", HttpStatus.OK);
+    @PostMapping("/upload")
+    public ResponseEntity<Recipe> uploadRecipe(@RequestBody UploadedRecipeWrapper recipeWrapper)
+            throws WrongTokenTypeException {
+        Recipe uploadedRecipe = recipeService.createUploadedRecipe(recipeWrapper);
+        Recipe savedRecipe = recipeService.saveRecipe(uploadedRecipe);
+        return new ResponseEntity<>(savedRecipe, HttpStatus.OK);
     }
 }
