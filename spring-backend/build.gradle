@@ -41,6 +41,10 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+test.environment([
+		"JWT_SECRET": "SecretSecretSecretSecretSecretSecret"
+])
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
