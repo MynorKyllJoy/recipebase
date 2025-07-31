@@ -18,7 +18,7 @@ public class LoginController {
     }
 
     @PostMapping("/register")
-    public AppUser register(@RequestBody AppUser newUser) {
+    public String register(@RequestBody AppUser newUser) {
         return userService.register(newUser);
     }
 }

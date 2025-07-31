@@ -24,11 +24,17 @@ public class AppUserService {
     @Autowired
     JWTService jwtService;
 
-    public AppUser register(AppUser user) {
+    public String register(AppUser user) {
+        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return "Username already exists.";
+        }
         String encodedPwd = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPwd);
         user.setRole(AppUserRole.USER);
-        return userRepository.save(user);
+        user.setEnabled(true);
+        user.setLocked(false);
+        AppUser newUser = userRepository.save(user);
+        return jwtService.generateToken(newUser.getUsername());
     }
 
     public String verify(AppUser user) {
