@@ -1,8 +1,6 @@
 package practice.recipebase.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
@@ -19,6 +17,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/recipes")
+@CrossOrigin(origins = "http://localhost:5173")
 public class RecipeController {
     @Autowired
     RecipeService recipeService;
@@ -26,36 +25,31 @@ public class RecipeController {
     IngredientService ingredientService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Recipe>> getAllRecipes() {
-        List<Recipe> allRecipes = recipeService.getAllRecipes();
-        return new ResponseEntity<>(allRecipes, HttpStatus.OK);
+    public List<Recipe> getAllRecipes() {
+        return recipeService.getAllRecipes();
     }
 
-    @GetMapping("/filter")
-    public ResponseEntity<List<Ingredient>> getAllIngredients() {
-        List<Ingredient> allIngredients = ingredientService.getAllIngredients();
-        return new ResponseEntity<>(allIngredients, HttpStatus.OK);
+    @GetMapping("/ingredients")
+    public List<Ingredient> getAllIngredients() {
+        return ingredientService.getAllIngredients();
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<Recipe> uploadRecipe(@RequestBody UploadedRecipeWrapper recipeWrapper)
+    public Recipe uploadRecipe(@RequestBody UploadedRecipeWrapper recipeWrapper)
             throws WrongTokenTypeException {
         Recipe uploadedRecipe = recipeService.createUploadedRecipe(recipeWrapper);
-        Recipe savedRecipe = recipeService.saveRecipe(uploadedRecipe);
-        return new ResponseEntity<>(savedRecipe, HttpStatus.OK);
+        return recipeService.saveRecipe(uploadedRecipe);
     }
 
     @PostMapping("/scrape")
-    public ResponseEntity<Recipe> scrapeRecipe(@RequestBody String URL)
+    public Recipe scrapeRecipe(@RequestBody String URL)
             throws WrongTokenTypeException, RecipeAlreadyExistsException, IOException {
         Recipe scrapedRecipe = recipeService.getRecipeMetaData(URL);
-        Recipe savedRecipe = recipeService.saveRecipe(scrapedRecipe);
-        return new ResponseEntity<>(savedRecipe, HttpStatus.OK);
+        return recipeService.saveRecipe(scrapedRecipe);
     }
 
     @PostMapping("/filter")
-    public ResponseEntity<Set<Recipe>> filterRecipesByIngredients(@RequestBody IngredientsWrapper ingredientsWrapper) {
-        Set<Recipe> filteredRecipes = recipeService.getRecipeByConditions(ingredientsWrapper.getIngredientNames());
-        return new ResponseEntity<>(filteredRecipes, HttpStatus.OK);
+    public Set<Recipe> filterRecipesByIngredients(@RequestBody IngredientsWrapper ingredientsWrapper) {
+        return recipeService.getRecipeByConditions(ingredientsWrapper.getIngredientNames());
     }
 }
