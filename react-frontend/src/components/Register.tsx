@@ -1,4 +1,6 @@
 import { useState } from "react";
+import api from "./axios_config";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
     const [name, setName] = useState("");
@@ -6,9 +8,26 @@ function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    const redirect = useNavigate();
+
+    const register = (event: React.FormEvent) => {
+        event.preventDefault();
+        api.post("/auth/register", {
+            name,
+            username,
+            password,
+            email
+        }).then((response) => {
+            localStorage.setItem("recipebase-user-token", response.data);
+            redirect("/");
+        }).catch((error) => {
+            // FIX ERROR: username taken, password conditions not met
+            console.log(error);
+        })
+    };
 
     return (
-        <form>
+        <form onSubmit={register}>
             <label> Name
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)}/><br/>
             </label>
