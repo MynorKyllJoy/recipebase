@@ -3,6 +3,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
+import { useState } from "react";
+
 /*
 interface User {
     id: string,
@@ -14,19 +16,36 @@ interface User {
 */
 
 function App() {
+    // FIX ERROR: JWT Token expired
+    const [isLoggedIn, setLoginStatus] = useState(localStorage.getItem("recipebase-user-token") != null)
+
+    const handleLoginStatus = () => {
+        setLoginStatus(localStorage.getItem("recipebase-user-token") != null);
+    }
+
     return (<>
         <div>
             <a href="/">Home</a>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-            <a href="/logout">Logout</a>
+            {
+                isLoggedIn ? (
+                    <>
+                        <a href="/profile">Profile</a>
+                        <a href="/logout">Logout</a>
+                    </>
+                ) : (
+                    <>
+                        <a href="/register">Register</a>
+                        <a href="/login">Login</a>
+                    </>
+                )
+            }
         </div>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Homepage/>}/>
-                <Route path="/register" element={<Register/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/logout" element={<Logout/>}/>
+                <Route path="/register" element={<Register setLoginStatus={handleLoginStatus}/>}/>
+                <Route path="/login" element={<Login setLoginStatus={handleLoginStatus}/>}/>
+                <Route path="/logout" element={<Logout setLoginStatus={handleLoginStatus}/>}/>
             </Routes>
         </BrowserRouter>
     </>)

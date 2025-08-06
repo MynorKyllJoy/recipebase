@@ -1,8 +1,10 @@
 import { useState } from "react";
 import api from "./axios_config";
 import { useNavigate } from "react-router-dom";
+import type { LoginStatusProps } from "./LoginStatusProps";
 
-function Login() {
+
+function Login({setLoginStatus}: LoginStatusProps) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -15,6 +17,7 @@ function Login() {
             password
         }).then((response) => {
             localStorage.setItem("recipebase-user-token", response.data);
+            setLoginStatus();
             redirect("/");
         }).catch((error) => {
             // FIX ERROR: wrong username password or jwt token expired

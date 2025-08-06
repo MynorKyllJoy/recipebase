@@ -1,8 +1,10 @@
 import { useState } from "react";
 import api from "./axios_config";
 import { useNavigate } from "react-router-dom";
+import type { LoginStatusProps } from "./LoginStatusProps";
 
-function Register() {
+
+function Register({setLoginStatus}: LoginStatusProps) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -19,6 +21,7 @@ function Register() {
             email
         }).then((response) => {
             localStorage.setItem("recipebase-user-token", response.data);
+            setLoginStatus();
             redirect("/");
         }).catch((error) => {
             // FIX ERROR: username taken, password conditions not met
