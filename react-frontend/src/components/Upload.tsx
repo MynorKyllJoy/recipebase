@@ -22,6 +22,10 @@ function ListItem({item, index, onDeleteItem, onEditItem}: ListItemProps) {
         setIsEditing(false);
     };
 
+    const cancelEditHandler = () => {
+        setIsEditing(false);
+    }
+
     return (
         <li>
             {
@@ -32,6 +36,7 @@ function ListItem({item, index, onDeleteItem, onEditItem}: ListItemProps) {
                         onChange={(e) => setEditValue(e.target.value)}
                     />
                     <button onClick={saveEditHandler}>Save</button>
+                    <button onClick={cancelEditHandler}>Cancel</button>
                 </>) : (<>
                     {item}
                     <button onClick={() => setIsEditing(true)}>Edit</button>
