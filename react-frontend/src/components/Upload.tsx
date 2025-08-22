@@ -66,7 +66,6 @@ function List({items, onEditItem, onDeleteItem}: ListProps) {
 }
 
 function Upload() {
-    const username = "";
     const [instructions, setInstructions] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<string[]>([]);
     const [title, setTitle] = useState<string>("");
