@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "./axios_config";
 
 interface ListItemProps {
     item: string,
@@ -65,6 +66,7 @@ function List({items, onEditItem, onDeleteItem}: ListProps) {
 }
 
 function Upload() {
+    const username = "";
     const [instructions, setInstructions] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<string[]>([]);
     const [title, setTitle] = useState<string>("");
@@ -121,7 +123,21 @@ function Upload() {
     };
 
     const uploadHandler = () => {
-    
+        api.post(
+            "api/v1/recipes/upload", {
+                title,
+                description,
+                ingredients,
+                instructions
+            }
+        ).then(
+            (response) => {
+                // TODO: redirect to created recipe
+                console.log(response)
+            }
+        ).catch(
+            (error) => {console.log(error)}
+        );
     }
 
     return (<>
@@ -133,8 +149,7 @@ function Upload() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <button onClick={uploadHandler}>Upload</button>
-                <p>{"By: Author"}</p>
+                <button onClick={uploadHandler}>Upload</button><br/>
                 <textarea 
                     placeholder="Description..."
                     value={description}
