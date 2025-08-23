@@ -30,10 +30,12 @@ function App() {
     return (<>
         <div>
             <div>
+                <a href="/">Home</a>
+                <a href="/recipes/all">All Recipes</a>
                 <a href="/recipes/upload">Upload</a>
+                <a href="/recipes/scrape">Scrape</a>
             </div>
             <div>
-                <a href="/">Home</a>
                 {
                     isLoggedIn ? (
                         <>
@@ -56,7 +58,6 @@ function App() {
                 <Route path="/register" element={<Register setLoginStatus={handleLoginStatus}/>}/>
                 <Route path="/login" element={<Login setLoginStatus={handleLoginStatus}/>}/>
                 <Route path="/logout" element={<Logout setLoginStatus={handleLoginStatus}/>}/>
-
                 <Route path="/recipes/upload" element={<Upload/>}/>
                 <Route path="/recipes/:recipeId" element={<RecipeDisplay/>}/>
                 <Route path="/recipes/all" element={<RecipeListDisplay/>}/>
