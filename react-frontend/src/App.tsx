@@ -5,6 +5,7 @@ import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
 import { useState } from "react";
 import Upload from "./components/Upload";
+import RecipeDisplay from "./components/RecipeDisplay";
 
 /*
 interface User {
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/logout" element={<Logout setLoginStatus={handleLoginStatus}/>}/>
 
                 <Route path="/recipes/upload" element={<Upload/>}/>
+                <Route path="/recipes/:recipeId" element={<RecipeDisplay/>}/>
             </Routes>
         </BrowserRouter>
     </>)

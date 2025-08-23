@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "./axios_config";
+import { useNavigate } from "react-router-dom";
 
 interface ListItemProps {
     item: string,
@@ -66,6 +67,7 @@ function List({items, onEditItem, onDeleteItem}: ListProps) {
 }
 
 function Upload() {
+    const navigate = useNavigate();
     const [instructions, setInstructions] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<string[]>([]);
     const [title, setTitle] = useState<string>("");
@@ -131,10 +133,10 @@ function Upload() {
             }
         ).then(
             (response) => {
-                // TODO: redirect to created recipe
-                console.log(response)
+                navigate(`/recipes/${response.data.id}`, {replace: true});
             }
         ).catch(
+            // TODO: Error Handling
             (error) => {console.log(error)}
         );
     }
