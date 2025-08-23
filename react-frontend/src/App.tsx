@@ -7,6 +7,7 @@ import { useState } from "react";
 import Upload from "./components/Upload";
 import RecipeDisplay from "./components/RecipeDisplay";
 import RecipeListDisplay from "./components/AllRecipeDisplay";
+import RecipeScraper from "./components/RecipScraper";
 
 /*
 interface User {
@@ -59,6 +60,7 @@ function App() {
                 <Route path="/recipes/upload" element={<Upload/>}/>
                 <Route path="/recipes/:recipeId" element={<RecipeDisplay/>}/>
                 <Route path="/recipes/all" element={<RecipeListDisplay/>}/>
+                <Route path="/recipes/scrape" element={<RecipeScraper/>}/>
             </Routes>
         </BrowserRouter>
     </>)
