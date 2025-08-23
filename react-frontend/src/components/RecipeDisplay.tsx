@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import api from "./axios_config";
+import api from "../config/axios_config";
 import { useEffect, useState } from "react";
 
 interface Recipe {

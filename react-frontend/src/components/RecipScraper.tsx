@@ -1,6 +1,6 @@
 import { useState } from "react";
-import api from "./axios_config";
 import { useNavigate } from "react-router-dom";
+import api from "../config/axios_config";
 
 function RecipeScraper() {
     // TODO: Add security measures

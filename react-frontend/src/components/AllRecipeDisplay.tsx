@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "./axios_config";
+import api from "../config/axios_config";
 
 
 interface Recipe {
