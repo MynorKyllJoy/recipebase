@@ -24,7 +24,7 @@ function Register({setLoginStatus}: LoginStatusProps) {
             setLoginStatus();
             redirect("/");
         }).catch((error) => {
-            // FIX ERROR: username taken, password conditions not met
+            // TODO: Error Handling, username taken, password conditions not met
             console.log(error);
         })
     };

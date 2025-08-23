@@ -20,7 +20,7 @@ function Login({setLoginStatus}: LoginStatusProps) {
             setLoginStatus();
             redirect("/");
         }).catch((error) => {
-            // FIX ERROR: wrong username password or jwt token expired
+            // TODO: Error Handling, wrong username password or jwt token expired
             console.log(error);
         })
     }
