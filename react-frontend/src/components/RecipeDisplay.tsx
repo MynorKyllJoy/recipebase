@@ -1,18 +1,13 @@
 import { useParams } from "react-router-dom";
 import api from "../config/axios_config";
 import { useEffect, useState } from "react";
+import type { Recipe } from "../types/Recipe";
 
-interface Recipe {
-    title: string,
-    description: string,
-    source: string,
-    instructions: string[],
-    ingredientInfos: string[]
-}
 
 function RecipeDisplay() {
     let params = useParams();
     const [recipe, setRecipe] = useState<Recipe>({
+        id: "",
         title: "",
         description: "",
         source: "",

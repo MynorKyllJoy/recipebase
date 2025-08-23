@@ -1,15 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../config/axios_config";
-
-
-interface Recipe {
-    id: string,
-    title: string,
-    description: string,
-    source: string,
-    instructions: string[],
-    ingredientInfos: string[]
-}
+import type { Recipe } from "../types/Recipe";
 
 
 function RecipeListDisplay() {

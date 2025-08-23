@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../config/axios_config";
 import { useNavigate } from "react-router-dom";
-import type { LoginStatusProps } from "./LoginStatusProps";
+import type { LoginStatusProps } from "../types/LoginStatusProps";
 
 
 function Register({setLoginStatus}: LoginStatusProps) {
