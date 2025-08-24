@@ -61,9 +61,9 @@ public class RecipeController {
     }
 
     @PostMapping("/scrape")
-    public Recipe scrapeRecipe(@RequestBody String URL)
+    public Recipe scrapeRecipe(@RequestBody RecipeSiteWrapper recipeSite)
             throws WrongTokenTypeException, RecipeAlreadyExistsException, IOException {
-        Recipe scrapedRecipe = recipeService.getRecipeMetaData(URL);
+        Recipe scrapedRecipe = recipeService.getRecipeMetaData(recipeSite.getRecipeSite());
         return recipeService.saveRecipe(scrapedRecipe);
     }
 
