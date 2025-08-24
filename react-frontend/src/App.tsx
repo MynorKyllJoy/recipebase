@@ -8,6 +8,7 @@ import Upload from "./components/Upload";
 import RecipeDisplay from "./components/RecipeDisplay";
 import RecipeListDisplay from "./components/AllRecipeDisplay";
 import RecipeScraper from "./components/RecipScraper";
+import RecipeFilter from "./components/RecipeFilter";
 
 /*
 interface User {
@@ -34,6 +35,7 @@ function App() {
                 <a href="/recipes/all">All Recipes</a>
                 <a href="/recipes/upload">Upload</a>
                 <a href="/recipes/scrape">Scrape</a>
+                <a href="/recipes/filter">Scrape</a>
             </div>
             <div>
                 {
@@ -62,6 +64,7 @@ function App() {
                 <Route path="/recipes/:recipeId" element={<RecipeDisplay/>}/>
                 <Route path="/recipes/all" element={<RecipeListDisplay/>}/>
                 <Route path="/recipes/scrape" element={<RecipeScraper/>}/>
+                <Route path="/recipes/filter" element={<RecipeFilter/>}/>
             </Routes>
         </BrowserRouter>
     </>)
