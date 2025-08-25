@@ -5,9 +5,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
-import practice.recipebase.misc.IngredientsWrapper;
-import practice.recipebase.misc.RecipeSiteWrapper;
-import practice.recipebase.misc.UploadedRecipeWrapper;
+import practice.recipebase.wrappers.IngredientsWrapper;
+import practice.recipebase.wrappers.RecipeSiteWrapper;
+import practice.recipebase.wrappers.UploadedRecipeWrapper;
 import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.service.IngredientService;
@@ -20,7 +20,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/recipes")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RecipeController {
     @Autowired
     RecipeService recipeService;

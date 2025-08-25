@@ -1,4 +1,4 @@
-package practice.recipebase.misc;
+package practice.recipebase.wrappers;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

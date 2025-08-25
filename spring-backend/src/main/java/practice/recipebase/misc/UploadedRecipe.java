@@ -1,5 +1,7 @@
 package practice.recipebase.misc;
 
+import practice.recipebase.wrappers.UploadedRecipeWrapper;
+
 import java.io.IOException;
 import java.util.List;
 
