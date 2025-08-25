@@ -7,7 +7,7 @@ import practice.recipebase.service.AppUserService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins="http://localhost:5173")
+@CrossOrigin(origins="http://localhost:3000")
 public class LoginController {
     @Autowired
     AppUserService userService;

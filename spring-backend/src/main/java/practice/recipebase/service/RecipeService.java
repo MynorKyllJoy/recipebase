@@ -8,7 +8,7 @@ import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.misc.RecipeSiteRequestAdapter;
 import practice.recipebase.misc.ScrapedRecipe;
 import practice.recipebase.misc.UploadedRecipe;
-import practice.recipebase.misc.UploadedRecipeWrapper;
+import practice.recipebase.wrappers.UploadedRecipeWrapper;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.repository.RecipeRepository;
 

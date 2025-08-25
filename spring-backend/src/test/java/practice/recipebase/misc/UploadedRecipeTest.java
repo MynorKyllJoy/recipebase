@@ -5,6 +5,7 @@ import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.model.Requirement;
+import practice.recipebase.wrappers.UploadedRecipeWrapper;
 
 import java.io.IOException;
 import java.util.HashSet;

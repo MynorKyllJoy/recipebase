@@ -1,4 +1,4 @@
-package practice.recipebase.misc;
+package practice.recipebase.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

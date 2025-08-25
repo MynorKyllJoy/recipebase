@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import practice.recipebase.wrappers.RecipeInstructionWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,8 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 @Node
 public class Recipe {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(UUIDStringGenerator.class)
     private String id;
     private String title;
     private String description;

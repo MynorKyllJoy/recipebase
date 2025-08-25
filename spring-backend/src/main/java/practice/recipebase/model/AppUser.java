@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,7 @@ import java.util.Collections;
 @Node("AppUser")
 public class AppUser implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(UUIDStringGenerator.class)
     private String id;
     private String name;
     private String username;

@@ -11,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
 import practice.recipebase.misc.RecipeSiteRequestAdapter;
-import practice.recipebase.misc.UploadedRecipeWrapper;
+import practice.recipebase.wrappers.UploadedRecipeWrapper;
 import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.model.Requirement;

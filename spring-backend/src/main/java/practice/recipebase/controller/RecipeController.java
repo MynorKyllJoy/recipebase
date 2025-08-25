@@ -1,14 +1,17 @@
 package practice.recipebase.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import practice.recipebase.exceptions.RecipeAlreadyExistsException;
 import practice.recipebase.exceptions.WrongTokenTypeException;
-import practice.recipebase.misc.IngredientsWrapper;
-import practice.recipebase.misc.UploadedRecipeWrapper;
+import practice.recipebase.wrappers.IngredientsWrapper;
+import practice.recipebase.wrappers.RecipeSiteWrapper;
+import practice.recipebase.wrappers.UploadedRecipeWrapper;
 import practice.recipebase.model.Ingredient;
 import practice.recipebase.model.Recipe;
 import practice.recipebase.service.IngredientService;
+import practice.recipebase.service.JWTService;
 import practice.recipebase.service.RecipeService;
 
 import java.io.IOException;
@@ -17,16 +20,23 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/recipes")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RecipeController {
     @Autowired
     RecipeService recipeService;
     @Autowired
     IngredientService ingredientService;
+    @Autowired
+    JWTService jwtService;
 
     @GetMapping("/all")
     public List<Recipe> getAllRecipes() {
         return recipeService.getAllRecipes();
+    }
+
+    @GetMapping("/id/{id}")
+    public Recipe getRecipe(@PathVariable("id") String id) {
+        return recipeService.getRecipeById(id);
     }
 
     @GetMapping("/ingredients")
@@ -35,16 +45,25 @@ public class RecipeController {
     }
 
     @PostMapping("/upload")
-    public Recipe uploadRecipe(@RequestBody UploadedRecipeWrapper recipeWrapper)
+    public Recipe uploadRecipe(@RequestHeader HttpHeaders httpHeaders, @RequestBody UploadedRecipeWrapper recipeWrapper)
             throws WrongTokenTypeException {
+        // TODO: Move logic out of controller
+        List<String> headers = httpHeaders.get("Authorization");
+        if(headers.isEmpty()) {
+            // TODO: Error handling
+        }
+        String jwtToken = headers.getFirst().substring(7);
+        String username = jwtService.extractUsername(jwtToken);
+
         Recipe uploadedRecipe = recipeService.createUploadedRecipe(recipeWrapper);
+        uploadedRecipe.setSource(username);
         return recipeService.saveRecipe(uploadedRecipe);
     }
 
     @PostMapping("/scrape")
-    public Recipe scrapeRecipe(@RequestBody String URL)
+    public Recipe scrapeRecipe(@RequestBody RecipeSiteWrapper recipeSite)
             throws WrongTokenTypeException, RecipeAlreadyExistsException, IOException {
-        Recipe scrapedRecipe = recipeService.getRecipeMetaData(URL);
+        Recipe scrapedRecipe = recipeService.getRecipeMetaData(recipeSite.getRecipeSite());
         return recipeService.saveRecipe(scrapedRecipe);
     }
 

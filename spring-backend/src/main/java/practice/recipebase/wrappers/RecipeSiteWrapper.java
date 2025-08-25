@@ -1,16 +1,14 @@
-package practice.recipebase.misc;
+package practice.recipebase.wrappers;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientsWrapper {
-    List<String> ingredientNames;
+public class RecipeSiteWrapper {
+    private String recipeSite;
 }
