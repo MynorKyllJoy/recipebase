@@ -24,7 +24,7 @@ services:
       retries: 20
       start_period: 5s
   spring-recipebase:
-    image: "recipebase:0.0.1"
+    image: "recipebase-backend:0.0.1"
     container_name: spring-recipebase
     ports:
       - "8080:8080"
@@ -35,6 +35,20 @@ services:
       - neo4j-db
     env_file:
       - "secret/docker_spring.env"
+  react-recipebase:
+    image: "recipebase-frontend:0.0.1"
+    container_name: react-recipebase
+    build:
+      context: ./react-frontend
+      dockerfile: ./react-frontend/Dockerfile
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - spring-recipebase
+    links:
+      - spring-recipebase
 secrets:
   neo4j_auth_file:
     file: ./secret/neo4j_auth_file.txt
