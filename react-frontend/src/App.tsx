@@ -35,7 +35,7 @@ function App() {
                 <a href="/recipes/all">All Recipes</a>
                 <a href="/recipes/upload">Upload</a>
                 <a href="/recipes/scrape">Scrape</a>
-                <a href="/recipes/filter">Scrape</a>
+                <a href="/recipes/filter">Filter</a>
             </div>
             <div>
                 {
