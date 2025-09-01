@@ -31,13 +31,13 @@ function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
             <input
                 type="text"
                 value={amount}
-                readOnly={isAny}
+                disabled={isAny}
                 onChange={(e) => setAmount(e.target.value)}
             />
             <select value={unit} onChange={unitHandler}>
                 <option value="Any">Any</option>
-                <option value="Cup">Cup</option>
-                <option value="Liter">Liter</option>
+                <option value="Cups">Cups</option>
+                <option value="Liters">Liters</option>
                 <option value="Ounces">Ounces</option>
                 <option value="Grams">Grams</option>
             </select>
