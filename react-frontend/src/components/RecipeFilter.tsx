@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../config/axios_config";
+import API from "../config/API";
 import type { Recipe } from "../types/Recipe";
 import DynamicFilterList from "./DynamicFilterList";
 
@@ -15,7 +15,7 @@ function RecipeFilter() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
 
     useEffect(() => {
-        api.get("api/v1/recipes/ingredients")
+        API.get("api/v1/recipes/ingredients")
             .then((response) => {
                 setAllIngredients(response.data)
             })
@@ -40,7 +40,7 @@ function RecipeFilter() {
     }
 
     const filterRecipesHandler = () => {
-        api.post(
+        API.post(
             "/api/v1/recipes/filter",
             {
                 ingredientNames: filterIngredients

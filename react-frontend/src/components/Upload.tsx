@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../config/axios_config";
+import API from "../config/API";
 import { useNavigate } from "react-router-dom";
 import DynamicEditList from "./DynamicEditList";
 
@@ -61,7 +61,7 @@ function Upload() {
     };
 
     const uploadHandler = () => {
-        api.post(
+        API.post(
             "api/v1/recipes/upload", {
                 title,
                 description,
@@ -87,7 +87,7 @@ function Upload() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <button onClick={uploadHandler}>Upload</button><br/>
+                <button data-testid="upload" onClick={uploadHandler}>Upload</button><br/>
                 <textarea 
                     placeholder="Description..."
                     value={description}

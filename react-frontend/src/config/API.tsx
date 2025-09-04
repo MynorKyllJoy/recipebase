@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const api = axios.create({
+const API = axios.create({
     baseURL: "http://localhost:8080/",
     headers: {
         "Content-Type": "application/json",
     }
 });
 
-api.interceptors.request.use(
+API.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("recipebase-user-token");
         if(token) {
@@ -20,7 +20,7 @@ api.interceptors.request.use(
     }
 );
 
-api.interceptors.response.use(
+API.interceptors.response.use(
     (response) => response,
     (error) => {
         if(error.response.status === 401) {
@@ -31,4 +31,4 @@ api.interceptors.response.use(
     }
 );
 
-export default api;
+export default API;

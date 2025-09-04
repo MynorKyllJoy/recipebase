@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../config/axios_config";
+import API from "../config/API";
 import { useNavigate } from "react-router-dom";
 import type { LoginStatusProps } from "../types/LoginStatusProps";
 
@@ -14,7 +14,7 @@ function Register({setLoginStatus}: LoginStatusProps) {
 
     const register = (event: React.FormEvent) => {
         event.preventDefault();
-        api.post("/auth/register", {
+        API.post("/auth/register", {
             name,
             username,
             password,

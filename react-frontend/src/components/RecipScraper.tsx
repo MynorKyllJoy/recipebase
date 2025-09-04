@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../config/axios_config";
+import API from "../config/API";
 
 function RecipeScraper() {
     // TODO: Add security measures
@@ -9,7 +9,7 @@ function RecipeScraper() {
 
     const scrapeSite = (event: React.FormEvent) => {
         event.preventDefault();
-        api.post(
+        API.post(
             "/api/v1/recipes/scrape", {
                 recipeSite
             }

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import api from "../config/axios_config";
+import API from "../config/API";
 import { useEffect, useState } from "react";
 import type { Recipe } from "../types/Recipe";
 
@@ -16,7 +16,7 @@ function RecipeDisplay() {
     });
 
     useEffect(() => {
-        api.get(
+        API.get(
             "/api/v1/recipes/id/" + params.recipeId,
         ).then(
             (response) => {
