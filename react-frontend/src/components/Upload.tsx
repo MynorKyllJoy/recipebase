@@ -86,12 +86,14 @@ function Upload() {
                     placeholder="Recipe name..."
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    data-testid="title"
                 />
                 <button data-testid="upload" onClick={uploadHandler}>Upload</button><br/>
                 <textarea 
                     placeholder="Description..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                    data-testid="description"
                 />
             </>
             <>
@@ -101,14 +103,16 @@ function Upload() {
                     placeholder="200g onions, chopped"
                     value={ingredientInput}
                     onChange={(e) => setIngredientInput(e.target.value)}
+                    data-testid="currIngredient"
                 />
-                <button onClick={addIngredientHandler}>Add</button>
+                <button data-testid="addIngredient-btn" onClick={addIngredientHandler}>Add</button>
             </>
             <>
                 <DynamicEditList
                     items={ingredients}
                     onEditItem={editIngredientHandler}
                     onDeleteItem={deleteIngredientHandler}
+                    data-testid="ingredientList"
                 />
             </>
         </div>
@@ -119,14 +123,16 @@ function Upload() {
                     placeholder="Fry onions until tanslucent."
                     value={instructionInput}
                     onChange={e => setInstructionInput(e.target.value)}
+                    data-testid="currInstruction"
                 />
-                <button onClick={addInstructionHandler}>Add</button>
+                <button data-testid="addInstruction-btn" onClick={addInstructionHandler}>Add</button>
             </>
             <>
                 <DynamicEditList
                     items={instructions}
                     onEditItem={editInstructionHandler}
                     onDeleteItem={deleteInstructionHandler}
+                    data-testid="instructionList"
                 />
             </>
         </div>
