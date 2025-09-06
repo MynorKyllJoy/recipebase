@@ -25,5 +25,5 @@ jobs:
               run: npm test
               working-directory: react-frontend
             - name: Lint Code
-              run: npm lint
+              run: npm run lint
               working-directory: react-frontend
