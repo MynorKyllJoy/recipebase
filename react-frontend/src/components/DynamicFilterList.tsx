@@ -16,7 +16,7 @@ function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
     const [unit, setUnit] = useState("Any");
     const [isAny, setIsAny] = useState(true);
 
-    const unitHandler = (event: any) => {
+    const unitHandler: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         const newUnit = event.target.value;
         if(newUnit == "Any") {
             setAmount("");

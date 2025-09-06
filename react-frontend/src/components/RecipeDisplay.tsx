@@ -5,7 +5,7 @@ import type { Recipe } from "../types/Recipe";
 
 
 function RecipeDisplay() {
-    let params = useParams();
+    const params = useParams();
     const [recipe, setRecipe] = useState<Recipe>({
         id: "",
         title: "",
@@ -27,7 +27,7 @@ function RecipeDisplay() {
             // TODO: Error Handling
             (error) => console.log(error)
         );
-    }, [])
+    }, [params.recipeId])
 
 
     return (<>
