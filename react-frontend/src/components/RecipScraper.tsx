@@ -14,7 +14,6 @@ function RecipeScraper() {
                 recipeSite
             }
         ).then((response) => {
-            console.log(response);
             navigate(`/recipes/${response.data.id}`, {replace: true})
         }).catch((error) => {
             // TODO: Error Handling, wrong username password or jwt token expired

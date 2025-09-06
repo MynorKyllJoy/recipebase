@@ -38,13 +38,13 @@ function RecipeDisplay() {
         <h3>Ingredients</h3>
         <ul>{
             recipe.ingredientInfos.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
+                <li data-testid="ingredient" key={index}>{ingredient}</li>
             ))
         }</ul>
         <h3>Instructions</h3>
         <ul>{
             recipe.instructions.map((instruction, index) => (
-                <li key={index}>{instruction}</li>
+                <li data-testid="instruction" key={index}>{instruction}</li>
             ))
         }</ul>
     </>);

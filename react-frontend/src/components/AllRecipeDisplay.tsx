@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../config/axios_config";
+import API from "../config/API";
 import type { Recipe } from "../types/Recipe";
 
 
@@ -7,7 +7,7 @@ function RecipeListDisplay() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
 
     useEffect(() => {
-        api.get(
+        API.get(
             "/api/v1/recipes/all",
         ).then(
             (response) => {

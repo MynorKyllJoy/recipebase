@@ -28,7 +28,8 @@ function RecipeFilter() {
             setFilterIngredients([...filterIngredients, ingredientInput]);
             setIngredientInput("");
         } else {
-            // display error message
+            // TODO: display error message
+            console.log("error")
         }
     }
 
@@ -46,19 +47,18 @@ function RecipeFilter() {
                 ingredientNames: filterIngredients
             }
         ).then((response) => {
-            console.log(response.data)
             setRecipes(response.data)
         }).catch((error) => console.log(error)); // TODO: Error handling
     }
 
     return (<>
-        <input type="input" list="ingredients" value={ingredientInput} onChange={(e) => setIngredientInput(e.target.value)}/>
+        <input type="text" list="ingredients" value={ingredientInput} onChange={(e) => setIngredientInput(e.target.value)}/>
         <button onClick={addIngredientHandler}>Add</button>
         <button onClick={filterRecipesHandler}>Filter</button>
         <datalist id="ingredients">
             {
                 allIngredients.map((ingredient) => (
-                    <option key={ingredient.name} value={ingredient.name}/>
+                    <option data-testid="ingredient" key={ingredient.name} value={ingredient.name}/>
                 ))
             }
         </datalist>

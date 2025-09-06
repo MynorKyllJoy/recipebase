@@ -32,18 +32,18 @@ function Register({setLoginStatus}: LoginStatusProps) {
     return (
         <form onSubmit={register}>
             <label> Name
-                <input type="text" value={name} onChange={(e) => setName(e.target.value)}/><br/>
+                <input data-testid="name" type="text" value={name} onChange={(e) => setName(e.target.value)}/><br/>
             </label>
             <label>E-mail
-                <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}/><br/>
+                <input data-testid="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)}/><br/>
             </label>
             <label>Username
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/><br/>
+                <input data-testid="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)}/><br/>
             </label>
             <label>Password
-                <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}/><br/>
+                <input data-testid="password" type="text" value={password} onChange={(e) => setPassword(e.target.value)}/><br/>
             </label>
-            <input type="submit"/>
+            <input type="submit" value={"Register"}/>
         </form>
     );
 }
