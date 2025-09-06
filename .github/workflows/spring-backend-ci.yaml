@@ -1,14 +1,14 @@
-name: Ci Pipeline
+name: Spring CI Pipeline
 
 on:
   push:
-    branches: ["main", "spring-backend"]
+    branches: ["main", "*/spring-*"]
   pull_request:
-    branches: ["main", "spring-backend"]
+    branches: ["main", "*/spring-*"]
 
 jobs:
   test:
-    name: Unit Test
+    name: Sping Backend Unit Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
