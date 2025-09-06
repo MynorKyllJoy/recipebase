@@ -1,0 +1,29 @@
+name: React CI Pipeline
+
+on:
+    push: 
+        branches: ["main", "*/react-*"]
+
+jobs:
+    test:
+        name: React Frontend Unit Test
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@4.2.2
+            - name: Set Up Node.js
+              uses: actions/setup-node@v5
+              with:
+                node-version: "22"
+            - name: Clean Project Install
+              run: npm ci
+              working-directory: react-frontend
+            - name: Build Project
+              run: npm build
+              working-directory: react-frontend
+            - name: Run Unit Tests
+              run: npm test
+              working-directory: react-frontend
+            - name: Lint Code
+              run: npm lint
+              working-directory: react-frontend
