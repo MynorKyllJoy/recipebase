@@ -34,7 +34,7 @@ describe("Login", () => {
     });
 
 
-    it("should render the usename after the user types one in", async () => {
+    it("should render the password after the user types one in", async () => {
         render(<Login setLoginStatus={() => {}}/>);
         const passwordInput = screen.getByTestId("password");
 
