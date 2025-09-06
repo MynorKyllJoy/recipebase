@@ -26,6 +26,9 @@ API.interceptors.response.use(
         if(error.response.status === 401) {
             localStorage.removeItem("recipebase-user-token");
             window.location.href = "/login";
+        } else if(error.response.status === 403) {
+            localStorage.removeItem("recipebase-user-token");
+            window.location.href = "/login";
         }
         return Promise.reject(error);
     }

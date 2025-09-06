@@ -3,7 +3,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Logout from "./components/Logout";
 import Homepage from "./components/Homepage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Upload from "./components/Upload";
 import RecipeDisplay from "./components/RecipeDisplay";
 import RecipeListDisplay from "./components/AllRecipeDisplay";
@@ -23,10 +23,25 @@ interface User {
 function App() {
     // FIX ERROR: JWT Token expired
     const [isLoggedIn, setLoginStatus] = useState(localStorage.getItem("recipebase-user-token") != null)
-
     const handleLoginStatus = () => {
+        const jwtToken = localStorage.getItem("recipebase-user-token");
+        if(jwtToken !== null) {
+            try {
+                let expirationDate = atob(jwtToken.split(".")[1]);
+                expirationDate = atob(expirationDate);
+                if (Number(expirationDate)*1000 < Date.now()) {
+                    localStorage.removeItem("recipebase-user-token")
+                }
+            } catch(error) {
+                // TODO: JWT token is expired, number decoding was wrong
+                console.log(error)
+            }
+        }
         setLoginStatus(localStorage.getItem("recipebase-user-token") != null);
     }
+    useEffect(() => {
+        handleLoginStatus()
+    }, [isLoggedIn]);
 
     return (<>
         <div>
