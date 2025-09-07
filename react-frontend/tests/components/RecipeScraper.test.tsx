@@ -27,6 +27,15 @@ describe("RecipeScraper", () => {
         expect(textField).toHaveValue("");
     });
 
+    it("should render user typed/pasted recipe site link", async () => {
+        render(<RecipeScraper/>);
+        const textField = screen.getByRole("textbox");
+        
+        await userEvent.type(textField, "https://example.com");
+
+        expect(textField).toHaveValue("https://example.com");
+    });
+
     it("should redirect to scraped recipe", async () => {
         render(<RecipeScraper/>);
         
