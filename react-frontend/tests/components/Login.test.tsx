@@ -2,28 +2,24 @@ import { render, screen } from "@testing-library/react"
 import Login from "../../src/components/Login"
 import userEvent from "@testing-library/user-event"
 import API from "../../src/config/API"
-import { useNavigate } from "react-router-dom";
 
+
+// mock API, useNavigate, and localStorage
+const mockUseNavigate = vi.fn();
+vi.mock("./src/config/API", async () => ({
+    API: {
+        ...await vi.importActual("./src/config/API"),
+        post: vi.fn()
+    }
+}));
+vi.mock("react-router-dom", async () => ({
+    useNavigate: () => mockUseNavigate
+}));
+vi.mock("localStorage", () => ({
+    setItem: vi.fn(),
+}));
 
 describe("Login", () => {
-    // mock API, useNavigate, and localStorage
-    vi.mock("./src/config/API", async () => ({
-        API: {
-            ...await vi.importActual("./src/config/API"),
-            post: vi.fn()
-        }
-    }));
-    vi.mock("react-router-dom", async () => ({
-        useNavigate: vi.fn()
-    }));
-    vi.mock("localStorage", () => ({
-        setItem: vi.fn(),
-    }));
-
-
-    afterEach(() => vi.restoreAllMocks());
-
-
     it("should render the usename after the user types one in", async () => {
         render(<Login setLoginStatus={() => {}}/>);
         const usernameInput = screen.getByTestId("username");
@@ -45,9 +41,7 @@ describe("Login", () => {
 
 
     it("should store JWT and redirect to / after clicking Login button", async () => {
-        const mockNavigate = vi.fn();
         const mockSetLoginStatus = vi.fn();
-        (useNavigate as ReturnType<typeof vi.fn>).mockReturnValue(mockNavigate);
         const mockAPI = vi.spyOn(API, "post").mockImplementation(() => {
             return Promise.resolve({data: "JWTToken"});
         });
@@ -62,8 +56,8 @@ describe("Login", () => {
         expect(mockLocalStorage).toBeCalledTimes(1);
         expect(mockLocalStorage).toHaveBeenCalledWith("recipebase-user-token", "JWTToken");
         expect(mockSetLoginStatus).toBeCalledTimes(1);
-        expect(mockNavigate).toBeCalledTimes(1);
-        expect(mockNavigate).toHaveBeenCalledWith("/");
+        expect(mockUseNavigate).toBeCalledTimes(1);
+        expect(mockUseNavigate).toHaveBeenCalledWith("/");
     });
 
 

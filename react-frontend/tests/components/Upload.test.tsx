@@ -1,20 +1,21 @@
 import { render, screen } from "@testing-library/react"
 import Upload from "../../src/components/Upload"
-import { useNavigate } from "react-router-dom";
 import API from "../../src/config/API";
 import userEvent from "@testing-library/user-event";
 
 
+const mockUseNavigate = vi.fn();
+vi.mock("./src/config/API", async () => ({
+API: {
+    ...await vi.importActual("./src/config/API"),
+    post: vi.fn()
+}
+}));
+vi.mock("react-router-dom", async () => ({
+    useNavigate: () => mockUseNavigate
+}));
+
 describe("Upload", () => {
-    vi.mock("./src/config/API", async () => ({
-        API: {
-            ...await vi.importActual("./src/config/API"),
-            post: vi.fn()
-        }
-    }));
-    vi.mock("react-router-dom", async () => ({
-        useNavigate: vi.fn()
-    }));
 
 
     // tests: display typed input correctly
@@ -221,8 +222,6 @@ describe("Upload", () => {
 
     // tests: uploadHandler testing
     it("should redirect after clicking upload button", async () => {
-        const mockNavigate = vi.fn();
-        (useNavigate as ReturnType<typeof vi.fn>).mockReturnValue(mockNavigate);
         const mockAPI = vi.spyOn(API, "post").mockImplementation(() => {
             return Promise.resolve({data: {id: "1234"}});
         });
@@ -231,7 +230,7 @@ describe("Upload", () => {
         await userEvent.click(screen.getByTestId("upload"));
 
         expect(mockAPI).toBeCalledTimes(1);
-        expect(mockNavigate).toBeCalledWith("/recipes/1234", {replace: true});
+        expect(mockUseNavigate).toBeCalledWith("/recipes/1234", {replace: true});
     });
 
 
