@@ -34,6 +34,7 @@ jobs:
                 name: React Frontend
                 json-summary-path: "./react-frontend/tests/unit/coverage/coverage-summary.json"
                 json-final-path: "./react-frontend/tests/unit/coverage/coverage-final.json"
+                vite-config-path: "./react-frontend"
             - name: Lint Code
               run: npm run lint
               working-directory: react-frontend
