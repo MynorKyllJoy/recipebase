@@ -27,7 +27,7 @@ function RecipeDisplay() {
             // TODO: Error Handling
             (error) => console.log(error)
         );
-    }, [params.recipeId])
+    }, [params.recipeId]);
 
 
     return (<>
@@ -36,17 +36,21 @@ function RecipeDisplay() {
         <h3>Description</h3>
         <p>{recipe.description}</p>
         <h3>Ingredients</h3>
-        <ul>{
-            recipe.ingredientInfos.map((ingredient, index) => (
-                <li data-testid="ingredient" key={index}>{ingredient}</li>
-            ))
-        }</ul>
+        <ul>
+            {
+                recipe.ingredientInfos.map((ingredient, index) => (
+                    <li data-testid="ingredient" key={index}>{ingredient}</li>
+                ))
+            }
+        </ul>
         <h3>Instructions</h3>
-        <ul>{
-            recipe.instructions.map((instruction, index) => (
-                <li data-testid="instruction" key={index}>{instruction}</li>
-            ))
-        }</ul>
+        <ul>
+            {
+                recipe.instructions.map((instruction, index) => (
+                    <li data-testid="instruction" key={index}>{instruction}</li>
+                ))
+            }
+        </ul>
     </>);
 }
 

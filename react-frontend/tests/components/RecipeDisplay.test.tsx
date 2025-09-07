@@ -1,8 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react";
 import API from "../../src/config/API";
 import type { Recipe } from "../../src/types/Recipe";
 import RecipeDisplay from "../../src/components/RecipeDisplay";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
+
 
 const recipeData: Recipe = {
     id: "1234",
@@ -19,7 +20,8 @@ const recipeData: Recipe = {
         "0.5 cup flour",
         "1/4 cup cold water"
     ]
-}  
+};
+
 
 vi.mock("./src/config/API", async () => ({
     API: {
@@ -56,6 +58,7 @@ describe("RecipeDisplay", () => {
         });
     });
 
+
     it("should log error after API get call fails", async() => {
         vi.spyOn(console, "log");
         const mockAPI = vi.spyOn(API, "get").mockImplementation(() => {
@@ -68,4 +71,4 @@ describe("RecipeDisplay", () => {
         expect(console.log).toBeCalledTimes(1);
         expect(console.log).toHaveBeenLastCalledWith({error: {status: 404}});
     });
-})
+});

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react";
 import RecipeFilter from "../../src/components/RecipeFilter";
 import API from "../../src/config/API";
 import userEvent from "@testing-library/user-event";
@@ -48,6 +48,7 @@ vi.mock("./src/config/API", async () => ({
     post: vi.fn()
 }));
 
+
 describe("RecipeFilter", () => {
     // test init state
     it("should render initial state", () => {
@@ -60,6 +61,7 @@ describe("RecipeFilter", () => {
         expect(addButton).toBeInTheDocument();
         expect(filterButton).toBeInTheDocument();
     });
+
 
     // test text input
     it("should render user typed input in textfield", async () => {
@@ -80,13 +82,13 @@ describe("RecipeFilter", () => {
 
         render(<RecipeFilter/>);
 
-        expect(await waitFor(() => mockApiGet)).toBeCalledTimes(1)
+        expect(await waitFor(() => mockApiGet)).toBeCalledTimes(1);
         const ingredientOptions = screen.getAllByTestId("ingredient");
         expect(ingredientOptions).toHaveLength(3);
         ingredients.forEach((ingredient, index) => {
                 expect(ingredientOptions[index]).toHaveValue(ingredient.name)
             }
-        )
+        );
     });
 
 
@@ -96,13 +98,13 @@ describe("RecipeFilter", () => {
         });
         render(<RecipeFilter/>);
 
-        expect(await waitFor(() => mockApiGet)).toBeCalledTimes(1)
+        expect(await waitFor(() => mockApiGet)).toBeCalledTimes(1);
         const textField = screen.getByRole("combobox");
         await userEvent.type(textField, "eggs");
         await userEvent.click(screen.getByText(/add/i));
 
-        const addedIngredient = screen.getByRole("listitem")
-        expect(addedIngredient).toHaveTextContent("eggs")
+        const addedIngredient = screen.getByRole("listitem");
+        expect(addedIngredient).toHaveTextContent("eggs");
         expect(addedIngredient).toHaveTextContent(/delete/i);
         expect(screen.getByText("eggs")).toBeInTheDocument();
         expect(screen.getByText(/delete/i)).toBeInTheDocument();
@@ -125,6 +127,7 @@ describe("RecipeFilter", () => {
         expect(screen.queryByText(/delete/i)).toBeNull();
     });
 
+
     it("should add typed input to the filter ingredient list and delete it", async () => {
         const mockApiGet = vi.spyOn(API, "get").mockImplementation(() =>  {
             return Promise.resolve({ data: ingredients });
@@ -137,12 +140,12 @@ describe("RecipeFilter", () => {
         await userEvent.click(screen.getByText(/add/i));
         await userEvent.click(screen.getByText(/delete/i));
 
-
         expect(screen.queryAllByRole("listitem")).toHaveLength(0);
         expect(screen.queryByText("eggs")).toBeNull();
         expect(screen.queryByText(/delete/i)).toBeNull();
         expect(textField).toHaveValue("");
     });
+
 
     it("should render a list of recipes after pressing filter", async () => {
         const mockApiPost = vi.spyOn(API, "post").mockImplementation(() =>  {
@@ -153,13 +156,14 @@ describe("RecipeFilter", () => {
         await userEvent.click(screen.getByText(/filter/i));
         const recipeList = screen.getAllByRole("listitem");
 
-        expect(await waitFor(() => mockApiPost)).toBeCalledTimes(1)
+        expect(await waitFor(() => mockApiPost)).toBeCalledTimes(1);
         expect(recipeList).toHaveLength(2);
         recipes.forEach((recipe, index) => {
             expect(recipeList[index]).toHaveTextContent(recipe.title)
         });
     });
-    
+
+
     it("should log error after API post fails", async () => {
         vi.spyOn(console, "log");
         const mockApiPost = vi.spyOn(API, "post").mockImplementation(() =>  {

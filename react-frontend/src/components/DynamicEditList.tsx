@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 interface ListItemProps {
     item: string,
     index: number,
@@ -24,7 +25,7 @@ function ListItem({item, index, onDeleteItem, onEditItem}: ListItemProps) {
 
     const cancelEditHandler = () => {
         setIsEditing(false);
-    }
+    };
 
     return (
         <li>

@@ -1,23 +1,22 @@
-import { render, screen } from "@testing-library/react"
-import Upload from "../../src/components/Upload"
+import { render, screen } from "@testing-library/react";
+import Upload from "../../src/components/Upload";
 import API from "../../src/config/API";
 import userEvent from "@testing-library/user-event";
 
 
 const mockUseNavigate = vi.fn();
-vi.mock("./src/config/API", async () => ({
-API: {
-    ...await vi.importActual("./src/config/API"),
-    post: vi.fn()
-}
-}));
 vi.mock("react-router-dom", async () => ({
     useNavigate: () => mockUseNavigate
 }));
+vi.mock("./src/config/API", async () => ({
+    API: {
+        ...await vi.importActual("./src/config/API"),
+        post: vi.fn()
+    }
+}));
+
 
 describe("Upload", () => {
-
-
     // tests: display typed input correctly
     it("should display the title the user types in", async () => {
         render(<Upload/>);
@@ -62,7 +61,7 @@ describe("Upload", () => {
     // test: add-, edit-, and deleteInstructionHandler with DynamicEditList
     // tests for ingredient list
     it("should add typed ingredient to the DynamicEditList", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const ingredientInput = screen.getByTestId("currIngredient");
 
         expect(screen.queryByText(/edit/i)).toBeNull();
@@ -79,7 +78,7 @@ describe("Upload", () => {
 
 
     it("should add of typed ingredient to the DynamicEditList and activate edit mode", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const ingredientInput = screen.getByTestId("currIngredient");
 
         await userEvent.type(ingredientInput, "1 large egg");
@@ -110,7 +109,7 @@ describe("Upload", () => {
 
 
     it("should add of typed ingredient to the DynamicEditList and activate edit mode and save edit", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const ingredientInput = screen.getByTestId("currIngredient");
 
         await userEvent.type(ingredientInput, "1 large egg");
@@ -126,7 +125,7 @@ describe("Upload", () => {
 
 
     it("should add of typed ingredient to the DynamicEditList and delete it", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const ingredientInput = screen.getByTestId("currIngredient");
 
         await userEvent.type(ingredientInput, "1 large egg");
@@ -142,7 +141,7 @@ describe("Upload", () => {
 
     // tests for intruction list
     it("should add typed instruction to the DynamicEditList", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const instructionInput = screen.getByTestId("currInstruction");
 
         expect(screen.queryByText(/edit/i)).toBeNull();
@@ -159,7 +158,7 @@ describe("Upload", () => {
 
 
     it("should add of typed instruction to the DynamicEditList and activate edit mode", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const instructionInput = screen.getByTestId("currInstruction");
 
         await userEvent.type(instructionInput, "Fry the egg");
@@ -174,7 +173,7 @@ describe("Upload", () => {
 
 
     it("should add of typed instruction to the DynamicEditList and activate edit mode and cancel", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const instructionInput = screen.getByTestId("currInstruction");
 
         await userEvent.type(instructionInput, "Fry the egg");
@@ -190,7 +189,7 @@ describe("Upload", () => {
 
 
     it("should add of typed instruction to the DynamicEditList and activate edit mode and save edit", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const instructionInput = screen.getByTestId("currInstruction");
 
         await userEvent.type(instructionInput, "Fry the egg");
@@ -206,7 +205,7 @@ describe("Upload", () => {
 
 
     it("should add of typed instruction to the DynamicEditList and delete it", async () => {
-        render(<Upload/>)
+        render(<Upload/>);
         const instructionInput = screen.getByTestId("currInstruction");
 
         await userEvent.type(instructionInput, "Fry the egg");
@@ -246,4 +245,4 @@ describe("Upload", () => {
         expect(mockAPI).toBeCalledTimes(1);
         expect(console.log).toHaveBeenLastCalledWith({error: {status: 403}});
     });
-})
+});

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from '@testing-library/user-event'
+import userEvent from "@testing-library/user-event";
 import DynamicFilterList from "../../src/components/DynamicFilterList";
 
 
@@ -12,11 +12,12 @@ describe("DynamicFilterList", () => {
         expect(list).toBeInTheDocument();
     });
 
+
     it("should render 'egg' and 'bacon' as ingredient list and initial states for dropdowns and textfields", () => {
         const items = ["egg", "bacon"];
-        const units = [/any/i, /cups/i, /liters/i, /ounces/i, /grams/i];
+        const units = [/any/i, /cups/i, /liters/i, /ounces/i, /grams/i];;
 
-        render(<DynamicFilterList ingredients={items} onDelete={() => {}} />)
+        render(<DynamicFilterList ingredients={items} onDelete={() => {}} />);
         const listItems = screen.getAllByRole("listitem");
         const selectItems = screen.getAllByRole("combobox");
         const textFields = screen.getAllByRole("textbox");
@@ -40,26 +41,28 @@ describe("DynamicFilterList", () => {
         });
 
         expect(textFields).toHaveLength(2);
-        textFields.map(textField => expect(textField).toBeDisabled())
+        textFields.map(textField => expect(textField).toBeDisabled());
     });
+
 
     it("should enable textbox for first ingredient textbox", async () => {
         const items = ["egg", "bacon"];
 
-        render(<DynamicFilterList ingredients={items} onDelete={() => {}} />)
+        render(<DynamicFilterList ingredients={items} onDelete={() => {}} />);
         const selectItems = screen.getAllByRole("combobox");
         const textFields = screen.getAllByRole("textbox");
 
         await userEvent.selectOptions(selectItems[0], "Liters");
 
-        expect( textFields[0]).not.toBeDisabled();
-        expect( textFields[1]).toBeDisabled();
+        expect(textFields[0]).not.toBeDisabled();
+        expect(textFields[1]).toBeDisabled();
     });
+
 
     it("should delete test from textbox after switching from a unit to any", async () => {
         const items = ["egg", "bacon"];
 
-        render(<DynamicFilterList ingredients={items} onDelete={() => {}} />)
+        render(<DynamicFilterList ingredients={items} onDelete={() => {}} />);
         const selectItems = screen.getAllByRole("combobox");
         const textFields = screen.getAllByRole("textbox");
 

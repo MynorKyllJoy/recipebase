@@ -17,7 +17,7 @@ function RecipeListDisplay() {
             // TODO: Error Handling
             (error) => console.log(error)
         );
-    }, [])
+    }, []);
 
     return (<>
         <ul>{

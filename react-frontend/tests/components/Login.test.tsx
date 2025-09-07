@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react"
-import Login from "../../src/components/Login"
-import userEvent from "@testing-library/user-event"
-import API from "../../src/config/API"
+import { render, screen } from "@testing-library/react";
+import Login from "../../src/components/Login";
+import userEvent from "@testing-library/user-event";
+import API from "../../src/config/API";
 
 
 // mock API, useNavigate, and localStorage
@@ -18,6 +18,7 @@ vi.mock("react-router-dom", async () => ({
 vi.mock("localStorage", () => ({
     setItem: vi.fn(),
 }));
+
 
 describe("Login", () => {
     it("should render the usename after the user types one in", async () => {
@@ -47,7 +48,7 @@ describe("Login", () => {
         });
         const mockLocalStorage = vi.spyOn(Storage.prototype, "setItem");
 
-        render(<Login setLoginStatus={mockSetLoginStatus}/>)
+        render(<Login setLoginStatus={mockSetLoginStatus}/>);
 
         await userEvent.click(screen.getByText(/login/i));
 
@@ -66,7 +67,7 @@ describe("Login", () => {
         const mockAPI = vi.spyOn(API, "post").mockImplementation(() => {
             return Promise.reject({error: {status: 403}});
         });
-        render(<Login setLoginStatus={() => {}}/>)
+        render(<Login setLoginStatus={() => {}}/>);
 
         await userEvent.click(screen.getByText(/login/i));
 

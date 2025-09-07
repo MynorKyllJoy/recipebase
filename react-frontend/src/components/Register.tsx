@@ -26,7 +26,7 @@ function Register({setLoginStatus}: LoginStatusProps) {
         }).catch((error) => {
             // TODO: Error Handling, username taken, password conditions not met
             console.log(error);
-        })
+        });
     };
 
     return (

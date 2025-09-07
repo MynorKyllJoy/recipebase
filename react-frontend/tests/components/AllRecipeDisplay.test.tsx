@@ -38,10 +38,11 @@ const recipes: Recipe[] = [
             "1 large egg",
         ]
     }
-]
+];
 vi.mock("./src/config/API", async () => ({
     get: vi.fn()
 }));
+
 
 describe("AllRecipeDisplay", () => {
     it("should display all recipes from recipeList", async () => {
@@ -49,7 +50,7 @@ describe("AllRecipeDisplay", () => {
             return Promise.resolve({data: recipes});
         });
 
-        render(<AllRecipeDisplay/>)
+        render(<AllRecipeDisplay/>);
         expect(await waitFor(() => mockAPI)).toBeCalledTimes(1);
 
         const recipeList = screen.getAllByRole("listitem");
@@ -59,7 +60,7 @@ describe("AllRecipeDisplay", () => {
             expect(recipeList[index]).toHaveTextContent(recipe.title);
             expect(recipeList[index]).toHaveTextContent(recipe.source);
             expect(recipeList[index]).toHaveTextContent(recipe.description);
-        })
+        });
     });
 
     

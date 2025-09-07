@@ -12,5 +12,5 @@ describe("Login", () => {
 
         expect(mockSetLoginStatus).toBeCalledTimes(1);
         expect(mockLocalStorage).toBeCalledTimes(1);
-    })
-})
+    });
+});

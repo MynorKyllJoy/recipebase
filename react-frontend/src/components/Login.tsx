@@ -22,8 +22,8 @@ function Login({setLoginStatus}: LoginStatusProps) {
         }).catch((error) => {
             // TODO: Error Handling, wrong username password or jwt token expired
             console.log(error);
-        })
-    }
+        });
+    };
 
     return (<>
         <form onSubmit={login}>

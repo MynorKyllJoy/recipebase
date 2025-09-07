@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 interface FilterListItemProps {
     ingredient: string,
     index: number,
@@ -10,6 +11,7 @@ interface FilterListProps {
     ingredients: string[],
     onDelete: (index: number) => void
 }
+
 
 function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
     const [amount, setAmount] = useState("");
@@ -25,7 +27,8 @@ function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
             setIsAny(false);
         }
         setUnit(newUnit);
-    }
+    };
+
     return (<>
         <li key={ingredient}>
             <input
@@ -44,7 +47,7 @@ function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
             <p>{ingredient}</p>
             <button onClick={() => onDelete(index)}>Delete</button>
         </li>
-    </>)
+    </>);
 }
 
 function DynamicFilterList({ingredients, onDelete}: FilterListProps) {

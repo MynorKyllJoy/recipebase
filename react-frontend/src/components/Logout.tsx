@@ -8,7 +8,7 @@ function Logout({setLoginStatus}: LoginStatusProps) {
     useEffect(() => { setLoginStatus(); });
     return (<>
         <Navigate data-testid="redirect" to="/login"/>
-    </>)
+    </>);
 }
 
 export default Logout;

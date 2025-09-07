@@ -3,19 +3,17 @@ import RecipeScraper from "../../src/components/RecipScraper";
 import API from "../../src/config/API";
 import userEvent from "@testing-library/user-event";
 
+
 const mockUseNavigate = vi.fn();
+vi.mock("./src/config/API", async () => ({
+    post: vi.fn()
+}));
+vi.mock("react-router-dom", async () => ({
+    useNavigate: () => mockUseNavigate
+}));
+
 
 describe("RecipeScraper", () => {
-    vi.mock("./src/config/API", async () => ({
-        post: vi.fn()
-    }));
-    vi.mock("react-router-dom", async () => ({
-        useNavigate: () => mockUseNavigate
-    }));
-
-
-    afterEach(() => {vi.restoreAllMocks()})
-
     it("should render initial state", async () => {
         render(<RecipeScraper/>);
         const button = screen.getByRole("button");
@@ -27,6 +25,7 @@ describe("RecipeScraper", () => {
         expect(textField).toHaveValue("");
     });
 
+
     it("should render user typed/pasted recipe site link", async () => {
         render(<RecipeScraper/>);
         const textField = screen.getByRole("textbox");
@@ -35,6 +34,7 @@ describe("RecipeScraper", () => {
 
         expect(textField).toHaveValue("https://example.com");
     });
+
 
     it("should redirect to scraped recipe", async () => {
         render(<RecipeScraper/>);
@@ -51,6 +51,7 @@ describe("RecipeScraper", () => {
         expect(await waitFor(() => mockUseNavigate)).toBeCalledWith("/recipes/1234", {replace: true})
     });
 
+
     it("should log error after API.get fails", async () => {
         render(<RecipeScraper/>);
         const button = screen.getByRole("button");
@@ -64,4 +65,4 @@ describe("RecipeScraper", () => {
         expect(await waitFor(() => mockAPI)).toBeCalledTimes(1);
         expect(console.log).toHaveBeenLastCalledWith({error: {status: 404}});
     });
-})
+});
