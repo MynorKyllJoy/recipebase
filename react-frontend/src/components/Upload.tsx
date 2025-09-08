@@ -1,70 +1,8 @@
 import { useState } from "react";
-import api from "../config/axios_config";
+import API from "../config/API";
 import { useNavigate } from "react-router-dom";
+import DynamicEditList from "./DynamicEditList";
 
-interface ListItemProps {
-    item: string,
-    index: number,
-    onDeleteItem: (index: number) => void,
-    onEditItem: (index: number, editValue: string) => void
-}
-
-interface ListProps {
-    items: string[],
-    onDeleteItem: (index: number) => void,
-    onEditItem: (index: number, editValue: string) => void
-}
-
-function ListItem({item, index, onDeleteItem, onEditItem}: ListItemProps) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [editValue, setEditValue] = useState(item);
-
-    const saveEditHandler = () => {
-        onEditItem(index, editValue);
-        setIsEditing(false);
-    };
-
-    const cancelEditHandler = () => {
-        setIsEditing(false);
-    }
-
-    return (
-        <li>
-            {
-                isEditing ? (<>
-                    <input 
-                        type="text" 
-                        value={editValue} 
-                        onChange={(e) => setEditValue(e.target.value)}
-                    />
-                    <button onClick={saveEditHandler}>Save</button>
-                    <button onClick={cancelEditHandler}>Cancel</button>
-                </>) : (<>
-                    {item}
-                    <button onClick={() => setIsEditing(true)}>Edit</button>
-                    <button onClick={() => onDeleteItem(index)}>Delete</button>
-                </>)
-            }
-        </li>
-    );
-}
-
-function List({items, onEditItem, onDeleteItem}: ListProps) {
-    return (
-        <ul>
-            {
-                items.map((item, index) => (
-                    <ListItem 
-                        key={index}
-                        item={item} index={index} 
-                        onEditItem={onEditItem} 
-                        onDeleteItem={onDeleteItem}
-                    />
-                ))
-            }
-        </ul>
-    );
-}
 
 function Upload() {
     const navigate = useNavigate();
@@ -124,7 +62,7 @@ function Upload() {
     };
 
     const uploadHandler = () => {
-        api.post(
+        API.post(
             "api/v1/recipes/upload", {
                 title,
                 description,
@@ -149,12 +87,14 @@ function Upload() {
                     placeholder="Recipe name..."
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    data-testid="title"
                 />
-                <button onClick={uploadHandler}>Upload</button><br/>
+                <button data-testid="upload" onClick={uploadHandler}>Upload</button><br/>
                 <textarea 
                     placeholder="Description..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                    data-testid="description"
                 />
             </>
             <>
@@ -164,14 +104,16 @@ function Upload() {
                     placeholder="200g onions, chopped"
                     value={ingredientInput}
                     onChange={(e) => setIngredientInput(e.target.value)}
+                    data-testid="currIngredient"
                 />
-                <button onClick={addIngredientHandler}>Add</button>
+                <button data-testid="addIngredient-btn" onClick={addIngredientHandler}>Add</button>
             </>
             <>
-                <List
+                <DynamicEditList
                     items={ingredients}
                     onEditItem={editIngredientHandler}
                     onDeleteItem={deleteIngredientHandler}
+                    data-testid="ingredientList"
                 />
             </>
         </div>
@@ -182,14 +124,16 @@ function Upload() {
                     placeholder="Fry onions until tanslucent."
                     value={instructionInput}
                     onChange={e => setInstructionInput(e.target.value)}
+                    data-testid="currInstruction"
                 />
-                <button onClick={addInstructionHandler}>Add</button>
+                <button data-testid="addInstruction-btn" onClick={addInstructionHandler}>Add</button>
             </>
             <>
-                <List
+                <DynamicEditList
                     items={instructions}
                     onEditItem={editInstructionHandler}
                     onDeleteItem={deleteInstructionHandler}
+                    data-testid="instructionList"
                 />
             </>
         </div>

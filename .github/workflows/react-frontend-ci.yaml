@@ -1,0 +1,40 @@
+name: React CI Pipeline
+
+on:
+    push: 
+        branches: ["main", "*/react-*"]
+
+jobs:
+    test:
+        name: React Frontend Unit Test
+        runs-on: ubuntu-latest
+        permissions:
+          contents: read
+          pull-requests: write
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4.2.2
+            - name: Set Up Node.js
+              uses: actions/setup-node@v5
+              with:
+                node-version: "22"
+            - name: Clean Project Install
+              run: npm ci
+              working-directory: react-frontend
+            - name: Build Project
+              run: npm run build
+              working-directory: react-frontend
+            - name: Run Unit Tests with Code Coverage
+              run: npm run coverage
+              working-directory: react-frontend
+            - name: Report Coverage
+              if: always()
+              uses: davelosert/vitest-coverage-report-action@v2
+              with:
+                name: React Frontend
+                json-summary-path: "./react-frontend/tests/unit/coverage/coverage-summary.json"
+                json-final-path: "./react-frontend/tests/unit/coverage/coverage-final.json"
+                vite-config-path: "./react-frontend/vitest.config.ts"
+            - name: Lint Code
+              run: npm run lint
+              working-directory: react-frontend

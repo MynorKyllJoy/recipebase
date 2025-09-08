@@ -7,8 +7,8 @@ function Logout({setLoginStatus}: LoginStatusProps) {
     localStorage.removeItem("recipebase-user-token");
     useEffect(() => { setLoginStatus(); });
     return (<>
-        <Navigate to="/login"/>
-    </>)
+        <Navigate data-testid="redirect" to="/login"/>
+    </>);
 }
 
 export default Logout;

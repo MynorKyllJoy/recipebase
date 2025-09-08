@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../config/axios_config";
+import API from "../config/API";
 import { useNavigate } from "react-router-dom";
 import type { LoginStatusProps } from "../types/LoginStatusProps";
 
@@ -12,7 +12,7 @@ function Login({setLoginStatus}: LoginStatusProps) {
 
     const login = (event: React.FormEvent) => {
         event.preventDefault();
-        api.post("/auth/login", {
+        API.post("/auth/login", {
             username,
             password
         }).then((response) => {
@@ -22,18 +22,18 @@ function Login({setLoginStatus}: LoginStatusProps) {
         }).catch((error) => {
             // TODO: Error Handling, wrong username password or jwt token expired
             console.log(error);
-        })
-    }
+        });
+    };
 
     return (<>
         <form onSubmit={login}>
             <label>Username
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/><br/>
+                <input data-testid="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)}/><br/>
             </label>
             <label>Password
-                <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}/><br/>
+                <input data-testid="password" type="text" value={password} onChange={(e) => setPassword(e.target.value)}/><br/>
             </label>
-            <input type="submit"/>
+            <input type="submit" value="Login"/>
         </form>
     </>);
 }

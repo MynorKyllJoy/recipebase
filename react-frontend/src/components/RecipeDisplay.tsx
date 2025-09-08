@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import api from "../config/axios_config";
+import API from "../config/API";
 import { useEffect, useState } from "react";
 import type { Recipe } from "../types/Recipe";
 
 
 function RecipeDisplay() {
-    let params = useParams();
+    const params = useParams();
     const [recipe, setRecipe] = useState<Recipe>({
         id: "",
         title: "",
@@ -16,7 +16,7 @@ function RecipeDisplay() {
     });
 
     useEffect(() => {
-        api.get(
+        API.get(
             "/api/v1/recipes/id/" + params.recipeId,
         ).then(
             (response) => {
@@ -27,7 +27,7 @@ function RecipeDisplay() {
             // TODO: Error Handling
             (error) => console.log(error)
         );
-    }, [])
+    }, [params.recipeId]);
 
 
     return (<>
@@ -36,17 +36,21 @@ function RecipeDisplay() {
         <h3>Description</h3>
         <p>{recipe.description}</p>
         <h3>Ingredients</h3>
-        <ul>{
-            recipe.ingredientInfos.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
-            ))
-        }</ul>
+        <ul>
+            {
+                recipe.ingredientInfos.map((ingredient, index) => (
+                    <li data-testid="ingredient" key={index}>{ingredient}</li>
+                ))
+            }
+        </ul>
         <h3>Instructions</h3>
-        <ul>{
-            recipe.instructions.map((instruction, index) => (
-                <li key={index}>{instruction}</li>
-            ))
-        }</ul>
+        <ul>
+            {
+                recipe.instructions.map((instruction, index) => (
+                    <li data-testid="instruction" key={index}>{instruction}</li>
+                ))
+            }
+        </ul>
     </>);
 }
 
