@@ -1,0 +1,162 @@
+* {
+    font-size: 11pt;
+}
+
+:root {
+    --bg-color:              hsl(  0,   3%,  5%);
+    --bg-body-color:         hsl(  0,   3%, 10%);
+    --bg-foreground-color:   hsl(  0,   3%, 15%);
+    --text-color:            hsl(  0,   3%, 75%);
+    --text-header-color:     hsl(  0,   3%, 90%);
+    --component-color:       hsl( 45, 100%, 25%);
+    --component-hover-color: hsl( 45, 100%, 45%);
+    --button-delete-color:         hsl(  0, 100%, 40%);
+    --button-delete-hover-color:   hsl(  0,  90%, 50%);
+    --button-cancel-color:         hsl(  0, 100%, 40%);
+    --button-cancel-hover-color:   hsl(  0,  90%, 50%);
+    --button-edit-color:           hsl(240, 100%, 40%);
+    --button-edit-hover-color:     hsl(240, 100%, 50%);
+    --button-save-color:           hsl(135, 100%, 40%);
+    --button-save-hover-color:     hsl(135, 100%, 50%);
+
+
+    color: var(--text-color);
+    font-family: Verdana;
+    padding-left: 4em;
+    padding-right: 4em;
+    background-color: var(--bg-color);
+}
+
+body {
+    background-color: var(--bg-body-color);
+}
+
+.mainContent {
+    padding: 1%;
+}
+
+
+/* buttons */
+a {
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--component-color);
+}
+a:hover {
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--component-hover-color);
+}
+
+button {
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--text-color);
+    background-color:var(--bg-foreground-color);
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+}
+
+button:hover {
+    color: var(--text-header-color);
+    background-color: var(--bg-foreground-color);
+}
+
+input[type=submit] {
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--text-header-color);
+    background-color:var(--component-color);
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+}
+
+.submitButton {
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--text-header-color);
+    background-color:var(--component-color);
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+}
+
+.deleteButton {
+    color: var(--text-color);
+    background-color: var(--button-delete-color);
+}
+.deleteButton:hover {
+    color: var(--text-header-color);
+    background-color: var(--button-delete-hover-color);
+}
+
+.cancelButton {
+    color: var(--text-color);
+    background-color: var(--button-cancel-color);
+}
+.cancelButton:hover {
+    color: var(--text-header-color);
+    background-color: var(--button-cancel-hover-color);
+}
+
+.editButton {
+    color: var(--text-color);
+    background-color: var(--button-edit-color);
+}
+.editButton:hover {
+    color: var(--text-header-color);
+    background-color: var(--button-edit-hover-color);
+}
+
+.saveButton {
+    color: var(--text-color);
+    background-color: var(--button-save-color);
+}
+.saveButton:hover {
+    color: var(--text-header-color);
+    background-color: var(--button-save-hover-color);
+}
+
+/* text fields */
+input[type=text] {
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--text-color);
+    background-color: var(--bg-foreground-color);
+    border:none;
+}
+
+textarea {
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--text-color);
+    background-color: var(--bg-foreground-color);
+    border:none;
+}
+
+/* dropdown */ 
+select {
+    border:none;
+    margin: 0.5%;
+    padding: 0.5%;
+    color: var(--text-color);
+    background-color: var(--bg-foreground-color);
+}
+
+/* lists */
+ul {
+    margin: 0.5%;
+    padding: 0.5%;
+    list-style: none;
+    list-style-type: none;
+}
+
+li {
+    margin: 0.5%;
+    padding: 0.5%;
+    display: flex;
+    list-style: none;
+    list-style-type: none;
+}

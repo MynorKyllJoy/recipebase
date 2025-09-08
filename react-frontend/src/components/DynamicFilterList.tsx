@@ -45,7 +45,7 @@ function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
                 <option value="Grams">Grams</option>
             </select>
             <p>{ingredient}</p>
-            <button onClick={() => onDelete(index)}>Delete</button>
+            <button className="deleteButton" onClick={() => onDelete(index)}>Delete</button>
         </li>
     </>);
 }

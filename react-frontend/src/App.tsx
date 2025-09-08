@@ -1,3 +1,4 @@
+import "./App.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -44,31 +45,32 @@ function App() {
     }, [isLoggedIn]);
 
     return (<>
-        <div>
-            <div>
-                <a href="/">Home</a>
-                <a href="/recipes/all">All Recipes</a>
-                <a href="/recipes/upload">Upload</a>
-                <a href="/recipes/scrape">Scrape</a>
-                <a href="/recipes/filter">Filter</a>
+        <div className="navbar">
+            <div className="navOptions">
+                <a className="navButton" href="/">Home</a>
+                <a className="navButton" href="/recipes/all">All Recipes</a>
+                <a className="navButton" href="/recipes/upload">Upload</a>
+                <a className="navButton" href="/recipes/scrape">Scrape</a>
+                <a className="navButton" href="/recipes/filter">Filter</a>
             </div>
-            <div>
+            <div className="navSettings">
                 {
                     isLoggedIn ? (
                         <>
-                            <a href="/profile">Profile</a>
-                            <a href="/logout">Logout</a>
+                            <a className="navButton" href="/profile">Profile</a>
+                            <a className="navButton" href="/logout">Logout</a>
                         </>
                     ) : (
                         <>
-                            <a href="/register">Register</a>
-                            <a href="/login">Login</a>
+                            <a className="navButton" href="/register">Register</a>
+                            <a className="navButton" href="/login">Login</a>
                         </>
                     )
                 }
             </div>
         </div>
         
+        <div className="mainContent">
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Homepage/>}/>
@@ -82,6 +84,8 @@ function App() {
                 <Route path="/recipes/filter" element={<RecipeFilter/>}/>
             </Routes>
         </BrowserRouter>
+        </div>
+
     </>)
 }
 

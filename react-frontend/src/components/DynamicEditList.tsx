@@ -36,12 +36,12 @@ function ListItem({item, index, onDeleteItem, onEditItem}: ListItemProps) {
                         value={editValue} 
                         onChange={(e) => setEditValue(e.target.value)}
                     />
-                    <button onClick={saveEditHandler}>Save</button>
-                    <button onClick={cancelEditHandler}>Cancel</button>
+                    <button className="saveButton" onClick={saveEditHandler}>Save</button>
+                    <button className="cancelButton" onClick={cancelEditHandler}>Cancel</button>
                 </>) : (<>
                     {item}
-                    <button onClick={() => setIsEditing(true)}>Edit</button>
-                    <button onClick={() => onDeleteItem(index)}>Delete</button>
+                    <button className="editButton" onClick={() => setIsEditing(true)}>Edit</button>
+                    <button className="deleteButton" onClick={() => onDeleteItem(index)}>Delete</button>
                 </>)
             }
         </li>
