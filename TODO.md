@@ -19,7 +19,7 @@ A list of features that have been or have yet to be implemented and chores to co
 - [x] add users
   - [x] password encryption 
   - [ ] add reviews 
-  - [ ] upload/save own recipes 
+  - [x] upload/save own recipes 
   - [x] fix logout
 - [ ] filtered recipe search
   - [x] filter for recipes that use a set of ingredients
@@ -28,7 +28,7 @@ A list of features that have been or have yet to be implemented and chores to co
   - [ ] extend filtering to use at least this amount of a certain ingredient
 - [ ] move hardcoded userAgent string in RecipeSiteRequestAdapter
 - [ ] actual exception handling
-- [ ] react frontend?
+- [x] react frontend
 - [ ] optimize 
 - [ ] create grocery list for set of selected recipes
 - [ ] a dish can be an ingredient to (e.g.: bread), link to recipes for said dish (inheritance?)
