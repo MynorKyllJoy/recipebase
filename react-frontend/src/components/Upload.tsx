@@ -89,7 +89,7 @@ function Upload() {
                     onChange={(e) => setTitle(e.target.value)}
                     data-testid="title"
                 />
-                <button data-testid="upload" onClick={uploadHandler}>Upload</button><br/>
+                <button className="submitButton" data-testid="upload" onClick={uploadHandler}>Upload</button><br/>
                 <textarea 
                     placeholder="Description..."
                     value={description}

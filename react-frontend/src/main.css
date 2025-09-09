@@ -1,5 +1,5 @@
 * {
-    font-size: 11pt;
+    font-size: 12pt;
 }
 
 :root {
@@ -19,16 +19,17 @@
     --button-save-color:           hsl(135, 100%, 40%);
     --button-save-hover-color:     hsl(135, 100%, 50%);
 
-
-    color: var(--text-color);
-    font-family: Verdana;
-    padding-left: 4em;
-    padding-right: 4em;
     background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: Verdana, sans-serif;
+    margin-left: 4em;
+    margin-right: 4em;
 }
 
-body {
+html, body {
     background-color: var(--bg-body-color);
+    height: 100%;
+    margin: 0;
 }
 
 .mainContent {

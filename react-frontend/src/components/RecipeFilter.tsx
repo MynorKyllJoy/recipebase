@@ -56,7 +56,7 @@ function RecipeFilter() {
     return (<>
         <input type="text" list="ingredients" value={ingredientInput} onChange={(e) => setIngredientInput(e.target.value)}/>
         <button onClick={addIngredientHandler}>Add</button>
-        <button onClick={filterRecipesHandler}>Filter</button>
+        <button className="submitButton" onClick={filterRecipesHandler}>Filter</button>
         <datalist id="ingredients">
             {
                 allIngredients.map((ingredient) => (
