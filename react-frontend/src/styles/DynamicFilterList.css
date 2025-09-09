@@ -1,0 +1,18 @@
+.filterItemContent {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.amountInput {
+    width: 50px;
+}
+.amountInput:disabled {
+    width: 100px;
+}
+
+.filterItemOptions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

@@ -41,7 +41,7 @@ function Login({setLoginStatus}: LoginStatusProps) {
                 <label>Password</label>
                 <input 
                     data-testid="password" 
-                    type="text" 
+                    type="password" 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)}
                 />

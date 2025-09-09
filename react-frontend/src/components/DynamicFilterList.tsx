@@ -1,3 +1,4 @@
+import "../styles/DynamicFilterList.css"
 import { useState } from "react";
 
 
@@ -30,22 +31,25 @@ function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
     };
 
     return (<>
-        <li key={ingredient}>
-            <input
-                type="text"
-                value={amount}
-                disabled={isAny}
-                onChange={(e) => setAmount(e.target.value)}
-            />
-            <select value={unit} onChange={unitHandler}>
-                <option value="Any">Any</option>
-                <option value="Cups">Cups</option>
-                <option value="Liters">Liters</option>
-                <option value="Ounces">Ounces</option>
-                <option value="Grams">Grams</option>
-            </select>
-            <p>{ingredient}</p>
-            <button className="deleteButton" onClick={() => onDelete(index)}>Delete</button>
+        <li className="filterItemContent" key={ingredient}>
+            <p>{ingredient},</p>
+            <div className="filterItemOptions">
+                <input
+                    className="amountInput"
+                    type="text"
+                    value={amount}
+                    disabled={isAny}
+                    onChange={(e) => setAmount(e.target.value)}
+                />
+                <select value={unit} onChange={unitHandler}>
+                    <option value="Any">Any</option>
+                    <option value="Cups">Cups</option>
+                    <option value="Liters">Liters</option>
+                    <option value="Ounces">Ounces</option>
+                    <option value="Grams">Grams</option>
+                </select>
+                <button className="deleteButton" onClick={() => onDelete(index)}>Delete</button>
+            </div>
         </li>
     </>);
 }

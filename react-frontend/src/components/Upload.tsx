@@ -1,3 +1,4 @@
+import "../styles/Upload.css";
 import { useState } from "react";
 import API from "../config/API";
 import { useNavigate } from "react-router-dom";
@@ -79,11 +80,13 @@ function Upload() {
         );
     }
 
-    return (<>
-        <div>
-            <>
-                <h1>Enter your recipe</h1>
+    return (
+    <div className="uploadContent">
+        <div className="uploadColumn">
+            <h1>Enter your recipe</h1>
+            <div className="uploadCenterInput">
                 <input 
+                    className="uploadTextField"
                     type="text" 
                     placeholder="Recipe name..."
                     value={title}
@@ -91,54 +94,60 @@ function Upload() {
                     data-testid="title"
                 />
                 <button className="submitButton" data-testid="upload" onClick={uploadHandler}>Upload</button><br/>
-                <textarea 
-                    placeholder="Description..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    data-testid="description"
-                />
-            </>
-            <>
-                <p>Ingredient</p>
+            </div>
+            <textarea 
+                className="editTextArea"
+                placeholder="Description..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                data-testid="description"
+            />
+            <h2>Ingredient</h2>
+            <div className="uploadCenterInput">
                 <input 
+                    className="uploadTextField"
                     type="text"
                     placeholder="200g onions, chopped"
                     value={ingredientInput}
                     onChange={(e) => setIngredientInput(e.target.value)}
                     data-testid="currIngredient"
                 />
-                <button data-testid="addIngredient-btn" onClick={addIngredientHandler}>Add</button>
-            </>
-            <>
-                <DynamicEditList
-                    items={ingredients}
-                    onEditItem={editIngredientHandler}
-                    onDeleteItem={deleteIngredientHandler}
-                    data-testid="ingredientList"
-                />
-            </>
-        </div>
-        <div>
-            <>
-                <p>Instruction Step {instructions.length+1}</p>
+            <button data-testid="addIngredient-btn" onClick={addIngredientHandler}>Add</button>
+            </div>
+            
+            <h2>Instruction Step {instructions.length+1}</h2>
+            <div className="uploadCenterInput">
                 <textarea
+                    className="editTextArea"
                     placeholder="Fry onions until tanslucent."
                     value={instructionInput}
                     onChange={e => setInstructionInput(e.target.value)}
                     data-testid="currInstruction"
                 />
                 <button data-testid="addInstruction-btn" onClick={addInstructionHandler}>Add</button>
-            </>
-            <>
-                <DynamicEditList
-                    items={instructions}
-                    onEditItem={editInstructionHandler}
-                    onDeleteItem={deleteInstructionHandler}
-                    data-testid="instructionList"
-                />
-            </>
+            </div>
+
         </div>
-    </>);
+        <div className="uploadColumn">
+            <h1>Ingredients</h1>
+            <DynamicEditList
+                items={ingredients}
+                onEditItem={editIngredientHandler}
+                onDeleteItem={deleteIngredientHandler}
+                data-testid="ingredientList"
+            />
+        </div>
+        <div className="uploadColumn">
+            <h1>Instructions</h1>
+            <DynamicEditList
+                items={instructions}
+                onEditItem={editInstructionHandler}
+                onDeleteItem={deleteInstructionHandler}
+                data-testid="instructionList"
+            />
+        </div>
+    </div>
+    );
 }
 
 export default Upload;

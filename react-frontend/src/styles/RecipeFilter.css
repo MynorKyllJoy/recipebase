@@ -1,0 +1,20 @@
+.filterContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+
+.filterColumn {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+
+.filterInput {
+    display: flex;
+    flex-direction: row;
+}
+
