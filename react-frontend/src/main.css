@@ -6,10 +6,11 @@
     --bg-color:              hsl(  0,   3%,  5%);
     --bg-body-color:         hsl(  0,   3%, 10%);
     --bg-foreground-color:   hsl(  0,   3%, 15%);
+    --bg-hover-color:        hsl(  0,   3%, 20%);
     --text-color:            hsl(  0,   3%, 75%);
     --text-header-color:     hsl(  0,   3%, 90%);
     --component-color:       hsl( 45, 100%, 25%);
-    --component-hover-color: hsl( 45, 100%, 45%);
+    --component-hover-color: hsl( 45, 100%, 35%);
     --button-delete-color:         hsl(  0, 100%, 40%);
     --button-delete-hover-color:   hsl(  0,  90%, 50%);
     --button-cancel-color:         hsl(  0, 100%, 40%);
@@ -26,14 +27,51 @@
     margin-right: 4em;
 }
 
+h1 {
+    font-size: 26pt;
+}
+
 html, body {
     background-color: var(--bg-body-color);
     height: 100%;
     margin: 0;
+    padding: 0;
+}
+
+.wholeScreen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .mainContent {
-    padding: 1%;
+    padding: min(5em, 50px);
+    height: 100%;
+    overflow: hidden;
+}
+
+.centerBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: max(100px, 80%);
+}
+
+.centerForm {
+    font-size: 14pt;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+    width: min(400px, 25%);
+}
+
+
+.centerInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 
@@ -50,6 +88,7 @@ a:hover {
 }
 
 button {
+    font-size: 16pt;
     margin: 0.5%;
     padding: 0.5%;
     color: var(--text-color);
@@ -58,13 +97,13 @@ button {
     font-weight: bold;
     border: none;
 }
-
 button:hover {
     color: var(--text-header-color);
-    background-color: var(--bg-foreground-color);
+    background-color: var(--bg-hover-color);
 }
 
-input[type=submit] {
+input[type=submit], .submitButton {
+    font-size: 16pt;
     margin: 0.5%;
     padding: 0.5%;
     color: var(--text-header-color);
@@ -73,12 +112,11 @@ input[type=submit] {
     font-weight: bold;
     border: none;
 }
-
-.submitButton {
+input[type=submit]:hover, .submitButton:hover {
     margin: 0.5%;
     padding: 0.5%;
     color: var(--text-header-color);
-    background-color:var(--component-color);
+    background-color:var(--component-hover-color);
     text-decoration: none;
     font-weight: bold;
     border: none;
@@ -121,7 +159,11 @@ input[type=submit] {
 }
 
 /* text fields */
-input[type=text] {
+label {
+    font-size: 16pt;
+}
+input[type=text], input[type=password] {
+    font-size: 16pt;
     margin: 0.5%;
     padding: 0.5%;
     color: var(--text-color);
@@ -160,4 +202,65 @@ li {
     display: flex;
     list-style: none;
     list-style-type: none;
+}
+
+/* navbar */
+.navbar {
+    padding: 0.5%;
+    background-color: var(--component-color);
+    display: flex;
+    justify-content: space-between;
+}
+.navOptions {
+    display: flex;
+    justify-content: flex-start;
+    width: 70%;
+}
+.navSettings {
+    display: flex;
+    justify-content: flex-end;
+    width: 30%;
+}
+
+.navButton {
+    font-size: 16pt;
+    color: var(--text-color);
+    background-color: var(--component-color);
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+}
+.navButton:hover {
+    margin: 0;
+    padding: 10px;
+    color: var(--text-color);
+    background-color: var(--component-hover-color);
+}
+
+.navDropDownContent {
+    display: none;
+    position: absolute;
+    color: var(--text-color);
+    min-width: 160px;
+    background-color: var(--bg-foreground-color);
+    z-index: 1;
+}
+
+.navDropDownContent a {
+    float: none;
+    display: block;
+    text-align: left;
+    text-decoration: none;
+}
+
+.navDropDownContent a:hover {
+    float: none;
+    display: block;
+    text-align: left;
+    text-decoration: none;
+}
+
+.navDropDown:hover .navDropDownContent {
+    display:block;
 }

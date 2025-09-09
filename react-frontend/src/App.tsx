@@ -1,4 +1,3 @@
-import "./App.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -44,14 +43,21 @@ function App() {
         handleLoginStatus()
     }, [isLoggedIn]);
 
-    return (<>
+    return (
+    <div className="wholeScreen">
         <div className="navbar">
             <div className="navOptions">
                 <a className="navButton" href="/">Home</a>
-                <a className="navButton" href="/recipes/all">All Recipes</a>
-                <a className="navButton" href="/recipes/upload">Upload</a>
-                <a className="navButton" href="/recipes/scrape">Scrape</a>
-                <a className="navButton" href="/recipes/filter">Filter</a>
+                <div className="navDropDown">
+                    <button className="navButton">Recipes</button>
+                    <div className="navDropDownContent">
+                        <a className="navButton" href="/recipes/all">All</a>
+                        <a className="navButton" href="/recipes/upload">Upload</a>
+                        <a className="navButton" href="/recipes/scrape">Scrape</a>
+                        <a className="navButton" href="/recipes/filter">Filter</a>
+                    </div>
+                </div>
+
             </div>
             <div className="navSettings">
                 {
@@ -85,8 +91,7 @@ function App() {
             </Routes>
         </BrowserRouter>
         </div>
-
-    </>)
+    </div>)
 }
 
 export default App;

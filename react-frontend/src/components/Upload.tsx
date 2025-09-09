@@ -82,6 +82,7 @@ function Upload() {
     return (<>
         <div>
             <>
+                <h1>Enter your recipe</h1>
                 <input 
                     type="text" 
                     placeholder="Recipe name..."

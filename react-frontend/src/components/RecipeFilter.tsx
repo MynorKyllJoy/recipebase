@@ -54,7 +54,14 @@ function RecipeFilter() {
     }
 
     return (<>
-        <input type="text" list="ingredients" value={ingredientInput} onChange={(e) => setIngredientInput(e.target.value)}/>
+        <h1>Recipe should contain</h1>
+        <input 
+            type="text" 
+            list="ingredients" 
+            placeholder="Ingredient..."
+            value={ingredientInput} 
+            onChange={(e) => setIngredientInput(e.target.value)}
+        />
         <button onClick={addIngredientHandler}>Add</button>
         <button className="submitButton" onClick={filterRecipesHandler}>Filter</button>
         <datalist id="ingredients">

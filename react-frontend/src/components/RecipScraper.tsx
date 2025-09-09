@@ -24,6 +24,7 @@ function RecipeScraper() {
 
     return (
         <form onSubmit={scrapeSite}>
+            <h1>Enter link of recipe to scrape</h1>
             <input type="text" value={recipeSite} onChange={(e) => setRecipeSite(e.target.value)}/>
             <input type="submit" value="Scrape"/>
         </form>
