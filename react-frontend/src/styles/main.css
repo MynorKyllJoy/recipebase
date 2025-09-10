@@ -157,6 +157,7 @@ select {
 }
 
 p {
+    margin: 0;
     font-size: 16pt;
 }
 

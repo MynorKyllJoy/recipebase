@@ -27,8 +27,8 @@ describe("DynamicEditList", () => {
         expect(listItems[1]).toHaveTextContent(/edit/i);
         expect(listItems[1]).toHaveTextContent(/delete/i);
 
-        expect(screen.getByText(items[0])).toBeInTheDocument();
-        expect(screen.getByText(items[1])).toBeInTheDocument();
+        expect(screen.getByDisplayValue(items[0])).toBeInTheDocument();
+        expect(screen.getByDisplayValue(items[1])).toBeInTheDocument();
     });
 
 

@@ -71,7 +71,7 @@ describe("Upload", () => {
         await userEvent.click(screen.getByTestId("addIngredient-btn"));
 
         expect(ingredientInput).toHaveValue("");
-        expect(screen.getByText("1 large egg")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("1 large egg")).toBeInTheDocument();
         expect(screen.getByText(/edit/i)).toBeInTheDocument();
         expect(screen.getByText(/delete/i)).toBeInTheDocument();
     });
@@ -103,7 +103,7 @@ describe("Upload", () => {
         await userEvent.type(screen.getByDisplayValue("1 large egg"), ", cooked");
         await userEvent.click(screen.getByText(/cancel/i));
 
-        expect(screen.getByText("1 large egg")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("1 large egg")).toBeInTheDocument();
         expect(screen.queryByText("1 large egg, cooked")).toBeNull();
     });
 
@@ -120,7 +120,7 @@ describe("Upload", () => {
         await userEvent.click(screen.getByText(/save/i));
 
         expect(screen.queryByText("1 large egg")).toBeNull();
-        expect(screen.getByText("1 large egg, cooked")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("1 large egg, cooked")).toBeInTheDocument();
     });
 
 
@@ -151,7 +151,7 @@ describe("Upload", () => {
         await userEvent.click(screen.getByTestId("addInstruction-btn"));
 
         expect(instructionInput).toHaveValue("");
-        expect(screen.getByText("Fry the egg")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("Fry the egg")).toBeInTheDocument();
         expect(screen.getByText(/edit/i)).toBeInTheDocument();
         expect(screen.getByText(/delete/i)).toBeInTheDocument();
     });
@@ -183,7 +183,7 @@ describe("Upload", () => {
         await userEvent.type(screen.getByDisplayValue("Fry the egg"), " over medium heat");
         await userEvent.click(screen.getByText(/cancel/i));
 
-        expect(screen.getByText("Fry the egg")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("Fry the egg")).toBeInTheDocument();
         expect(screen.queryByText("Fry the egg over medium heat")).toBeNull();
     });
 
@@ -200,7 +200,7 @@ describe("Upload", () => {
         await userEvent.click(screen.getByText(/save/i));
 
         expect(screen.queryByText("Fry the egg")).toBeNull();
-        expect(screen.getByText("Fry the egg over medium heat")).toBeInTheDocument();
+        expect(screen.getByDisplayValue("Fry the egg over medium heat")).toBeInTheDocument();
     });
 
 

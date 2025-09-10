@@ -32,7 +32,7 @@ function FilterListItem({ingredient, index, onDelete}: FilterListItemProps) {
 
     return (<>
         <li className="filterItemContent" key={ingredient}>
-            <p>{ingredient},</p>
+            <p>{ingredient}</p>
             <div className="filterItemOptions">
                 <input
                     className="amountInput"

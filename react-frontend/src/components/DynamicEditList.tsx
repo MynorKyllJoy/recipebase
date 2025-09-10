@@ -19,14 +19,18 @@ interface ListProps {
 function ListItem({item, index, onDeleteItem, onEditItem}: ListItemProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [editValue, setEditValue] = useState(item);
+    // the original value needs to be saved, so it won't be overwritten by edits
+    const [originalValue, setOriginalValue] = useState(item);
 
     const saveEditHandler = () => {
         onEditItem(index, editValue);
         setIsEditing(false);
+        setOriginalValue(editValue);
     };
 
     const cancelEditHandler = () => {
         setIsEditing(false);
+        setEditValue(originalValue);
     };
 
     return (
