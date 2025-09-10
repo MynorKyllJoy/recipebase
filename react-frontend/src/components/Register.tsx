@@ -30,21 +30,50 @@ function Register({setLoginStatus}: LoginStatusProps) {
     };
 
     return (
-        <form onSubmit={register}>
-            <label> Name
-                <input data-testid="name" type="text" value={name} onChange={(e) => setName(e.target.value)}/><br/>
-            </label>
-            <label>E-mail
-                <input data-testid="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)}/><br/>
-            </label>
-            <label>Username
-                <input data-testid="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)}/><br/>
-            </label>
-            <label>Password
-                <input data-testid="password" type="text" value={password} onChange={(e) => setPassword(e.target.value)}/><br/>
-            </label>
+        <div className="centerBox">
+        <form className="centerForm" onSubmit={register}>
+            <h1>Enter your data</h1>
+            <div className="centerInput">
+                <label>Name</label>
+                <input 
+                    data-testid="name" 
+                    type="text" value={name} 
+                    onChange={(e) => setName(e.target.value)}
+                />
+            </div>
+
+            <div className="centerInput">
+                <label>E-mail</label>
+                <input 
+                    data-testid="email" 
+                    type="text" 
+                    value={email} onChange={(e) => setEmail(e.target.value)}
+                />
+            </div>
+            
+            <div className="centerInput">
+                <label>Username</label>
+                <input 
+                    data-testid="username" 
+                    type="text" 
+                    value={username} 
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
+            
+            <div className="centerInput">
+                <label>Password</label>
+                <input 
+                    data-testid="password" 
+                    type="password" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
             <input type="submit" value={"Register"}/>
         </form>
+        </div>
+
     );
 }
 

@@ -1,3 +1,4 @@
+import "../styles/RecipeFilter.css"
 import { useEffect, useState } from "react";
 import API from "../config/API";
 import type { Recipe } from "../types/Recipe";
@@ -53,29 +54,47 @@ function RecipeFilter() {
         }).catch((error) => console.log(error)); // TODO: Error handling
     }
 
-    return (<>
-        <input type="text" list="ingredients" value={ingredientInput} onChange={(e) => setIngredientInput(e.target.value)}/>
-        <button onClick={addIngredientHandler}>Add</button>
-        <button onClick={filterRecipesHandler}>Filter</button>
-        <datalist id="ingredients">
-            {
-                allIngredients.map((ingredient) => (
-                    <option data-testid="ingredient" key={ingredient.name} value={ingredient.name}/>
-                ))
-            }
-        </datalist>
-        <DynamicFilterList 
-            ingredients={filterIngredients}
-            onDelete={deleteFilterHandler}
-        />
-        <ul>
-            {
-                recipes.map((recipe) => (
-                    <li key={recipe.title}>{recipe.title}</li>
-                ))
-            }
-        </ul>
-    </>);
+    return (
+        <div className="filterContent">
+            <div className="filterColumn">
+                <h1>Recipe should contain</h1>
+                <div className="filterInput">
+                    <input 
+                        type="text" 
+                        list="ingredients" 
+                        placeholder="Ingredient..."
+                        value={ingredientInput} 
+                        onChange={(e) => setIngredientInput(e.target.value)}
+                    />
+                    <button onClick={addIngredientHandler}>Add</button>
+                    <button className="submitButton" onClick={filterRecipesHandler}>Filter</button>
+                    <datalist id="ingredients">
+                        {
+                            allIngredients.map((ingredient) => (
+                                <option data-testid="ingredient" key={ingredient.name} value={ingredient.name}/>
+                            ))
+                        }
+                    </datalist>
+                </div>
+                <DynamicFilterList 
+                    ingredients={filterIngredients}
+                    onDelete={deleteFilterHandler}
+                />
+            </div>
+            <div className="filterColumn">
+                <h1>Recipes fulfilling criteria</h1>
+                <ul>
+                    {
+                        recipes.map((recipe) => (
+                            <li key={recipe.title}>
+                                <a href={`/recipes/${recipe.id}`}>{recipe.title}</a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+    );
 }
 
 export default RecipeFilter;

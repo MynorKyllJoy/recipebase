@@ -43,32 +43,40 @@ function App() {
         handleLoginStatus()
     }, [isLoggedIn]);
 
-    return (<>
-        <div>
-            <div>
-                <a href="/">Home</a>
-                <a href="/recipes/all">All Recipes</a>
-                <a href="/recipes/upload">Upload</a>
-                <a href="/recipes/scrape">Scrape</a>
-                <a href="/recipes/filter">Filter</a>
+    return (
+    <div className="wholeScreen">
+        <div className="navbar">
+            <div className="navOptions">
+                <a className="navButton" href="/">Home</a>
+                <div className="navDropDown">
+                    <button className="navButton">Recipes</button>
+                    <div className="navDropDownContent">
+                        <a className="navButton" href="/recipes/all">All</a>
+                        <a className="navButton" href="/recipes/upload">Upload</a>
+                        <a className="navButton" href="/recipes/scrape">Scrape</a>
+                        <a className="navButton" href="/recipes/filter">Filter</a>
+                    </div>
+                </div>
+
             </div>
-            <div>
+            <div className="navSettings">
                 {
                     isLoggedIn ? (
                         <>
-                            <a href="/profile">Profile</a>
-                            <a href="/logout">Logout</a>
+                            <a className="navButton" href="/profile">Profile</a>
+                            <a className="navButton" href="/logout">Logout</a>
                         </>
                     ) : (
                         <>
-                            <a href="/register">Register</a>
-                            <a href="/login">Login</a>
+                            <a className="navButton" href="/register">Register</a>
+                            <a className="navButton" href="/login">Login</a>
                         </>
                     )
                 }
             </div>
         </div>
         
+        <div className="mainContent">
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Homepage/>}/>
@@ -82,7 +90,8 @@ function App() {
                 <Route path="/recipes/filter" element={<RecipeFilter/>}/>
             </Routes>
         </BrowserRouter>
-    </>)
+        </div>
+    </div>)
 }
 
 export default App;

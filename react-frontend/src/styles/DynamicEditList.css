@@ -1,0 +1,75 @@
+.listItemContent {
+    font-size: 16pt;
+    width: 100%;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttonList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.deleteButton {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-color);
+    background-color: var(--button-delete-color);
+}
+.deleteButton:hover {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-header-color);
+    background-color: var(--button-delete-hover-color);
+}
+
+.cancelButton {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-color);
+    background-color: var(--button-cancel-color);
+}
+.cancelButton:hover {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-color);
+    background-color: var(--button-cancel-hover-color);
+}
+
+.editButton {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-color);
+    background-color: var(--button-edit-color);
+}
+.editButton:hover {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-header-color);
+    background-color: var(--button-edit-hover-color);
+}
+
+.saveButton {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-color);
+    background-color: var(--button-save-color);
+}
+.saveButton:hover {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 5px;
+    color: var(--text-header-color);
+    background-color: var(--button-save-hover-color);
+}

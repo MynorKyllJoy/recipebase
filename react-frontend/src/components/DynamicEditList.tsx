@@ -1,3 +1,4 @@
+import "../styles/DynamicEditList.css"
 import { useState } from "react";
 
 
@@ -14,39 +15,49 @@ interface ListProps {
     onEditItem: (index: number, editValue: string) => void
 }
 
+
 function ListItem({item, index, onDeleteItem, onEditItem}: ListItemProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [editValue, setEditValue] = useState(item);
+    // the original value needs to be saved, so it won't be overwritten by edits
+    const [originalValue, setOriginalValue] = useState(item);
 
     const saveEditHandler = () => {
         onEditItem(index, editValue);
         setIsEditing(false);
+        setOriginalValue(editValue);
     };
 
     const cancelEditHandler = () => {
         setIsEditing(false);
+        setEditValue(originalValue);
     };
 
     return (
-        <li>
+        <li className="listItemContent">
+                <input 
+                    type="text" 
+                    value={editValue} 
+                    onChange={(e) => setEditValue(e.target.value)}
+                    disabled={isEditing===false}
+                />
             {
                 isEditing ? (<>
-                    <input 
-                        type="text" 
-                        value={editValue} 
-                        onChange={(e) => setEditValue(e.target.value)}
-                    />
-                    <button onClick={saveEditHandler}>Save</button>
-                    <button onClick={cancelEditHandler}>Cancel</button>
+                    <div className="buttonList">
+                        <button className="saveButton" onClick={saveEditHandler}>Save</button>
+                        <button className="cancelButton" onClick={cancelEditHandler}>Cancel</button>
+                    </div>
                 </>) : (<>
-                    {item}
-                    <button onClick={() => setIsEditing(true)}>Edit</button>
-                    <button onClick={() => onDeleteItem(index)}>Delete</button>
+                    <div className="buttonList">
+                        <button className="editButton" onClick={() => setIsEditing(true)}>Edit</button>
+                        <button className="deleteButton" onClick={() => onDeleteItem(index)}>Delete</button>
+                    </div>
                 </>)
             }
         </li>
     );
 }
+
 
 function DynamicEditList({items, onEditItem, onDeleteItem}: ListProps) {
     return (
